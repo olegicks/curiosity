@@ -14,7 +14,12 @@ dependencies = [
     "sqlalchemy>=2.1.5",
     "structlog>=26.1.0",
     "uvicorn[standard]>=0.54.0",
+    "pyyaml>=6.0.3",
+    "typer>=0.27.3",
 ]
+
+[project.scripts]
+curiosity = "app.cli:app"
 
 [build-system]
 requires = ["hatchling"]
@@ -56,4 +61,5 @@ dev = [
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.1",
+    "types-pyyaml>=6.0.12.20260906",
 ]

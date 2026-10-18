@@ -5,14 +5,16 @@ from datetime import datetime
 from functools import lru_cache
 from zoneinfo import available_timezones
 
-from sqlalchemy import delete
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from app.auth.errors import InvalidCredentialsError
 from app.auth.models import User
+from app.content.models import Subject, Topic
+from app.content.service import resolve_topic_ids
 from app.core.errors import ValidationError
 from app.core.security import verify_password
-from app.users.models import UserPreferences
+from app.users.models import UserPreferences, UserTopicInterest
 from app.users.schemas import PreferencesOut, PreferencesPatchIn
 
 DELETE_CONFIRMATION = "DELETE"
@@ -59,13 +61,37 @@ def get_preferences(db: Session, user_id: uuid.UUID) -> UserPreferences:
     return prefs
 
 
-def preferences_out(prefs: UserPreferences) -> PreferencesOut:
+def interest_topic_slugs(db: Session, user_id: uuid.UUID) -> list[str]:
+    return list(
+        db.scalars(
+            select(Topic.slug)
+            .join(UserTopicInterest, UserTopicInterest.topic_id == Topic.id)
+            .join(Subject, Subject.id == Topic.subject_id)
+            .where(UserTopicInterest.user_id == user_id)
+            .order_by(Subject.position, Topic.position)
+        )
+    )
+
+
+def preferences_out(db: Session, prefs: UserPreferences) -> PreferencesOut:
     return PreferencesOut(
         timezone=prefs.timezone,
         daily_xp_goal=prefs.daily_xp_goal,
-        interest_topics=[],  # topic interests arrive with the content module
+        interest_topics=interest_topic_slugs(db, prefs.user_id),
         onboarding_completed=prefs.onboarding_completed_at is not None,
     )
+
+
+def _replace_interests(db: Session, user_id: uuid.UUID, slugs: list[str]) -> None:
+    wanted = list(dict.fromkeys(slugs))  # de-duplicate, keep order
+    topic_ids = resolve_topic_ids(db, wanted)
+    unknown = [slug for slug in wanted if slug not in topic_ids]
+    if unknown:
+        raise UnknownTopicError(
+            details=[{"field": "interest_topics", "issue": "unknown", "value": s} for s in unknown]
+        )
+    db.execute(delete(UserTopicInterest).where(UserTopicInterest.user_id == user_id))
+    db.add_all(UserTopicInterest(user_id=user_id, topic_id=topic_ids[s]) for s in wanted)
 
 
 def update_preferences(
@@ -78,9 +104,8 @@ def update_preferences(
         prefs.timezone = patch.timezone
     if patch.daily_xp_goal is not None:
         prefs.daily_xp_goal = patch.daily_xp_goal
-    if patch.interest_topics:
-        # No topics exist until the content module is imported, so any slug is unknown.
-        raise UnknownTopicError(details=[{"field": "interest_topics", "issue": "unknown"}])
+    if patch.interest_topics is not None:
+        _replace_interests(db, user_id, patch.interest_topics)
     if patch.onboarding_completed and prefs.onboarding_completed_at is None:
         prefs.onboarding_completed_at = now
     db.commit()

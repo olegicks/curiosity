@@ -1,0 +1,25 @@
+# Subjects and topics, in curated order (docs/spec/03 §3.6).
+# Topic slugs must be unique across all subjects.
+subjects:
+  - slug: psychology
+    title: Psychology & Human Behavior
+    description: How people judge, decide and remember, and the systematic ways intuition goes wrong.
+    position: 1
+    published: true
+    topics:
+      - slug: foundations
+        title: How judgment works
+        description: Heuristics, biases and the statistical ideas that explain them.
+        position: 1
+      - slug: judgment
+        title: Judging under uncertainty
+        description: How we estimate likelihoods, frequencies and our own accuracy.
+        position: 2
+      - slug: decisions
+        title: Choices, value and time
+        description: How framing, losses and the passage of time shape decisions.
+        position: 3
+      - slug: social
+        title: Beliefs and other people
+        description: How we weigh evidence about our beliefs and judge other people.
+        position: 4

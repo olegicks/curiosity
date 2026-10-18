@@ -1,0 +1,214 @@
+# DRAFT. Not editorially reviewed. Do not publish until it passes the checklist in
+# docs/spec/03 §3.5 with an independent reviewer, and every source has been verified.
+id: 01a150f6-72b3-77a0-9158-002bee760130
+slug: confirmation-bias
+version: 1
+status: draft
+subject: psychology
+topic: social
+position: 1
+title: Confirmation bias
+description: Why we notice evidence that fits what we already believe, and miss what doesn't.
+learning_objective: Recognize confirmation bias in how people search for, interpret and remember evidence, and name one way to counter it.
+estimated_minutes: 6
+evidence_status: established
+last_reviewed_on: null
+reviewers: []
+prerequisites: []
+related: []
+sources:
+  - key: nickerson-1998
+    note: Broad review of the many forms of the bias.
+  - key: wason-1960
+  - key: lord-ross-lepper-1979
+steps:
+  - type: hook
+    body: |
+      You're sure your new coworker is unfriendly. Over the next week you notice
+      every short reply and forget the time they helped you. Was your first
+      impression right, or did it decide what you would notice?
+  - type: explanation
+    title: The core idea
+    body: |
+      **Confirmation bias** is the tendency to search for, interpret and remember
+      information in ways that support what we already believe. It is not one
+      mistake but a family of them: *which* evidence we look for, *how* we read
+      evidence that could go either way, and *what* stays in memory afterwards.
+  - type: explanation
+    title: Why it happens
+    body: |
+      Testing a belief by looking for cases that fit it feels natural and takes
+      little effort. Ambiguous information is easier to read in line with what we
+      already expect. And beliefs we care about carry emotional stakes, so evidence
+      against them tends to get more scrutiny than evidence for them.
+  - type: question
+    question_key: check-search
+  - type: example
+    kind: research
+    source_key: wason-1960
+    title: The 2-4-6 task
+    body: |
+      In Wason's task, people were told that the sequence 2-4-6 fits a hidden rule
+      and could test sequences of their own to discover it. Many tested only
+      sequences that fit their first guess, such as 8-10-12, and rarely tried a
+      sequence that could have shown the guess was wrong.
+  - type: example
+    kind: research
+    source_key: lord-ross-lepper-1979
+    title: Same evidence, opposite conclusions
+    body: |
+      People with opposing views on capital punishment read the same pair of
+      studies, one supporting each side. Each group rated the study that agreed with
+      them as more convincing, and many reported feeling more certain of their
+      original view afterwards.
+  - type: example
+    kind: illustrative
+    body: |
+      Imagine a manager who believes remote work hurts productivity. They treat one
+      missed deadline as proof, and explain away three on-time deliveries as luck.
+  - type: misconception
+    myth: Confirmation bias only affects people who aren't very smart or well educated.
+    correction: |
+      It shows up across levels of intelligence and expertise. Knowing that the
+      bias exists does not, by itself, protect you from it.
+  - type: question
+    question_key: check-interpretation
+  - type: explanation
+    title: What helps
+    body: |
+      Ask yourself: "What would I expect to see if I were wrong?" Then go and look
+      for that. Seek out the strongest version of the opposing view rather than the
+      weakest. Habits like these can reduce the bias in some situations, but none of
+      them makes anyone immune.
+  - type: summary
+    points:
+      - We tend to seek, interpret and recall evidence in ways that fit our existing beliefs.
+      - The bias affects searching, interpreting and remembering, not just one step.
+      - Looking for evidence that could prove you wrong helps, but nobody is immune.
+questions:
+  - key: check-search
+    role: lesson
+    type: single_choice
+    prompt: Priya thinks a supplement improves her sleep. Which approach best avoids confirmation bias?
+    options:
+      - key: a
+        text: Reading reviews from people who say it worked for them
+        correct: false
+        feedback: Testimonials from satisfied users are exactly the kind of evidence that fits her belief.
+      - key: b
+        text: Tracking her sleep on nights with and without it, without knowing which is which
+        correct: true
+        feedback: Comparing both conditions, ideally blind, gives evidence against her belief a chance to show up.
+      - key: c
+        text: Writing down the nights she slept well after taking it
+        correct: false
+        feedback: Counting only the hits ignores the misses and the nights without the supplement.
+    explanation: Avoiding confirmation bias means looking for evidence that could show you're wrong, not only evidence that fits.
+  - key: check-interpretation
+    role: lesson
+    type: true_false
+    prompt: "True or false: confirmation bias is only about which information we search for."
+    options:
+      - key: "true"
+        text: "True"
+        correct: false
+        feedback: It also affects how we interpret ambiguous evidence and what we remember later.
+      - key: "false"
+        text: "False"
+        correct: true
+        feedback: Right. Searching, interpreting and remembering are all affected.
+    explanation: The bias operates at several stages of handling evidence.
+  - key: recall-jury
+    role: recall
+    type: single_choice
+    prompt: After deciding early on that a defendant is guilty, a juror sees an ambiguous alibi as "obviously made up." This is mainly confirmation bias in…
+    options:
+      - key: a
+        text: searching for evidence
+        correct: false
+        feedback: The alibi was presented to the juror. The bias here is in how it was read.
+      - key: b
+        text: interpreting evidence
+        correct: true
+        feedback: Evidence that could go either way was read to fit the existing belief.
+      - key: c
+        text: remembering evidence
+        correct: false
+        feedback: Nothing in this situation depends on later recall.
+    explanation: The same evidence can look strong or weak depending on what we already believe.
+  - key: recall-search-terms
+    role: recall
+    type: single_choice
+    prompt: Sam suspects his phone gives him headaches and searches online for "proof phones cause headaches." Which part of confirmation bias does this show?
+    options:
+      - key: a
+        text: Biased searching
+        correct: true
+        feedback: The search itself is phrased to find support for the belief rather than to test it.
+      - key: b
+        text: Biased memory
+        correct: false
+        feedback: Sam isn't recalling anything yet. He is choosing what to look for.
+      - key: c
+        text: No bias, because he is gathering evidence
+        correct: false
+        feedback: Gathering evidence only in one direction is exactly what makes it biased.
+    explanation: How we phrase a search often decides what we find. A neutral search would ask whether there is a link at all.
+  - key: recall-vs-availability
+    role: recall
+    type: single_choice
+    prompt: After watching several news reports about shark attacks, Lena thinks they are far more common than they are. What best describes this?
+    options:
+      - key: a
+        text: Confirmation bias, because the reports confirm her fear
+        correct: false
+        feedback: She isn't testing an existing belief. She is judging frequency by how easily examples come to mind.
+      - key: b
+        text: The availability heuristic
+        correct: true
+        feedback: Vivid, recent examples are easy to recall, which makes the event seem more frequent.
+      - key: c
+        text: Hindsight bias
+        correct: false
+        feedback: Hindsight bias is about feeling that an outcome was predictable after it happened.
+    explanation: Confirmation bias is about handling evidence for a belief you already hold. Availability is about estimating frequency from what comes to mind easily.
+  - key: recall-memory
+    role: recall
+    type: single_choice
+    prompt: Two friends who disagree about a politician watch the same debate. A week later, each mostly remembers the moments that supported their own view. This is confirmation bias in…
+    options:
+      - key: a
+        text: searching for evidence
+        correct: false
+        feedback: Both watched the same debate, so neither chose what to look at.
+      - key: b
+        text: interpreting evidence
+        correct: false
+        feedback: Interpretation may play a part, but the key detail is what they remember later.
+      - key: c
+        text: remembering evidence
+        correct: true
+        feedback: Memory favoured the moments that fit each person's existing view.
+    explanation: Even when everyone sees the same evidence, what sticks in memory can differ in line with prior beliefs.
+  - key: recall-countermeasures
+    role: recall
+    type: multi_select
+    prompt: Which habits can help reduce confirmation bias? Select all that apply.
+    options:
+      - key: a
+        text: Asking what you'd expect to see if you were wrong, and looking for it
+        correct: true
+        feedback: Actively looking for disconfirming evidence is one of the most direct counters.
+      - key: b
+        text: Seeking out the strongest version of the opposing argument
+        correct: true
+        feedback: Engaging with the best counterargument tests your view more fairly than the weakest one.
+      - key: c
+        text: Reading only the sources you already trust most
+        correct: false
+        feedback: Trusted sources often share your view, so this tends to strengthen the bias.
+      - key: d
+        text: Learning the definition of confirmation bias
+        correct: false
+        feedback: Knowing about the bias doesn't protect you from it by itself.
+    explanation: These habits help in some situations, but none of them makes anyone immune.

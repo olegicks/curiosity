@@ -8,7 +8,7 @@ from sqlalchemy import Text as SAText
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.db import Base, TimestampMixin
+from app.core.db import Base, CreatedAtMixin, TimestampMixin
 
 DAILY_XP_GOALS = (20, 40, 60)
 DEFAULT_DAILY_XP_GOAL = 20
@@ -28,3 +28,16 @@ class UserPreferences(TimestampMixin, Base):
         SmallInteger, nullable=False, server_default=str(DEFAULT_DAILY_XP_GOAL)
     )
     onboarding_completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class UserTopicInterest(CreatedAtMixin, Base):
+    """Topics chosen during onboarding; only affects lesson ordering (max 3 per user)."""
+
+    __tablename__ = "user_topic_interests"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    topic_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("topics.id", ondelete="CASCADE"), primary_key=True
+    )

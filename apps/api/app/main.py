@@ -4,9 +4,11 @@ from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 
 from app.auth.router import router as auth_router
 from app.config import AppEnv, Settings, get_settings
+from app.content.router import router as content_router
 from app.core.clock import Clock, SystemClock
 from app.core.db import create_db_engine, create_session_factory
 from app.core.errors import register_exception_handlers
@@ -56,4 +58,9 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.include_router(health_router)
     app.include_router(auth_router, prefix=API_PREFIX)
     app.include_router(users_router, prefix=API_PREFIX)
+    app.include_router(content_router, prefix=API_PREFIX)
+    # Lesson illustrations from content/media (validated at import; read-only).
+    app.mount(
+        "/media", StaticFiles(directory=settings.content_dir / "media", check_dir=False), "media"
+    )
     return app

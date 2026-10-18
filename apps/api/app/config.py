@@ -2,6 +2,7 @@
 
 from enum import StrEnum
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -23,6 +24,16 @@ def parse_version(value: str) -> tuple[int, int, int]:
     return major, minor, patch
 
 
+def _default_content_dir() -> Path:
+    """<repo>/content for a checkout (apps/api/app/config.py); /app/content in the image."""
+    here = Path(__file__).resolve()
+    candidates = [p / "content" for p in here.parents[1:4]]
+    return next((c for c in candidates if c.is_dir()), candidates[0])
+
+
+DEFAULT_CONTENT_DIR = _default_content_dir()
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
@@ -42,6 +53,9 @@ class Settings(BaseSettings):
     refresh_token_ttl_days: int = Field(default=30, ge=1, le=365)
     refresh_reuse_grace_seconds: int = Field(default=10, ge=0, le=60)
     rate_limit_enabled: bool = True
+
+    content_dir: Path = DEFAULT_CONTENT_DIR
+    content_allow_draft_overwrite: bool = False
 
     @field_validator("jwt_secret")
     @classmethod

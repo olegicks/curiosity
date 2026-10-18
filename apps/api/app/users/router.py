@@ -28,7 +28,7 @@ class UserResponse(BaseModel):
 @router.get("", response_model=MeOut)
 def get_me(user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> MeOut:
     prefs = service.get_preferences(db, user.id)
-    return MeOut(user=UserOut.model_validate(user), preferences=service.preferences_out(prefs))
+    return MeOut(user=UserOut.model_validate(user), preferences=service.preferences_out(db, prefs))
 
 
 @router.patch("", response_model=UserResponse)
@@ -51,7 +51,7 @@ def delete_me(
 def get_preferences(
     user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ) -> PreferencesOut:
-    return service.preferences_out(service.get_preferences(db, user.id))
+    return service.preferences_out(db, service.get_preferences(db, user.id))
 
 
 @router.patch("/preferences", response_model=PreferencesOut)
@@ -61,4 +61,5 @@ def patch_preferences(
     db: Session = Depends(get_db),
     now: datetime = Depends(get_now),
 ) -> PreferencesOut:
-    return service.preferences_out(service.update_preferences(db, user.id, body, now))
+    prefs = service.update_preferences(db, user.id, body, now)
+    return service.preferences_out(db, prefs)

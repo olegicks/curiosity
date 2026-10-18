@@ -39,6 +39,8 @@ jobs:
       - run: uv run mypy app
       - run: uv run alembic upgrade head
       - run: uv run alembic check
+      - run: uv run curiosity content validate
+      - run: uv run curiosity content import
       - run: uv run pytest --cov --cov-report=term-missing
 
   api-docker:
