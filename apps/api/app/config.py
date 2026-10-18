@@ -1,0 +1,67 @@
+"""Application settings, loaded from environment variables (see docs/spec/13-operations.md)."""
+
+from enum import StrEnum
+from functools import lru_cache
+
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class AppEnv(StrEnum):
+    LOCAL = "local"
+    TEST = "test"
+    STAGING = "staging"
+    PRODUCTION = "production"
+
+
+def parse_version(value: str) -> tuple[int, int, int]:
+    """Parse a strict MAJOR.MINOR.PATCH version string."""
+    parts = value.strip().split(".")
+    if len(parts) != 3 or not all(p.isdigit() for p in parts):
+        raise ValueError(f"invalid version {value!r}, expected MAJOR.MINOR.PATCH")
+    major, minor, patch = (int(p) for p in parts)
+    return major, minor, patch
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    app_env: AppEnv = AppEnv.LOCAL
+    git_sha: str = "dev"
+
+    database_url: str
+    db_pool_size: int = Field(default=10, ge=1, le=100)
+    db_connect_timeout_seconds: int = Field(default=5, ge=1, le=60)
+
+    log_level: str = "INFO"
+    min_app_version: str = "1.0.0"
+    expose_openapi: bool | None = None
+
+    @field_validator("min_app_version")
+    @classmethod
+    def _validate_min_app_version(cls, value: str) -> str:
+        parse_version(value)
+        return value
+
+    @field_validator("log_level")
+    @classmethod
+    def _validate_log_level(cls, value: str) -> str:
+        level = value.upper()
+        if level not in {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}:
+            raise ValueError(f"invalid log level {value!r}")
+        return level
+
+    @property
+    def openapi_enabled(self) -> bool:
+        if self.expose_openapi is not None:
+            return self.expose_openapi
+        return self.app_env != AppEnv.PRODUCTION
+
+    @property
+    def min_app_version_tuple(self) -> tuple[int, int, int]:
+        return parse_version(self.min_app_version)
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()  # values come from the environment
