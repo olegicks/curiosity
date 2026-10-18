@@ -2,6 +2,8 @@
 
 ## 15.1 Decisions requiring approval before implementation
 
+> **Status: all recommendations D-1 to D-15 approved by the product owner on 2026-10-18.**
+
 Each decision has a **recommendation**, which the rest of the spec already assumes. Approving the recommendation needs no spec change. Choosing an alternative requires updating the referenced sections.
 
 | ID | Decision | Recommendation (assumed in spec) | Alternatives | Affects |
@@ -87,3 +89,4 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-10-18 | Initial draft for approval |
+| 1.0 | 2026-10-18 | D-1 to D-15 approved as recommended. Spec is the baseline for implementation. |

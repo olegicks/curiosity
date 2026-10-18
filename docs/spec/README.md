@@ -1,7 +1,7 @@
 # Curiosity — MVP Specification
 
-> Status: **Draft for approval** · Spec version 0.1 · 2026-10-18
-> Implementation must not start until the decisions in [15-decisions-and-risks.md](15-decisions-and-risks.md) are approved or amended.
+> Status: **Approved baseline** · Spec version 1.0 · 2026-10-18
+> All decisions in [15-decisions-and-risks.md](15-decisions-and-risks.md) are approved as recommended. Record any deviation found during implementation in that file.
 
 Curiosity is a personal learning app: **understand an idea, test your understanding, and remember what you learn.** The MVP covers one subject area (psychology and cognitive biases). It is built as a React Native (Expo) client and a FastAPI modular monolith on PostgreSQL.
 
