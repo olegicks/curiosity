@@ -34,7 +34,7 @@ Purpose: the account, either guest or full.
 | Column | Type | Notes |
 |---|---|---|
 | `id` | uuid PK | |
-| `email` | citext null | Unique when not null. Null for guests. Stored lowercase-trimmed. |
+| `email` | text null | Unique when not null. Null for guests. Stored lowercase-trimmed, enforced by `CHECK (email = lower(email))` (see 15 §15.6, DEV-1). |
 | `password_hash` | text null | argon2id encoded string. |
 | `display_name` | text null | ≤ 40 chars. |
 | `is_guest` | bool not null | |
@@ -277,7 +277,7 @@ Indexes: `(user_id, answered_at DESC)` (recent accuracy, export), `(lesson_id, q
 **Unique `(user_id, idempotency_key)`**. Index `(user_id, local_date)`.
 
 ### `streak_states`
-PK `user_id` FK CASCADE; `current_streak` int, `longest_streak` int, `last_streak_date` date null, `freezes_available` smallint CHECK 0–2 default 1, `freezes_used_total` int, `updated_at`. Row created with the user.
+PK `user_id` FK CASCADE; `current_streak` int, `longest_streak` int, `last_streak_date` date null, `freezes_available` smallint CHECK 0–2 default 1, `freezes_used_total` int, `updated_at`. Created lazily on the first qualifying event (see 15 §15.6, DEV-4).
 
 ### `daily_activity`
 PK `(user_id, local_date)`; `lesson_questions_answered`, `review_items_answered`, `lessons_completed`, `review_sessions_completed`, `xp_earned` (all int ≥ 0), `updated_at`. Index `(local_date)` for cohort queries.

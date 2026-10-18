@@ -105,7 +105,7 @@ Converts the **current guest** into a full account. The same `user.id` keeps all
 - Request: `{ "refresh_token" }`
 - 200: `{ "tokens": Tokens }`. The old token is marked `rotated_at` and a new token is issued in the same family.
 - Errors: `401 INVALID_REFRESH_TOKEN` (unknown, expired, or revoked). **Reuse** of an already-rotated token revokes the whole family and returns `401 REFRESH_TOKEN_REUSED`.
-- Concurrency: a reuse inside a 10-second grace window from the same family returns the already-issued successor instead of revoking. This handles parallel refreshes from the app.
+- Concurrency: a reuse inside a 10-second grace window gets a new sibling token in the same family instead of revoking. This handles parallel refreshes from the app. Successors are stored only as hashes, so the original successor can't be returned (15 §15.6, DEV-2).
 
 ### `POST /auth/logout`
 - Request: `{ "refresh_token" }`

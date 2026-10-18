@@ -84,7 +84,19 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | Privacy policy and terms | Store listings, beta | Owner (R-13) |
 | Sentry account (if D-11 approved) | Error tracking | Owner |
 
-## 15.6 Change log for this spec
+
+## 15.6 Deviations recorded during implementation
+
+| ID | Spec said | Implemented | Reason | Follow-up |
+|---|---|---|---|---|
+| DEV-1 | `users.email` as `citext` | `text` with a unique constraint and `CHECK (email = lower(email))`. The app trims and lowercases emails. | Same guarantee without depending on a Postgres extension. The embedded Postgres used for local tests lacks `citext`. | None |
+| DEV-2 | Refresh reuse within the grace window returns the already-issued successor | Issues a new sibling token in the same family | Only token hashes are stored, so the successor can't be re-sent | None. Family revocation after the grace window is unchanged. |
+| DEV-3 | Bundled top-10,000 common-password list | Interim curated list of common passwords of 10+ characters (`app/auth/common_passwords.txt`), plus a repeated-character check | A large list must come from a vetted source and wasn't downloaded | Owner to supply a vetted list (e.g. a filtered public breach-frequency list). Drop-in file replacement. |
+| DEV-4 | `streak_states` row created with the user | Deferred to the gamification module. The row will be created on the first qualifying event. | The table belongs to a later slice | Implement with gamification |
+| DEV-5 | Interests stored in `user_topic_interests` | `PATCH /me/preferences` rejects any non-empty `interest_topics` with `UNKNOWN_TOPIC` and returns `[]` | Topics don't exist until the content module | Add the table and validation with the content slice |
+| DEV-6 | Password reset, data export, global per-user/IP rate limits | Not in the accounts/auth slice | Reset needs the email provider (D-2). Export needs all data modules. | Separate slices |
+
+## 15.7 Change log for this spec
 
 | Version | Date | Change |
 |---|---|---|
