@@ -1,15 +1,28 @@
-"""Current review schedule per user and concept (docs/spec/04 §4.5)."""
+"""Review schedule, sessions and history (docs/spec/04 §4.5)."""
 
 import uuid
 from datetime import date, datetime
 from decimal import Decimal
 
-from sqlalchemy import CheckConstraint, Date, DateTime, ForeignKey, Index, Integer, Numeric
+from sqlalchemy import (
+    Boolean,
+    CheckConstraint,
+    Date,
+    DateTime,
+    ForeignKey,
+    Index,
+    Integer,
+    Numeric,
+    SmallInteger,
+    UniqueConstraint,
+    text,
+)
 from sqlalchemy import Text as SAText
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.db import Base, TimestampMixin
+from app.core.db import Base, CreatedAtMixin, TimestampMixin
+from app.core.ids import uuid7
 
 
 class ReviewState(TimestampMixin, Base):
@@ -38,3 +51,98 @@ class ReviewState(TimestampMixin, Base):
     last_question_id: Mapped[uuid.UUID | None] = mapped_column(
         UUID(as_uuid=True), ForeignKey("questions.id", ondelete="SET NULL")
     )
+
+
+class ReviewSession(CreatedAtMixin, Base):
+    __tablename__ = "review_sessions"
+    __table_args__ = (
+        CheckConstraint(
+            "status IN ('open','completed','ended_early','expired')", name="status_allowed"
+        ),
+        # one open session per user
+        Index(
+            "uq_review_sessions_open",
+            "user_id",
+            unique=True,
+            postgresql_where=text("status = 'open'"),
+        ),
+        Index("ix_review_sessions_user_id_created_at", "user_id", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid7)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    local_date: Mapped[date] = mapped_column(Date, nullable=False)
+    status: Mapped[str] = mapped_column(SAText, nullable=False)
+    item_count: Mapped[int] = mapped_column(SmallInteger, nullable=False)
+    completed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    ended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ReviewSessionItem(Base):
+    __tablename__ = "review_session_items"
+    __table_args__ = (
+        UniqueConstraint("session_id", "lesson_id"),
+        UniqueConstraint("session_id", "position"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid7)
+    session_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("review_sessions.id", ondelete="CASCADE"), nullable=False
+    )
+    lesson_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("lessons.id", ondelete="RESTRICT"), nullable=False
+    )
+    question_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("questions.id", ondelete="RESTRICT"), nullable=False
+    )
+    position: Mapped[int] = mapped_column(SmallInteger, nullable=False)
+    answered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class ReviewEvent(Base):
+    """One answered review item with the schedule before and after (review history)."""
+
+    __tablename__ = "review_events"
+    __table_args__ = (
+        CheckConstraint("quality IN (1, 3, 4)", name="quality_allowed"),
+        Index("ix_review_events_user_id_answered_at", "user_id", "answered_at"),
+        Index("ix_review_events_lesson_id_question_id", "lesson_id", "question_id"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid7)
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    session_item_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey("review_session_items.id", ondelete="CASCADE"),
+        nullable=False,
+        unique=True,
+    )
+    lesson_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("lessons.id", ondelete="RESTRICT"), nullable=False
+    )
+    question_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("questions.id", ondelete="RESTRICT"), nullable=False
+    )
+    selected_option_ids: Mapped[list[uuid.UUID]] = mapped_column(
+        ARRAY(UUID(as_uuid=True)), nullable=False
+    )
+    is_correct: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    guessed: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    quality: Mapped[int] = mapped_column(SmallInteger, nullable=False)
+    scheduler_version: Mapped[str] = mapped_column(SAText, nullable=False)
+    ef_before: Mapped[Decimal] = mapped_column(Numeric(3, 2), nullable=False)
+    ef_after: Mapped[Decimal] = mapped_column(Numeric(3, 2), nullable=False)
+    interval_before: Mapped[int] = mapped_column(Integer, nullable=False)
+    interval_after: Mapped[int] = mapped_column(Integer, nullable=False)
+    reps_before: Mapped[int] = mapped_column(Integer, nullable=False)
+    reps_after: Mapped[int] = mapped_column(Integer, nullable=False)
+    due_on_before: Mapped[date] = mapped_column(Date, nullable=False)
+    due_on_after: Mapped[date] = mapped_column(Date, nullable=False)
+    days_since_last_review: Mapped[int] = mapped_column(Integer, nullable=False)
+    review_number: Mapped[int] = mapped_column(Integer, nullable=False)
+    local_date: Mapped[date] = mapped_column(Date, nullable=False)
+    answered_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

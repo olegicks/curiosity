@@ -17,6 +17,7 @@ from app.core.middleware import AppVersionGateMiddleware, RequestContextMiddlewa
 from app.core.ratelimit import DisabledRateLimiter, FixedWindowRateLimiter, RateLimiter
 from app.health.router import router as health_router
 from app.learning.router import router as learning_router
+from app.reviews.router import router as reviews_router
 from app.users.router import router as users_router
 
 API_PREFIX = "/v1"
@@ -61,6 +62,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.include_router(users_router, prefix=API_PREFIX)
     app.include_router(content_router, prefix=API_PREFIX)
     app.include_router(learning_router, prefix=API_PREFIX)
+    app.include_router(reviews_router, prefix=API_PREFIX)
     # Lesson illustrations from content/media (validated at import; read-only).
     app.mount(
         "/media", StaticFiles(directory=settings.content_dir / "media", check_dir=False), "media"
