@@ -5,10 +5,12 @@ description = "Curiosity backend: FastAPI modular monolith"
 requires-python = ">=3.13"
 dependencies = [
     "alembic>=1.20.0",
+    "argon2-cffi>=25.1.0",
     "fastapi>=0.146.0",
     "psycopg[binary]>=3.3.6",
-    "pydantic>=2.14.1",
+    "pydantic[email]>=2.14.1",
     "pydantic-settings>=2.16.0",
+    "pyjwt>=2.15.1",
     "sqlalchemy>=2.1.5",
     "structlog>=26.1.0",
     "uvicorn[standard]>=0.54.0",

@@ -5,7 +5,8 @@ TEST_DATABASE_URL. When it is unset they are skipped (CI always sets it).
 """
 
 import os
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
+from datetime import UTC, datetime
 from typing import Any
 
 import pytest
@@ -15,13 +16,17 @@ from fastapi.testclient import TestClient
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session
 
+from app import models  # noqa: F401  # register all tables on Base.metadata
 from app.config import AppEnv, Settings
+from app.core.clock import FixedClock
 from app.core.db import alembic_config, get_db
 from app.main import create_app
 
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
 # Nothing listens on port 1: DB calls fail fast without a real database.
 UNREACHABLE_DATABASE_URL = "postgresql+psycopg://nobody:nothing@127.0.0.1:1/none"
+TEST_JWT_SECRET = "test-secret-test-secret-test-secret-0123"
+TEST_NOW = datetime(2026, 11, 2, 12, 0, tzinfo=UTC)
 
 
 def make_settings(**overrides: Any) -> Settings:
@@ -31,6 +36,8 @@ def make_settings(**overrides: Any) -> Settings:
         "db_connect_timeout_seconds": 1,
         "git_sha": "test-sha",
         "log_level": "WARNING",
+        "jwt_secret": TEST_JWT_SECRET,
+        "rate_limit_enabled": False,
     }
     values.update(overrides)
     return Settings(_env_file=None, **values)
@@ -82,14 +89,31 @@ def db_session(db_engine: Engine) -> Iterator[Session]:
 
 
 @pytest.fixture
-def db_app(db_session: Session) -> FastAPI:
-    assert TEST_DATABASE_URL
-    application = create_app(make_settings(database_url=TEST_DATABASE_URL))
-    application.dependency_overrides[get_db] = lambda: db_session
-    return application
+def clock() -> FixedClock:
+    return FixedClock(TEST_NOW)
 
 
 @pytest.fixture
-def db_client(db_app: FastAPI) -> Iterator[TestClient]:
-    with TestClient(db_app, raise_server_exceptions=False) as test_client:
-        yield test_client
+def make_db_client(db_session: Session, clock: FixedClock) -> Iterator[Callable[..., TestClient]]:
+    """Build clients sharing the rolled-back test session and the fixed clock."""
+    clients: list[TestClient] = []
+
+    def factory(**settings_overrides: Any) -> TestClient:
+        assert TEST_DATABASE_URL
+        application = create_app(
+            make_settings(database_url=TEST_DATABASE_URL, **settings_overrides), clock=clock
+        )
+        application.dependency_overrides[get_db] = lambda: db_session
+        test_client = TestClient(application, raise_server_exceptions=False)
+        test_client.__enter__()
+        clients.append(test_client)
+        return test_client
+
+    yield factory
+    for test_client in clients:
+        test_client.__exit__(None, None, None)
+
+
+@pytest.fixture
+def db_client(make_db_client: Callable[..., TestClient]) -> TestClient:
+    return make_db_client()

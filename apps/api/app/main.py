@@ -5,13 +5,16 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.auth.router import router as auth_router
 from app.config import AppEnv, Settings, get_settings
 from app.core.clock import Clock, SystemClock
 from app.core.db import create_db_engine, create_session_factory
 from app.core.errors import register_exception_handlers
 from app.core.logging import configure_logging
 from app.core.middleware import AppVersionGateMiddleware, RequestContextMiddleware
+from app.core.ratelimit import DisabledRateLimiter, FixedWindowRateLimiter, RateLimiter
 from app.health.router import router as health_router
+from app.users.router import router as users_router
 
 API_PREFIX = "/v1"
 
@@ -40,6 +43,10 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.state.engine = engine
     app.state.session_factory = create_session_factory(engine)
     app.state.clock = clock or SystemClock()
+    rate_limiter: RateLimiter = (
+        FixedWindowRateLimiter() if settings.rate_limit_enabled else DisabledRateLimiter()
+    )
+    app.state.rate_limiter = rate_limiter
 
     register_exception_handlers(app)
     # Starlette runs the last-added middleware first: request context wraps everything.
@@ -47,5 +54,6 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.add_middleware(RequestContextMiddleware)
 
     app.include_router(health_router)
-    # Domain routers are mounted under API_PREFIX as each module is implemented.
+    app.include_router(auth_router, prefix=API_PREFIX)
+    app.include_router(users_router, prefix=API_PREFIX)
     return app

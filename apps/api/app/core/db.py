@@ -5,14 +5,15 @@ isolated apps without module-level globals.
 """
 
 from collections.abc import Iterator
+from datetime import datetime
 from pathlib import Path
 
 from alembic.config import Config
 from alembic.runtime.migration import MigrationContext
 from alembic.script import ScriptDirectory
 from fastapi import Request
-from sqlalchemy import Engine, MetaData, create_engine, text
-from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
+from sqlalchemy import DateTime, Engine, MetaData, create_engine, func, text
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
 from app.config import Settings
 
@@ -30,6 +31,18 @@ NAMING_CONVENTION = {
 
 class Base(DeclarativeBase):
     metadata = MetaData(naming_convention=NAMING_CONVENTION)
+
+
+class CreatedAtMixin:
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+
+
+class TimestampMixin(CreatedAtMixin):
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+    )
 
 
 def create_db_engine(settings: Settings) -> Engine:

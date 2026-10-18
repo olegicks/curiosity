@@ -5,6 +5,7 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import create_engine, pool
 
+import app.models  # noqa: F401  # registers all tables on Base.metadata
 from app.config import get_settings
 from app.core.db import Base
 
@@ -12,7 +13,6 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name, disable_existing_loggers=False)
 
-# Model modules must be imported here as they are added so autogenerate sees them.
 target_metadata = Base.metadata
 
 
