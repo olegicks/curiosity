@@ -24,7 +24,7 @@ lessons / lesson_versions / questions / answer_options / sources  (runtime copy,
 ### Import rules (`curiosity content import`)
 1. Parse and validate every file (§3.3). If any file fails, the whole import aborts with no partial writes, in a single transaction.
 2. Upsert `subjects`, `topics`, `sources` by `slug`/`key`.
-3. For each lesson, compute `content_hash` = SHA-256 of the canonicalised lesson payload (excluding `status` and `position`).
+3. For each lesson, compute `content_hash` = SHA-256 of the canonicalised lesson payload, excluding `status`, `position`, editorial metadata (`last_reviewed_on`, `reviewers`, `changelog`) and lesson-level relations (`related`, `prerequisites`). Editorial metadata is updated in place on the version row. This lets a reviewed draft be published without a version bump (15 §15.6, DEV-7).
    - No `lesson_versions` row with this `version` → insert a new version with its questions and options. If `status: published`, set `lessons.current_version_id` to it.
    - A row exists with the same `version` and the **same** hash → no-op.
    - A row exists with the same `version` but a **different** hash → **fail**: "content changed without a version bump". This is enforced for published versions. Draft versions MAY be overwritten in non-production environments (`CONTENT_ALLOW_DRAFT_OVERWRITE=true`).
