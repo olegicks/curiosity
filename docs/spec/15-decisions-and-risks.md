@@ -104,6 +104,9 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-13 | `POST /attempts/{id}/complete` returns `xp_awarded`, `xp`, `streak`, `achievements_unlocked`, and completion updates XP, streak, daily activity and achievements | Completion returns `attempt`, `first_review_on`, `next_lesson`, `replayed` only. No XP, streak, daily-activity or achievement writes yet. | Gamification is its own slice | Add the fields and writes, in the same completion transaction, with the gamification slice |
 | DEV-14 | `POST /attempts/{id}/rating` and `POST /lessons/{slug}/feedback` | Not implemented yet | Kept the learning slice focused on attempts, grading and completion | Small follow-up slice |
 | DEV-15 | Completion's `next_lesson` falls back to the recommendation rules (07 §7.8) | First uncompleted related lesson, else the first uncompleted lesson in curated order (ignores interests and prerequisites) | Recommendations land with the Discover slice | Switch to `recommendations.py` with Discover |
+| DEV-16 | Review item answers and session completion return `xp_awarded`, `streak`, `achievements_unlocked` and apply XP, streaks and achievements | Responses carry `result`, `session`, `session_summary`, `replayed` only. No gamification writes yet. | Same as DEV-13: gamification is its own slice | Add with the gamification slice, inside the answer transaction |
+| DEV-17 | `review_sessions` has `completed_at` only | Also `ended_at`, set when a session ends early or expires | Keeps "completed" (all items answered, used by metric M2) separate from other closings | None |
+| DEV-18 | Session estimate `ceil(due_count × 0.5)` minutes | `ceil(min(due_count, 20) × 0.5)` | A session holds at most 20 items | None |
 
 ## 15.7 Change log for this spec
 
