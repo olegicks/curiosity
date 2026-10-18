@@ -2,9 +2,6 @@
 
 import json
 import uuid
-from collections.abc import Callable
-from datetime import date
-from pathlib import Path
 from typing import Any
 
 import pytest
@@ -12,36 +9,14 @@ from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.content.importer import ContentImportError, ImportSummary, import_content
-from app.content.loader import load_content
+from app.content.importer import ContentImportError
 from app.content.models import Lesson, LessonVersion, Question
 from app.core.clock import FixedClock
 from app.users.models import UserTopicInterest
-from tests.content_factory import make_lesson, standard_lessons, write_content
+from tests.conftest import Importer
+from tests.content_factory import make_lesson, standard_lessons
 
 pytestmark = pytest.mark.db
-
-TODAY = date(2026, 11, 2)
-Importer = Callable[..., ImportSummary]
-
-
-@pytest.fixture
-def run_import(db_session: Session, clock: FixedClock, tmp_path: Path) -> Importer:
-    counter = iter(range(1000))
-
-    def run(lessons: list[dict[str, Any]], **kwargs: Any) -> ImportSummary:
-        root = write_content(tmp_path / f"content-{next(counter)}", lessons)
-        content = load_content(root, today=TODAY)
-        assert content.errors == []
-        return import_content(db_session, content, now=clock.now(), **kwargs)
-
-    return run
-
-
-@pytest.fixture
-def auth(db_client: TestClient) -> dict[str, str]:
-    tokens = db_client.post("/v1/auth/guest", json={}).json()["tokens"]
-    return {"Authorization": f"Bearer {tokens['access_token']}"}
 
 
 def lesson_row(db: Session, slug: str) -> Lesson:

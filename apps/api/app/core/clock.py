@@ -46,6 +46,10 @@ def resolve_timezone(name: str | None) -> ZoneInfo:
         return ZoneInfo("UTC")
 
 
+def to_local_date(moment: datetime, timezone: str | None) -> date:
+    """Calendar date of ``moment`` in the user's timezone (the 'local date' of the spec)."""
+    return moment.astimezone(resolve_timezone(timezone)).date()
+
+
 def local_date(clock: Clock, timezone: str | None) -> date:
-    """Calendar date in the user's timezone (the 'local date' of the spec)."""
-    return clock.now().astimezone(resolve_timezone(timezone)).date()
+    return to_local_date(clock.now(), timezone)

@@ -170,34 +170,93 @@ def list_lessons(
     return LessonPage(items=[s for _, s in page], next_cursor=next_cursor)
 
 
-def get_lesson_detail(db: Session, user_id: uuid.UUID, slug: str) -> LessonDetailOut:
+@dataclass(frozen=True)
+class PublishedLesson:
+    lesson_id: uuid.UUID
+    version_id: uuid.UUID
+
+
+def get_published_lesson(db: Session, slug: str) -> PublishedLesson:
     rows = _published_rows(db, slugs=[slug])
     if not rows:
         raise LessonNotFoundError
-    row = rows[0]
-    related_slugs = list(
+    return PublishedLesson(lesson_id=rows[0].lesson.id, version_id=rows[0].version.id)
+
+
+def related_published_slugs(db: Session, lesson_id: uuid.UUID) -> list[str]:
+    """Published related lessons in curated order."""
+    slugs = list(
         db.scalars(
             select(Lesson.slug)
             .join(LessonRelation, LessonRelation.to_lesson_id == Lesson.id)
             .where(
-                LessonRelation.from_lesson_id == row.lesson.id,
+                LessonRelation.from_lesson_id == lesson_id,
                 LessonRelation.relation_type == "related",
             )
             .order_by(LessonRelation.position)
         )
     )
-    related_rows = {r.lesson.slug: r for r in _published_rows(db, slugs=related_slugs)}
-    ordered = [related_rows[s] for s in related_slugs if s in related_rows]
-    summaries = _summaries(db, user_id, [row, *ordered])
-    related = summaries[1:]
+    published = {r.lesson.slug for r in _published_rows(db, slugs=slugs)}
+    return [slug for slug in slugs if slug in published]
+
+
+def _related_summaries(
+    db: Session, user_id: uuid.UUID, lesson_id: uuid.UUID
+) -> list[LessonSummary]:
+    slugs = related_published_slugs(db, lesson_id)
+    rows = {r.lesson.slug: r for r in _published_rows(db, slugs=slugs)}
+    return _summaries(db, user_id, [rows[s] for s in slugs])
+
+
+def lesson_summaries(db: Session, user_id: uuid.UUID, slugs: list[str]) -> list[LessonSummary]:
+    """Summaries of published lessons, in curated order."""
+    return _summaries(db, user_id, _published_rows(db, slugs=slugs))
+
+
+def published_slugs_in_order(db: Session) -> list[tuple[uuid.UUID, str]]:
+    return [(r.lesson.id, r.lesson.slug) for r in _published_rows(db)]
+
+
+def get_lesson_detail(db: Session, user_id: uuid.UUID, slug: str) -> LessonDetailOut:
+    rows = _published_rows(db, slugs=[slug])
+    if not rows:
+        raise LessonNotFoundError
+    row = rows[0]
+    summary = _summaries(db, user_id, [row])[0]
+    related = _related_summaries(db, user_id, row.lesson.id)
     detail = LessonDetail(
-        **summaries[0].model_dump(),
+        **summary.model_dump(),
         learning_objective=row.version.learning_objective,
         related=related,
     )
     return LessonDetailOut(
         lesson=detail, content=_lesson_content(db, row, related, shuffle_seed=str(user_id))
     )
+
+
+def lesson_content_for_version(
+    db: Session, user_id: uuid.UUID, version_id: uuid.UUID, *, shuffle_seed: str
+) -> LessonContent:
+    """Content of a specific (pinned) version, even if the lesson was revised or retired."""
+    result = db.execute(
+        select(Lesson, LessonVersion, Topic, Subject)
+        .join(Lesson, Lesson.id == LessonVersion.lesson_id)
+        .join(Topic, Topic.id == Lesson.topic_id)
+        .join(Subject, Subject.id == Topic.subject_id)
+        .where(LessonVersion.id == version_id)
+    ).one()
+    row = _Row(*result)
+    return _lesson_content(
+        db, row, _related_summaries(db, user_id, row.lesson.id), shuffle_seed=shuffle_seed
+    )
+
+
+def shuffled[T](items: list[T], *, seed: str, question_id: uuid.UUID, enabled: bool) -> list[T]:
+    """Deterministic option order for a seed (attempt or user) and question."""
+    ordered = list(items)
+    if enabled:
+        random.Random(f"{seed}:{question_id}").shuffle(ordered)  # noqa: S311 - not security
+    return ordered
 
 
 def _lesson_content(
@@ -220,9 +279,7 @@ def _lesson_content(
 
     question_out = []
     for q in questions:
-        opts = list(options[q.id])
-        if q.shuffle:  # stable per user so the order doesn't change on reload
-            random.Random(f"{shuffle_seed}:{q.id}").shuffle(opts)  # noqa: S311 - not security
+        opts = shuffled(options[q.id], seed=shuffle_seed, question_id=q.id, enabled=q.shuffle)
         question_out.append(
             QuestionOut(
                 id=q.id,
