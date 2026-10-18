@@ -99,8 +99,11 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-8 | Topic slugs unique within a subject | Validator requires topic slugs to be unique across all subjects | The API identifies topics by slug alone (interests, `?topic=` filter) | None |
 | DEV-9 | `GET /lessons` cursor pagination in SQL | Published lessons are loaded, filtered by topic/progress in memory, then paginated with a keyset cursor over the curated order | The progress filter needs per-user state. The library is small (≤ 100s of lessons). | Move filtering into SQL if the library grows past ~500 lessons |
 | DEV-10 | Lesson images served with hashed names and long cache headers | `/media/<slug>/<file>` served by the API from `content/media` with default static-file headers | No lesson has images yet | Add content hashing to file names and `Cache-Control: immutable` when images are introduced |
-| DEV-11 | Lesson cards show per-user progress | `progress` is always `not_started` until the learning and review modules exist (`app/learning/progress.py`) | Attempts and review states are later slices | Replace `progress_briefs` in the learning slice |
+| DEV-11 | Lesson cards show per-user progress | **Resolved in the learning slice:** derived from progress milestones, review state and open attempts | — | None |
 | DEV-12 | Options shuffled with seed `(attempt_id or session_item_id, question_id)` | `GET /lessons/{slug}` (no attempt yet) seeds with `(user_id, question_id)` | Stable order per user before an attempt exists | Attempt responses will use the attempt seed |
+| DEV-13 | `POST /attempts/{id}/complete` returns `xp_awarded`, `xp`, `streak`, `achievements_unlocked`, and completion updates XP, streak, daily activity and achievements | Completion returns `attempt`, `first_review_on`, `next_lesson`, `replayed` only. No XP, streak, daily-activity or achievement writes yet. | Gamification is its own slice | Add the fields and writes, in the same completion transaction, with the gamification slice |
+| DEV-14 | `POST /attempts/{id}/rating` and `POST /lessons/{slug}/feedback` | Not implemented yet | Kept the learning slice focused on attempts, grading and completion | Small follow-up slice |
+| DEV-15 | Completion's `next_lesson` falls back to the recommendation rules (07 §7.8) | First uncompleted related lesson, else the first uncompleted lesson in curated order (ignores interests and prerequisites) | Recommendations land with the Discover slice | Switch to `recommendations.py` with Discover |
 
 ## 15.7 Change log for this spec
 
