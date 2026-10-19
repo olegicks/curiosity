@@ -3,6 +3,7 @@ import { useState } from "react";
 import { errorMessage } from "@/api/errors";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { DAILY_GOALS, type DailyGoal } from "@/features/onboarding/interests";
+import { setLandingLesson } from "@/features/onboarding/landing";
 import { strings } from "@/i18n/en";
 import { Banner } from "@/ui/Banner";
 import { Button } from "@/ui/Button";
@@ -27,6 +28,9 @@ export default function GoalScreen() {
           ? { daily_xp_goal: goal, onboarding_completed: true }
           : { onboarding_completed: true },
       );
+      // Land on the first recommended lesson (FR-ONB-4); Discover is the fallback.
+      const discover = await api.discover.get().catch(() => null);
+      setLandingLesson(discover?.todays_lesson?.slug ?? null);
       await reloadMe(); // the route guard then opens the app
     } catch (e) {
       setError(errorMessage(e));

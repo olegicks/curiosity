@@ -1,5 +1,7 @@
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
+import { useEffect } from "react";
 
+import { takeLandingLesson } from "@/features/onboarding/landing";
 import { strings } from "@/i18n/en";
 import { useTheme } from "@/ui/theme";
 import { fonts } from "@/ui/tokens";
@@ -7,6 +9,12 @@ import { fonts } from "@/ui/tokens";
 /** Exactly three tabs (docs/spec/02 §2.1). Profile is reached from the Discover header. */
 export default function TabsLayout() {
   const { colors } = useTheme();
+
+  useEffect(() => {
+    const slug = takeLandingLesson();
+    if (slug) router.push({ pathname: "/lesson/[slug]", params: { slug } });
+  }, []);
+
   return (
     <Tabs
       screenOptions={{

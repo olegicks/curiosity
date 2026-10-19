@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react-native";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react-native";
 import { Pressable, Text } from "react-native";
 
 import { AuthProvider, useAuth } from "@/features/auth/AuthProvider";
@@ -35,7 +35,7 @@ const route = () => screen.getByTestId("route").props.children as string;
 
 test("without saved tokens the user starts signed out", async () => {
   const { fetchImpl, calls } = scriptedFetch({});
-  renderWith(memoryTokenStore(), fetchImpl);
+  await renderWith(memoryTokenStore(), fetchImpl);
   await waitFor(() => expect(route()).toBe("auth"));
   expect(calls).toHaveLength(0);
 });
@@ -46,9 +46,9 @@ test("starting as a guest stores tokens and opens onboarding", async () => {
     "POST /v1/auth/guest": () => json(201, { user: me().user, tokens: tokens(1) }),
     "GET /v1/me": () => json(200, me()),
   });
-  renderWith(store, fetchImpl);
+  await renderWith(store, fetchImpl);
   await waitFor(() => expect(route()).toBe("auth"));
-  await act(async () => fireEvent.press(screen.getByTestId("guest")));
+  await fireEvent.press(screen.getByTestId("guest"));
   await waitFor(() => expect(route()).toBe("onboarding"));
   expect(store.get()?.access_token).toBe("access-1");
   const guest = calls.find((c) => c.url.endsWith("/v1/auth/guest"))!;
@@ -59,7 +59,7 @@ test("a saved session is restored", async () => {
   const { fetchImpl } = scriptedFetch({
     "GET /v1/me": () => json(200, me({ onboarding_completed: true })),
   });
-  renderWith(memoryTokenStore(tokens(1)), fetchImpl);
+  await renderWith(memoryTokenStore(tokens(1)), fetchImpl);
   await waitFor(() => expect(route()).toBe("app"));
 });
 
@@ -69,7 +69,7 @@ test("an expired session that cannot refresh returns to welcome with a notice", 
     "GET /v1/me": () => json(401, errorBody("UNAUTHENTICATED")),
     "POST /v1/auth/refresh": () => json(401, errorBody("INVALID_REFRESH_TOKEN")),
   });
-  renderWith(store, fetchImpl);
+  await renderWith(store, fetchImpl);
   await waitFor(() => expect(route()).toBe("auth"));
   expect(screen.getByTestId("notice").props.children).toBe(strings.session.expired);
   expect(store.get()).toBeNull();
@@ -82,7 +82,7 @@ test("an unreachable API keeps the saved session and offers retry", async () => 
       throw new TypeError("Network request failed");
     },
   });
-  renderWith(store, fetchImpl);
+  await renderWith(store, fetchImpl);
   await waitFor(() => expect(route()).toBe("unavailable"));
   expect(store.get()).not.toBeNull();
 });
@@ -93,9 +93,9 @@ test("logout revokes the refresh token and clears the session", async () => {
     "GET /v1/me": () => json(200, me({ onboarding_completed: true })),
     "POST /v1/auth/logout": () => json(204, null),
   });
-  renderWith(store, fetchImpl);
+  await renderWith(store, fetchImpl);
   await waitFor(() => expect(route()).toBe("app"));
-  await act(async () => fireEvent.press(screen.getByTestId("logout")));
+  await fireEvent.press(screen.getByTestId("logout"));
   await waitFor(() => expect(route()).toBe("auth"));
   expect(store.get()).toBeNull();
   const logout = calls.find((c) => c.url.endsWith("/v1/auth/logout"))!;

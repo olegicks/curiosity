@@ -71,6 +71,11 @@ function Navigator({ ready }: { ready: boolean }) {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="profile" />
           <Stack.Screen name="account/create" options={{ presentation: "modal" }} />
+          <Stack.Screen name="lesson/[slug]/index" />
+          <Stack.Screen
+            name="lesson/[slug]/play"
+            options={{ presentation: "fullScreenModal", gestureEnabled: false }}
+          />
         </Stack.Protected>
       </Stack>
     </>

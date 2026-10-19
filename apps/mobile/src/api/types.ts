@@ -21,3 +21,19 @@ export type ErrorEnvelope = {
     request_id: string | null;
   };
 };
+
+export type LessonSummary = Schemas["LessonSummary"];
+export type LessonPage = Schemas["LessonPage"];
+export type LessonDetailOut = Schemas["LessonDetailOut"];
+export type LessonContent = Schemas["LessonContent"];
+export type Step = LessonContent["steps"][number];
+export type QuestionOut = Schemas["QuestionOut"];
+export type SourceOut = Schemas["SourceOut"];
+export type ProgressBrief = Schemas["ProgressBrief"];
+export type AttemptResponse = Schemas["AttemptResponse"];
+export type AnswerResult = Schemas["AnswerResult"];
+export type AnswerResponse = Schemas["AnswerResponse"];
+export type CompletionResponse = Schemas["CompletionResponse"];
+export type XpAward = Schemas["XpAwardOut"];
+export type Achievement = Schemas["AchievementOut"];
+export type DiscoverOut = Schemas["DiscoverOut"];

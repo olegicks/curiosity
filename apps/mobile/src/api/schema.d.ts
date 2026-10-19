@@ -883,10 +883,47 @@ export interface components {
        */
       mode: "simpler" | "example" | "analogy";
     };
+    /** ExplanationOut */
+    ExplanationOut: {
+      /** Content */
+      content: string;
+      /** Has More Variants */
+      has_more_variants: boolean;
+      /**
+       * Id
+       * Format: uuid
+       */
+      id: string;
+      /**
+       * Label
+       * @enum {string}
+       */
+      label: "ai_generated" | "ai_reviewed";
+      /**
+       * Mode
+       * @enum {string}
+       */
+      mode: "simpler" | "example" | "analogy";
+      /** Variant */
+      variant: number;
+    };
     /** ExplanationResponse */
     ExplanationResponse: {
-      explanation: components["schemas"]["app__ai__schemas__ExplanationOut"];
+      explanation: components["schemas"]["ExplanationOut"];
       usage: components["schemas"]["UsageOut"];
+    };
+    /** ExplanationStepOut */
+    ExplanationStepOut: {
+      /** Body */
+      body: string;
+      image: components["schemas"]["ImageOut"] | null;
+      /** Title */
+      title: string | null;
+      /**
+       * @description discriminator enum property added by openapi-typescript
+       * @enum {string}
+       */
+      type: "explanation";
     };
     /** FeedbackIn */
     FeedbackIn: {
@@ -953,7 +990,7 @@ export interface components {
       /** Steps */
       steps: (
         | components["schemas"]["HookOut"]
-        | components["schemas"]["app__content__schemas__ExplanationOut"]
+        | components["schemas"]["ExplanationStepOut"]
         | components["schemas"]["ExampleOut"]
         | components["schemas"]["MisconceptionOut"]
         | components["schemas"]["EvidenceOut"]
@@ -1618,43 +1655,6 @@ export interface components {
       today: number;
       /** Total */
       total: number;
-    };
-    /** ExplanationOut */
-    app__ai__schemas__ExplanationOut: {
-      /** Content */
-      content: string;
-      /** Has More Variants */
-      has_more_variants: boolean;
-      /**
-       * Id
-       * Format: uuid
-       */
-      id: string;
-      /**
-       * Label
-       * @enum {string}
-       */
-      label: "ai_generated" | "ai_reviewed";
-      /**
-       * Mode
-       * @enum {string}
-       */
-      mode: "simpler" | "example" | "analogy";
-      /** Variant */
-      variant: number;
-    };
-    /** ExplanationOut */
-    app__content__schemas__ExplanationOut: {
-      /** Body */
-      body: string;
-      image: components["schemas"]["ImageOut"] | null;
-      /** Title */
-      title: string | null;
-      /**
-       * @description discriminator enum property added by openapi-typescript
-       * @enum {string}
-       */
-      type: "explanation";
     };
   };
   responses: never;

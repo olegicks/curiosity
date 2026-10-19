@@ -39,7 +39,6 @@ const config: ExpoConfig = {
       },
     ],
   ],
-  experiments: { typedRoutes: true },
 };
 
 export default config;
