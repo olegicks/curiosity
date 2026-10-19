@@ -17,8 +17,8 @@ Key files by task:
 
 ```
 apps/api/      FastAPI modular monolith (Python 3.13, uv, SQLAlchemy 2 sync, Alembic, Postgres 16)
-apps/mobile/   Expo + React Native + TypeScript (not started yet)
-content/       Lesson YAML files: the canonical content (not started yet)
+apps/mobile/   Expo SDK 58 + React Native + TypeScript 6 (Expo Router, TanStack Query)
+content/       Lesson YAML files: the canonical content
 docs/spec/     Specification
 ```
 
@@ -30,10 +30,25 @@ uv run pytest                    # tests (DB tests need TEST_DATABASE_URL, other
 uv run ruff check . && uv run ruff format --check .
 uv run mypy app
 uv run alembic upgrade head      # needs DATABASE_URL
-uv run uvicorn app.main:app --reload
+uv run uvicorn --factory app.main:create_app --reload
+uv run curiosity --help             # content import/validate, AI review, OpenAPI export
 ```
 
 With Docker available, `docker compose up` from the repo root starts Postgres and the API.
+
+## Mobile commands (run from `apps/mobile/`)
+
+```bash
+npm install
+npx expo start                   # dev server; set EXPO_PUBLIC_API_URL in .env.local
+npm run lint && npm run typecheck && npm test
+npm run api-types                # regenerate src/api/schema.d.ts from the API (needs uv)
+```
+
+- API types are generated, never hand-edited. CI fails if `src/api/schema.d.ts` drifts from the API.
+- All API access goes through `src/api` (client with one shared token refresh). Screens never call `fetch`.
+- No correctness logic in the client: the server grades answers and computes progress and XP.
+- UI uses the tokens in `src/ui/tokens.ts`; copy lives in `src/i18n/en.ts`.
 
 ## Architecture rules (summary of 06-architecture.md)
 

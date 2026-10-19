@@ -48,3 +48,45 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -f apps/api/Dockerfile --target runtime -t curiosity-api:ci .
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - run: npm ci
+      - run: npx eslint .
+      - run: npx prettier --check .
+      - run: npx tsc --noEmit
+      - run: npx jest --ci
+      - run: npm audit --omit=dev --audit-level=critical
+
+  contract:
+    # Fails when the committed client types drift from the API's OpenAPI document.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.13.1"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+      - run: uv python install 3.13
+      - working-directory: apps/api
+        run: uv sync --frozen && uv run curiosity openapi --out ../mobile/openapi.json
+      - working-directory: apps/mobile
+        run: |
+          npm ci
+          npx --yes openapi-typescript@7.13.0 openapi.json -o src/api/schema.d.ts
+          npx prettier --write src/api/schema.d.ts
+          git diff --exit-code src/api/schema.d.ts
