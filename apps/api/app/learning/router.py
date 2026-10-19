@@ -10,12 +10,13 @@ from sqlalchemy.orm import Session
 from app.auth.deps import get_current_user, get_now
 from app.auth.models import User
 from app.core.db import get_db
-from app.learning import service
+from app.learning import discover, service
 from app.learning.schemas import (
     AnswerIn,
     AnswerResponse,
     AttemptResponse,
     CompletionResponse,
+    DiscoverOut,
     StartAttemptIn,
 )
 
@@ -94,3 +95,12 @@ def complete_attempt(
     now: datetime = Depends(get_now),
 ) -> CompletionResponse:
     return service.complete_attempt(db, user.id, attempt_id, now=now)
+
+
+@router.get("/discover", response_model=DiscoverOut, tags=["discover"])
+def get_discover(
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    now: datetime = Depends(get_now),
+) -> DiscoverOut:
+    return discover.discover(db, user.id, now)

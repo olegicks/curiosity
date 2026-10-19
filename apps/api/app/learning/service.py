@@ -15,11 +15,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.content import service as content
-from app.content.models import AnswerOption, Lesson, Question
-from app.content.schemas import LessonSummary
+from app.content.models import AnswerOption, Question
 from app.core.clock import to_local_date
 from app.core.errors import ConflictError, NotFoundError, ValidationError
 from app.gamification import service as gamification
+from app.learning import discover
 from app.learning.grading import is_correct, selection_problem
 from app.learning.models import LessonAttempt, LessonAttemptAnswer, UserLessonProgress
 from app.learning.schemas import (
@@ -396,34 +396,10 @@ def _completion_response(
             is_first_completion=attempt.is_first_completion,
         ),
         first_review_on=first_review_on,
-        next_lesson=next_lesson(db, user_id, attempt.lesson_id),
+        next_lesson=discover.next_lesson_after(db, user_id, attempt.lesson_id),
         xp_awarded=rewards.xp_awarded,
         xp=gamification.xp_summary(db, user_id, today, reached_now=rewards.daily_goal_reached_now),
         streak=gamification.streak_out(db, user_id, today),
         achievements_unlocked=rewards.achievements_unlocked,
         replayed=replayed,
     )
-
-
-def next_lesson(db: Session, user_id: uuid.UUID, lesson_id: uuid.UUID) -> LessonSummary | None:
-    """First uncompleted related lesson, else the first uncompleted lesson in curated order."""
-    completed = set(
-        db.scalars(
-            select(Lesson.slug)
-            .join(UserLessonProgress, UserLessonProgress.lesson_id == Lesson.id)
-            .where(
-                UserLessonProgress.user_id == user_id,
-                UserLessonProgress.first_completed_at.is_not(None),
-            )
-        )
-    )
-    candidates = [s for s in content.related_published_slugs(db, lesson_id) if s not in completed]
-    if not candidates:
-        candidates = [
-            slug
-            for lid, slug in content.published_slugs_in_order(db)
-            if slug not in completed and lid != lesson_id
-        ]
-    if not candidates:
-        return None
-    return content.lesson_summaries(db, user_id, [candidates[0]])[0]

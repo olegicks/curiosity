@@ -213,8 +213,38 @@ def lesson_summaries(db: Session, user_id: uuid.UUID, slugs: list[str]) -> list[
     return _summaries(db, user_id, _published_rows(db, slugs=slugs))
 
 
-def published_slugs_in_order(db: Session) -> list[tuple[uuid.UUID, str]]:
-    return [(r.lesson.id, r.lesson.slug) for r in _published_rows(db)]
+@dataclass(frozen=True)
+class PublishedLessonInfo:
+    lesson_id: uuid.UUID
+    slug: str
+    topic: str
+    prerequisites: tuple[str, ...]  # published prerequisites only, in authored order
+
+
+def published_lesson_infos(db: Session) -> list[PublishedLessonInfo]:
+    """Published lessons in curated order with their (published) prerequisites."""
+    rows = _published_rows(db)
+    slug_by_id = {r.lesson.id: r.lesson.slug for r in rows}
+    prerequisites: dict[uuid.UUID, list[str]] = {r.lesson.id: [] for r in rows}
+    for from_id, to_id in db.execute(
+        select(LessonRelation.from_lesson_id, LessonRelation.to_lesson_id)
+        .where(
+            LessonRelation.relation_type == "prerequisite",
+            LessonRelation.from_lesson_id.in_(list(slug_by_id)),
+        )
+        .order_by(LessonRelation.position)
+    ):
+        if to_id in slug_by_id:
+            prerequisites[from_id].append(slug_by_id[to_id])
+    return [
+        PublishedLessonInfo(
+            lesson_id=r.lesson.id,
+            slug=r.lesson.slug,
+            topic=r.topic.slug,
+            prerequisites=tuple(prerequisites[r.lesson.id]),
+        )
+        for r in rows
+    ]
 
 
 def get_lesson_detail(db: Session, user_id: uuid.UUID, slug: str) -> LessonDetailOut:

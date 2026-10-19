@@ -74,3 +74,40 @@ class CompletionResponse(BaseModel):
     streak: StreakOut
     achievements_unlocked: list[AchievementOut]
     replayed: bool
+
+
+class ReviewActionOut(BaseModel):
+    due_count: int
+    estimated_minutes: int
+    open_session_id: uuid.UUID | None
+
+
+class PrimaryActionOut(BaseModel):
+    type: Literal["review", "continue_lesson", "start_lesson", "caught_up"]
+    review: ReviewActionOut | None = None
+    lesson: LessonSummary | None = None
+    attempt_id: uuid.UUID | None = None
+    next_review_on: date | None = None
+
+
+class DiscoverProgressOut(BaseModel):
+    lessons_total: int
+    completed: int
+    understood: int
+
+
+class DiscoverXpOut(BaseModel):
+    today: int
+    goal: int
+    total: int
+
+
+class DiscoverOut(BaseModel):
+    local_date: date
+    primary_action: PrimaryActionOut
+    todays_lesson: LessonSummary | None
+    recommended: list[LessonSummary]
+    progress: DiscoverProgressOut
+    streak: StreakOut
+    xp: DiscoverXpOut
+    reviews_due: int
