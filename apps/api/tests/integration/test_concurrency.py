@@ -14,7 +14,11 @@ import pytest
 from sqlalchemy import Engine, func, select, text
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.ai import service as ai
+from app.ai.models import AiExplanation
+from app.ai.provider import FakeProvider
 from app.auth.service import create_guest
+from app.content import service as content
 from app.content.importer import import_content
 from app.content.loader import load_content
 from app.content.models import AnswerOption
@@ -181,3 +185,37 @@ def test_parallel_completions_award_the_daily_goal_once(committed: sessionmaker[
         activity = db.scalars(select(DailyActivity)).one()
         assert activity.lessons_completed == 2
         assert activity.xp_earned == db.scalar(select(func.sum(XpTransaction.amount)))
+
+
+def test_concurrent_cache_misses_generate_once(committed: sessionmaker[Session]) -> None:
+    provider = FakeProvider()
+    settings = make_settings()
+    with committed() as db:
+        users = [
+            create_guest(db, timezone=None, now=TEST_NOW, settings=settings)[0].id for _ in range(2)
+        ]
+        version_id = content.get_published_lesson(db, "anchoring").version_id
+    pending = iter(users)
+    lock = threading.Lock()
+
+    def explain(db: Session) -> uuid.UUID:
+        with lock:
+            user_id = next(pending)
+        response = ai.explain(
+            db,
+            user_id,
+            "anchoring",
+            mode="simpler",
+            version_id=version_id,
+            exclude_ids=[],
+            now=TEST_NOW,
+            settings=settings,
+            provider=provider,
+        )
+        return response.explanation.id
+
+    ids = run_twice(committed, explain)
+    assert ids[0] == ids[1]
+    assert len(provider.calls) == 1
+    with committed() as db:
+        assert db.scalar(select(func.count()).select_from(AiExplanation)) == 1

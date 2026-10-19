@@ -6,6 +6,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from app.ai.provider import ExplanationProvider, build_provider
+from app.ai.router import router as ai_router
 from app.auth.router import router as auth_router
 from app.config import AppEnv, Settings, get_settings
 from app.content.router import router as content_router
@@ -24,7 +26,11 @@ from app.users.router import router as users_router
 API_PREFIX = "/v1"
 
 
-def create_app(settings: Settings | None = None, clock: Clock | None = None) -> FastAPI:
+def create_app(
+    settings: Settings | None = None,
+    clock: Clock | None = None,
+    ai_provider: ExplanationProvider | None = None,
+) -> FastAPI:
     settings = settings or get_settings()
     configure_logging(settings.log_level, json=settings.app_env != AppEnv.LOCAL)
 
@@ -52,6 +58,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
         FixedWindowRateLimiter() if settings.rate_limit_enabled else DisabledRateLimiter()
     )
     app.state.rate_limiter = rate_limiter
+    app.state.ai_provider = ai_provider or build_provider(settings)
 
     register_exception_handlers(app)
     # Starlette runs the last-added middleware first: request context wraps everything.
@@ -65,6 +72,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.include_router(learning_router, prefix=API_PREFIX)
     app.include_router(reviews_router, prefix=API_PREFIX)
     app.include_router(gamification_router, prefix=API_PREFIX)
+    app.include_router(ai_router, prefix=API_PREFIX)
     # Lesson illustrations from content/media (validated at import; read-only).
     app.mount(
         "/media", StaticFiles(directory=settings.content_dir / "media", check_dir=False), "media"

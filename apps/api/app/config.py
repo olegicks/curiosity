@@ -3,9 +3,15 @@
 from enum import StrEnum
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class AiProvider(StrEnum):
+    FAKE = "fake"
+    ANTHROPIC = "anthropic"
 
 
 class AppEnv(StrEnum):
@@ -57,12 +63,37 @@ class Settings(BaseSettings):
     content_dir: Path = DEFAULT_CONTENT_DIR
     content_allow_draft_overwrite: bool = False
 
+    ai_explanations_enabled: bool = True
+    ai_provider: AiProvider = AiProvider.FAKE
+    anthropic_api_key: SecretStr | None = None
+    ai_model: str = "claude-opus-5-5"
+    ai_effort: Literal["low", "medium", "high"] = "low"
+    ai_refusal_fallback: bool = True
+    ai_timeout_seconds: float = Field(default=15.0, gt=0, le=60)
+    ai_max_output_tokens: int = Field(default=1024, ge=256, le=4096)
+    ai_max_variants: int = Field(default=3, ge=1, le=10)
+    ai_user_daily_limit: int = Field(default=20, ge=1)
+    ai_user_burst_limit: int = Field(default=5, ge=1)
+    ai_daily_budget_micros: int = Field(default=5_000_000, ge=0)
+    ai_price_input_per_mtok_micros: int | None = Field(default=None, ge=0)
+    ai_price_output_per_mtok_micros: int | None = Field(default=None, ge=0)
+
     @field_validator("jwt_secret")
     @classmethod
     def _validate_jwt_secret(cls, value: SecretStr) -> SecretStr:
         if len(value.get_secret_value().encode()) < 32:
             raise ValueError("JWT_SECRET must be at least 32 bytes")
         return value
+
+    @model_validator(mode="after")
+    def _require_provider_key(self) -> "Settings":
+        if (
+            self.ai_explanations_enabled
+            and self.ai_provider == AiProvider.ANTHROPIC
+            and self.anthropic_api_key is None
+        ):
+            raise ValueError("ANTHROPIC_API_KEY is required when AI_PROVIDER=anthropic")
+        return self
 
     @field_validator("min_app_version")
     @classmethod

@@ -18,6 +18,7 @@ from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session
 
 from app import models  # noqa: F401  # register all tables on Base.metadata
+from app.ai.provider import ExplanationProvider
 from app.config import AppEnv, Settings
 from app.content.importer import ImportSummary, import_content
 from app.content.loader import load_content
@@ -103,10 +104,14 @@ def make_db_client(db_session: Session, clock: FixedClock) -> Iterator[Callable[
     """Build clients sharing the rolled-back test session and the fixed clock."""
     clients: list[TestClient] = []
 
-    def factory(**settings_overrides: Any) -> TestClient:
+    def factory(
+        ai_provider: ExplanationProvider | None = None, **settings_overrides: Any
+    ) -> TestClient:
         assert TEST_DATABASE_URL
         application = create_app(
-            make_settings(database_url=TEST_DATABASE_URL, **settings_overrides), clock=clock
+            make_settings(database_url=TEST_DATABASE_URL, **settings_overrides),
+            clock=clock,
+            ai_provider=ai_provider,
         )
         application.dependency_overrides[get_db] = lambda: db_session
         test_client = TestClient(application, raise_server_exceptions=False)
