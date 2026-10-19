@@ -223,7 +223,7 @@ def _resolve_version(
     return version
 
 
-def _lesson_text(db: Session, version: LessonVersion) -> str:
+def lesson_text_for_version(db: Session, version: LessonVersion) -> str:
     citations = list(
         db.scalars(
             select(Source.citation)
@@ -334,7 +334,7 @@ def explain(
     if cached is not None:
         return serve(cached, variants)
 
-    generated = _generate(db, ctx, _lesson_text(db, version), provider, settings)
+    generated = _generate(db, ctx, lesson_text_for_version(db, version), provider, settings)
     if generated is None:
         db.commit()
         raise AiUnavailableError("quality")

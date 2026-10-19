@@ -8,6 +8,7 @@ from zoneinfo import available_timezones
 from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
+from app.analytics.emit import emit
 from app.auth.errors import InvalidCredentialsError
 from app.auth.models import User
 from app.content.models import Subject, Topic
@@ -118,7 +119,9 @@ def update_display_name(db: Session, user: User, display_name: str | None) -> Us
     return user
 
 
-def delete_account(db: Session, user: User, *, password: str | None, confirm: str | None) -> None:
+def delete_account(
+    db: Session, user: User, *, password: str | None, confirm: str | None, now: datetime
+) -> None:
     """Hard-delete the user; personal rows go with it via ON DELETE CASCADE."""
     if user.is_guest:
         if confirm != DELETE_CONFIRMATION:
@@ -127,5 +130,14 @@ def delete_account(db: Session, user: User, *, password: str | None, confirm: st
         not password or not user.password_hash or not verify_password(user.password_hash, password)
     ):
         raise InvalidCredentialsError("Password is incorrect.")
+    # anonymised: no user id, so it survives the cascade below (spec 12 §12.2)
+    emit(
+        db,
+        "account_deleted",
+        user_id=None,
+        now=now,
+        timezone=get_preferences(db, user.id).timezone,
+        properties={"was_guest": user.is_guest},
+    )
     db.execute(delete(User).where(User.id == user.id))
     db.commit()

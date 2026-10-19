@@ -111,3 +111,18 @@ class DiscoverOut(BaseModel):
     streak: StreakOut
     xp: DiscoverXpOut
     reviews_due: int
+
+
+class RatingIn(StrictModel):
+    rating: Literal["clear", "unclear"]
+
+
+class ContentFeedbackIn(StrictModel):
+    kind: Literal["factual_error", "unclear", "typo", "other"]
+    message: str | None = Field(default=None, max_length=500)
+    question_id: uuid.UUID | None = None
+    lesson_version_id: uuid.UUID
+
+
+class ContentFeedbackOut(BaseModel):
+    id: uuid.UUID

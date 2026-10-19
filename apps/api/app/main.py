@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.ai.provider import ExplanationProvider, build_provider
 from app.ai.router import router as ai_router
+from app.analytics.router import router as analytics_router
 from app.auth.router import router as auth_router
 from app.config import AppEnv, Settings, get_settings
 from app.content.router import router as content_router
@@ -73,6 +74,7 @@ def create_app(
     app.include_router(reviews_router, prefix=API_PREFIX)
     app.include_router(gamification_router, prefix=API_PREFIX)
     app.include_router(ai_router, prefix=API_PREFIX)
+    app.include_router(analytics_router, prefix=API_PREFIX)
     # Lesson illustrations from content/media (validated at import; read-only).
     app.mount(
         "/media", StaticFiles(directory=settings.content_dir / "media", check_dir=False), "media"

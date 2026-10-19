@@ -10,13 +10,16 @@ from sqlalchemy.orm import Session
 from app.auth.deps import get_current_user, get_now
 from app.auth.models import User
 from app.core.db import get_db
-from app.learning import discover, service
+from app.learning import discover, feedback, service
 from app.learning.schemas import (
     AnswerIn,
     AnswerResponse,
     AttemptResponse,
     CompletionResponse,
+    ContentFeedbackIn,
+    ContentFeedbackOut,
     DiscoverOut,
+    RatingIn,
     StartAttemptIn,
 )
 
@@ -104,3 +107,35 @@ def get_discover(
     now: datetime = Depends(get_now),
 ) -> DiscoverOut:
     return discover.discover(db, user.id, now)
+
+
+@router.post(
+    "/attempts/{attempt_id}/rating",
+    status_code=status.HTTP_204_NO_CONTENT,
+    responses={**NOT_FOUND, 409: {"description": "Attempt not completed (ATTEMPT_NOT_COMPLETED)"}},
+)
+def rate_attempt(
+    attempt_id: uuid.UUID,
+    body: RatingIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    now: datetime = Depends(get_now),
+) -> Response:
+    feedback.rate_attempt(db, user.id, attempt_id, body.rating, now)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post(
+    "/lessons/{slug}/feedback",
+    response_model=ContentFeedbackOut,
+    status_code=status.HTTP_201_CREATED,
+    tags=["feedback"],
+)
+def report_problem(
+    slug: Annotated[str, Path(max_length=60)],
+    body: ContentFeedbackIn,
+    user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    now: datetime = Depends(get_now),
+) -> ContentFeedbackOut:
+    return ContentFeedbackOut(id=feedback.submit_feedback(db, user.id, slug, body, now))

@@ -19,7 +19,7 @@ from sqlalchemy import Text as SAText
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.core.db import Base
+from app.core.db import Base, CreatedAtMixin, TimestampMixin
 from app.core.ids import uuid7
 
 
@@ -121,3 +121,49 @@ class UserLessonProgress(Base):
     completion_count: Mapped[int] = mapped_column(Integer, nullable=False, server_default="0")
     first_attempt_score: Mapped[int | None] = mapped_column(SmallInteger)
     last_activity_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class LessonRating(TimestampMixin, Base):
+    """Optional "Was this lesson clear?" answer on the completion screen."""
+
+    __tablename__ = "lesson_ratings"
+    __table_args__ = (CheckConstraint("rating IN ('clear','unclear')", name="rating_allowed"),)
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), primary_key=True
+    )
+    lesson_version_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("lesson_versions.id", ondelete="CASCADE"), primary_key=True
+    )
+    rating: Mapped[str] = mapped_column(SAText, nullable=False)
+
+
+class ContentFeedback(CreatedAtMixin, Base):
+    """'Report a problem'. Kept, unlinked from the user, after account deletion (D-15)."""
+
+    __tablename__ = "content_feedback"
+    __table_args__ = (
+        CheckConstraint("kind IN ('factual_error','unclear','typo','other')", name="kind_allowed"),
+        CheckConstraint("status IN ('open','resolved','dismissed')", name="status_allowed"),
+        Index("ix_content_feedback_status_created_at", "status", "created_at"),
+        Index("ix_content_feedback_user_id_created_at", "user_id", "created_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid7)
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    lesson_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("lessons.id", ondelete="CASCADE"), nullable=False
+    )
+    lesson_version_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("lesson_versions.id", ondelete="CASCADE"), nullable=False
+    )
+    question_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("questions.id", ondelete="SET NULL")
+    )
+    kind: Mapped[str] = mapped_column(SAText, nullable=False)
+    message: Mapped[str | None] = mapped_column(SAText)
+    status: Mapped[str] = mapped_column(SAText, nullable=False, server_default="open")
+    resolution_note: Mapped[str | None] = mapped_column(SAText)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

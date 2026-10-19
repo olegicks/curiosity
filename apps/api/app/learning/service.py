@@ -103,7 +103,7 @@ def _answer_result(
     )
 
 
-def _get_attempt(
+def get_owned_attempt(
     db: Session, user_id: uuid.UUID, attempt_id: uuid.UUID, *, lock: bool = False
 ) -> LessonAttempt:
     stmt = select(LessonAttempt).where(
@@ -216,7 +216,7 @@ def start_attempt(
 
 
 def get_attempt(db: Session, user_id: uuid.UUID, attempt_id: uuid.UUID) -> AttemptResponse:
-    attempt = _get_attempt(db, user_id, attempt_id)
+    attempt = get_owned_attempt(db, user_id, attempt_id)
     return _attempt_response(db, user_id, attempt, resumed=attempt.status == "in_progress")
 
 
@@ -236,7 +236,7 @@ def submit_answer(
 
     Replays return the stored result: the first answer is final.
     """
-    attempt = _get_attempt(db, user_id, attempt_id, lock=True)
+    attempt = get_owned_attempt(db, user_id, attempt_id, lock=True)
     questions = _lesson_questions(db, attempt.lesson_version_id)
     stored = db.scalar(
         select(LessonAttemptAnswer).where(
@@ -283,7 +283,7 @@ def submit_answer(
 def complete_attempt(
     db: Session, user_id: uuid.UUID, attempt_id: uuid.UUID, *, now: datetime
 ) -> CompletionResponse:
-    attempt = _get_attempt(db, user_id, attempt_id, lock=True)
+    attempt = get_owned_attempt(db, user_id, attempt_id, lock=True)
     if attempt.status == "completed":
         today = to_local_date(now, get_preferences(db, user_id).timezone)
         rewards = gamification.rewards_for_attempt(db, user_id, attempt.id)

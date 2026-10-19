@@ -10,6 +10,7 @@ from sqlalchemy import select, update
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.analytics.emit import emit
 from app.auth.errors import (
     AlreadyFullAccountError,
     EmailTakenError,
@@ -35,7 +36,7 @@ from app.core.security import (
     password_needs_rehash,
     verify_password,
 )
-from app.users.service import create_default_preferences
+from app.users.service import create_default_preferences, get_preferences
 
 LAST_SEEN_RESOLUTION = timedelta(hours=1)
 
@@ -102,6 +103,7 @@ def create_guest(
     db.flush()
     create_default_preferences(db, user.id, timezone)
     tokens = _issue_tokens(db, user, now=now, settings=settings)
+    emit(db, "guest_created", user_id=user.id, now=now, timezone=timezone)
     db.commit()
     return user, tokens
 
@@ -154,6 +156,13 @@ def upgrade_guest(
     user.token_version += 1  # guest access tokens stop working
     _revoke_all_refresh_tokens(db, user.id, now)
     tokens = _issue_tokens(db, user, now=now, settings=settings)
+    emit(
+        db,
+        "account_upgraded",
+        user_id=user.id,
+        now=now,
+        timezone=get_preferences(db, user.id).timezone,
+    )
     _commit_or_email_taken(db)
     return user, tokens
 
