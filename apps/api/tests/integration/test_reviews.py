@@ -1,7 +1,7 @@
 """Due reviews, sessions, scheduling and history over simulated days (T-REC-*)."""
 
 import uuid
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from decimal import Decimal
 from typing import Any
 
@@ -10,99 +10,21 @@ from fastapi.testclient import TestClient
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.content.models import AnswerOption, Question
+from app.content.models import Question
 from app.core.clock import FixedClock
 from app.learning.models import UserLessonProgress
 from app.reviews.models import ReviewEvent, ReviewSession, ReviewSessionItem, ReviewState
 from tests.conftest import Importer
 from tests.content_factory import make_lesson, standard_lessons
+from tests.helpers import Learner, complete_lesson, correct_ids, review_once, wrong_ids
 
 pytestmark = pytest.mark.db
-
-
-class Learner:
-    """A guest whose tokens are refreshed after the test clock jumps forward."""
-
-    def __init__(self, client: TestClient, clock: FixedClock) -> None:
-        self.client, self.clock = client, clock
-        self.tokens = client.post("/v1/auth/guest", json={}).json()["tokens"]
-
-    @property
-    def headers(self) -> dict[str, str]:
-        return {"Authorization": f"Bearer {self.tokens['access_token']}"}
-
-    def travel(self, days: int = 0, **kwargs: int) -> None:
-        """Advance the clock, refreshing at least every 29 days (refresh tokens last 30)."""
-        remaining = timedelta(days=days, **kwargs)
-        while True:
-            step = min(remaining, timedelta(days=29))
-            self.clock.advance(step)
-            remaining -= step
-            refreshed = self.client.post(
-                "/v1/auth/refresh", json={"refresh_token": self.tokens["refresh_token"]}
-            )
-            assert refreshed.status_code == 200, refreshed.text
-            self.tokens = refreshed.json()["tokens"]
-            if remaining <= timedelta(0):
-                break
-
-    def get(self, path: str, **kwargs: Any) -> Any:
-        return self.client.get(path, headers=self.headers, **kwargs)
-
-    def post(self, path: str, json: Any = None) -> Any:
-        return self.client.post(path, headers=self.headers, json=json)
 
 
 @pytest.fixture
 def learner(db_client: TestClient, clock: FixedClock, run_import: Importer) -> Learner:
     run_import(standard_lessons())
     return Learner(db_client, clock)
-
-
-def correct_ids(db: Session, question_id: str) -> list[str]:
-    return [
-        str(i)
-        for i in db.scalars(
-            select(AnswerOption.id).where(
-                AnswerOption.question_id == uuid.UUID(question_id), AnswerOption.is_correct
-            )
-        )
-    ]
-
-
-def wrong_ids(db: Session, question_id: str) -> list[str]:
-    ids = db.scalars(
-        select(AnswerOption.id).where(
-            AnswerOption.question_id == uuid.UUID(question_id), AnswerOption.is_correct.is_(False)
-        )
-    )
-    return [str(next(iter(ids)))]
-
-
-def complete_lesson(learner: Learner, db: Session, slug: str = "anchoring") -> None:
-    body = learner.post(f"/v1/lessons/{slug}/attempts").json()
-    for q in body["content"]["questions"]:
-        learner.post(
-            f"/v1/attempts/{body['attempt']['id']}/answers",
-            {"question_id": q["id"], "selected_option_ids": correct_ids(db, q["id"])},
-        )
-    assert learner.post(f"/v1/attempts/{body['attempt']['id']}/complete").status_code == 200
-
-
-def review_once(learner: Learner, db: Session, *, correct: bool, guessed: bool = False) -> Any:
-    session = learner.post("/v1/review-sessions").json()["session"]
-    item = session["items"][0]
-    ids = (
-        correct_ids(db, item["question"]["id"])
-        if correct
-        else wrong_ids(db, item["question"]["id"])
-    )
-    response = learner.post(
-        f"/v1/review-sessions/{session['id']}/items/{item['id']}/answer",
-        {"selected_option_ids": ids, "guessed": guessed},
-    )
-    assert response.status_code == 201, response.text
-    return response.json()
 
 
 def card(learner: Learner, slug: str = "anchoring") -> dict[str, Any]:
@@ -220,6 +142,7 @@ def test_successful_review_reschedules_and_records_history(
         "total": 1,
         "advanced": [{"slug": "anchoring", "from": 1, "to": 2}],
         "to_revisit": [],
+        "xp_total": 15,  # 5 for the correct item + 10 for completing the session
     }
 
     event = db_session.scalars(select(ReviewEvent)).one()

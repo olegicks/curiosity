@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.content.schemas import LessonContent, LessonSummary
+from app.gamification.schemas import AchievementOut, StreakOut, XpAwardOut, XpSummaryOut
 
 
 class StrictModel(BaseModel):
@@ -68,4 +69,8 @@ class CompletionResponse(BaseModel):
     attempt: CompletedAttemptOut
     first_review_on: date | None
     next_lesson: LessonSummary | None
+    xp_awarded: list[XpAwardOut]
+    xp: XpSummaryOut
+    streak: StreakOut
+    achievements_unlocked: list[AchievementOut]
     replayed: bool

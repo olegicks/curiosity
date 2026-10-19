@@ -7,7 +7,7 @@ attempt -> progress -> review state to avoid deadlocks.
 
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.dialects.postgresql import insert as pg_insert
@@ -19,6 +19,7 @@ from app.content.models import AnswerOption, Lesson, Question
 from app.content.schemas import LessonSummary
 from app.core.clock import to_local_date
 from app.core.errors import ConflictError, NotFoundError, ValidationError
+from app.gamification import service as gamification
 from app.learning.grading import is_correct, selection_problem
 from app.learning.models import LessonAttempt, LessonAttemptAnswer, UserLessonProgress
 from app.learning.schemas import (
@@ -269,6 +270,8 @@ def submit_answer(
     progress = _progress(db, user_id, attempt.lesson_id)
     if progress is not None:
         progress.last_activity_at = now
+    day = to_local_date(now, get_preferences(db, user_id).timezone)
+    gamification.on_lesson_question_answered(db, user_id, day)
     db.commit()
     result = _answer_result(attempt, lq, answer)
     return AnswerResponse(**result.model_dump(), replayed=False), True
@@ -282,7 +285,11 @@ def complete_attempt(
 ) -> CompletionResponse:
     attempt = _get_attempt(db, user_id, attempt_id, lock=True)
     if attempt.status == "completed":
-        response = _completion_response(db, user_id, attempt, replayed=True)
+        today = to_local_date(now, get_preferences(db, user_id).timezone)
+        rewards = gamification.rewards_for_attempt(db, user_id, attempt.id)
+        response = _completion_response(
+            db, user_id, attempt, rewards=rewards, today=today, replayed=True
+        )
         db.commit()
         return response
     if attempt.status != "in_progress":
@@ -349,13 +356,32 @@ def complete_attempt(
             .on_conflict_do_nothing(index_elements=["user_id", "lesson_id"])
         )
     db.flush()
-    response = _completion_response(db, user_id, attempt, replayed=False)
+    rewards = gamification.on_lesson_completed(
+        db,
+        user_id,
+        attempt_id=attempt.id,
+        lesson_id=attempt.lesson_id,
+        first_completion=first_completion,
+        perfect=first_completion and correct == attempt.question_count,
+        day=local_today,
+        now=now,
+    )
+    db.flush()
+    response = _completion_response(
+        db, user_id, attempt, rewards=rewards, today=local_today, replayed=False
+    )
     db.commit()
     return response
 
 
 def _completion_response(
-    db: Session, user_id: uuid.UUID, attempt: LessonAttempt, *, replayed: bool
+    db: Session,
+    user_id: uuid.UUID,
+    attempt: LessonAttempt,
+    *,
+    rewards: gamification.Rewards,
+    today: date,
+    replayed: bool,
 ) -> CompletionResponse:
     """Rebuilt from stored data, so replays return the same summary."""
     first_review_on = None
@@ -371,6 +397,10 @@ def _completion_response(
         ),
         first_review_on=first_review_on,
         next_lesson=next_lesson(db, user_id, attempt.lesson_id),
+        xp_awarded=rewards.xp_awarded,
+        xp=gamification.xp_summary(db, user_id, today, reached_now=rewards.daily_goal_reached_now),
+        streak=gamification.streak_out(db, user_id, today),
+        achievements_unlocked=rewards.achievements_unlocked,
         replayed=replayed,
     )
 

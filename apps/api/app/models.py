@@ -2,8 +2,16 @@
 
 from app.auth import models as auth_models
 from app.content import models as content_models
+from app.gamification import models as gamification_models
 from app.learning import models as learning_models
 from app.reviews import models as reviews_models
 from app.users import models as users_models
 
-__all__ = ["auth_models", "content_models", "learning_models", "reviews_models", "users_models"]
+__all__ = [
+    "auth_models",
+    "content_models",
+    "gamification_models",
+    "learning_models",
+    "reviews_models",
+    "users_models",
+]

@@ -7,6 +7,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.content.schemas import QuestionOut
+from app.gamification.schemas import AchievementOut, StreakOut, XpAwardOut
 from app.learning.schemas import OptionFeedbackOut
 
 MasteryStage = Literal[0, 1, 2, 3, 4]
@@ -86,6 +87,7 @@ class SessionSummaryOut(BaseModel):
     total: int
     advanced: list[StageAdvanceOut]
     to_revisit: list[LessonRef]
+    xp_total: int
 
 
 class SessionOut(BaseModel):
@@ -113,4 +115,7 @@ class ReviewAnswerResponse(BaseModel):
     result: ReviewAnswerResult
     session: SessionProgressOut
     session_summary: SessionSummaryOut | None
+    xp_awarded: list[XpAwardOut]
+    streak: StreakOut | None  # present when this answer completed the session
+    achievements_unlocked: list[AchievementOut]
     replayed: bool

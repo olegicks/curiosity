@@ -15,6 +15,7 @@ from app.core.errors import register_exception_handlers
 from app.core.logging import configure_logging
 from app.core.middleware import AppVersionGateMiddleware, RequestContextMiddleware
 from app.core.ratelimit import DisabledRateLimiter, FixedWindowRateLimiter, RateLimiter
+from app.gamification.router import router as gamification_router
 from app.health.router import router as health_router
 from app.learning.router import router as learning_router
 from app.reviews.router import router as reviews_router
@@ -63,6 +64,7 @@ def create_app(settings: Settings | None = None, clock: Clock | None = None) -> 
     app.include_router(content_router, prefix=API_PREFIX)
     app.include_router(learning_router, prefix=API_PREFIX)
     app.include_router(reviews_router, prefix=API_PREFIX)
+    app.include_router(gamification_router, prefix=API_PREFIX)
     # Lesson illustrations from content/media (validated at import; read-only).
     app.mount(
         "/media", StaticFiles(directory=settings.content_dir / "media", check_dir=False), "media"

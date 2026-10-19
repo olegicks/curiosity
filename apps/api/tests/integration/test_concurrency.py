@@ -18,6 +18,7 @@ from app.auth.service import create_guest
 from app.content.importer import import_content
 from app.content.loader import load_content
 from app.content.models import AnswerOption
+from app.gamification.models import DailyActivity, StreakState, XpTransaction
 from app.learning import service
 from app.learning.models import LessonAttempt, UserLessonProgress
 from app.reviews import service as reviews
@@ -140,3 +141,43 @@ def test_concurrent_answers_change_the_schedule_once(committed: sessionmaker[Ses
         assert db.scalar(select(func.count()).select_from(ReviewEvent)) == 1
         state = db.scalars(select(ReviewState)).one()
         assert (state.repetitions, state.interval_days) == (1, 6)
+
+
+def test_parallel_completions_award_the_daily_goal_once(committed: sessionmaker[Session]) -> None:
+    with committed() as db:
+        user, _ = create_guest(db, timezone=None, now=TEST_NOW, settings=make_settings())
+        attempts = []
+        for slug in ("anchoring", "availability"):
+            started, _ = service.start_attempt(db, user.id, slug, restart=False, now=TEST_NOW)
+            for question in started.content.questions:
+                service.submit_answer(
+                    db,
+                    user.id,
+                    started.attempt.id,
+                    question_id=question.id,
+                    selected=[question.options[0].id],
+                    now=TEST_NOW,
+                )
+            attempts.append(started.attempt.id)
+
+    pending = iter(attempts)
+    lock = threading.Lock()
+
+    def complete(db: Session) -> object:
+        with lock:
+            attempt_id = next(pending)
+        return service.complete_attempt(db, user.id, attempt_id, now=TEST_NOW)
+
+    run_twice(committed, complete)
+    with committed() as db:
+        goals = db.scalar(
+            select(func.count())
+            .select_from(XpTransaction)
+            .where(XpTransaction.reason == "daily_goal")
+        )
+        assert goals == 1
+        streak = db.scalars(select(StreakState)).one()
+        assert streak.current_streak == 1
+        activity = db.scalars(select(DailyActivity)).one()
+        assert activity.lessons_completed == 2
+        assert activity.xp_earned == db.scalar(select(func.sum(XpTransaction.amount)))

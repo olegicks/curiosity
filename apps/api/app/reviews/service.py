@@ -20,6 +20,7 @@ from app.content.schemas import OptionOut, QuestionOut
 from app.core.clock import to_local_date
 from app.core.errors import ConflictError, NotFoundError, ValidationError
 from app.core.pagination import InvalidCursorError, decode_cursor, encode_cursor
+from app.gamification import service as gamification
 from app.learning.grading import is_correct, selection_problem
 from app.learning.models import UserLessonProgress
 from app.learning.schemas import OptionFeedbackOut
@@ -332,7 +333,14 @@ def answer_item(
     iq = _item_question(db, item)
     stored = db.scalar(select(ReviewEvent).where(ReviewEvent.session_item_id == item.id))
     if stored is not None:
-        response = _answer_response(db, session, _result_from_event(iq, stored), replayed=True)
+        response = _answer_response(
+            db,
+            session,
+            _result_from_event(iq, stored),
+            rewards=gamification.rewards_for_review_item(db, user_id, item.id),
+            today=local_today(db, user_id, now),
+            replayed=True,
+        )
         db.commit()
         return response, False
     if session.status != "open":
@@ -429,7 +437,21 @@ def answer_item(
     if unanswered == 0:
         session.status = "completed"
         session.completed_at = now
-    response = _answer_response(db, session, _result_from_event(iq, event), replayed=False)
+    rewards = gamification.on_review_answered(
+        db,
+        user_id,
+        session_id=session.id,
+        item_id=item.id,
+        lesson_id=item.lesson_id,
+        correct=correct,
+        session_completed=unanswered == 0,
+        day=today,
+        now=now,
+    )
+    db.flush()
+    response = _answer_response(
+        db, session, _result_from_event(iq, event), rewards=rewards, today=today, replayed=False
+    )
     db.commit()
     return response, True
 
@@ -479,6 +501,7 @@ def _summary(db: Session, session: ReviewSession) -> SessionSummaryOut:
         total=len(pairs),
         advanced=advanced,
         to_revisit=[refs[i.lesson_id] for i, e in pairs if not e.is_correct],
+        xp_total=gamification.session_xp_total(db, session.user_id, session.id),
     )
 
 
@@ -517,8 +540,15 @@ def _session_response(db: Session, session: ReviewSession, *, resumed: bool) -> 
 
 
 def _answer_response(
-    db: Session, session: ReviewSession, result: ReviewAnswerResult, *, replayed: bool
+    db: Session,
+    session: ReviewSession,
+    result: ReviewAnswerResult,
+    *,
+    rewards: gamification.Rewards,
+    today: date,
+    replayed: bool,
 ) -> ReviewAnswerResponse:
+    completed = session.status == "completed"
     answered = db.scalar(
         select(func.count())
         .select_from(ReviewSessionItem)
@@ -533,6 +563,9 @@ def _answer_response(
             item_count=session.item_count,
             status=session.status,
         ),
-        session_summary=_summary(db, session) if session.status == "completed" else None,
+        session_summary=_summary(db, session) if completed else None,
+        xp_awarded=rewards.xp_awarded,
+        streak=gamification.streak_out(db, session.user_id, today) if completed else None,
+        achievements_unlocked=rewards.achievements_unlocked,
         replayed=replayed,
     )
