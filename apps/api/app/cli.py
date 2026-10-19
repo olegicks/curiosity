@@ -26,6 +26,29 @@ ai_app = typer.Typer(no_args_is_help=True, help="Pre-generate and review AI expl
 app.add_typer(ai_app, name="ai")
 
 
+@app.command("openapi")
+def export_openapi(
+    out: Annotated[Path, typer.Option(help="Where to write the OpenAPI JSON document")],
+) -> None:
+    """Write the API's OpenAPI document (no database or server needed)."""
+    import json
+    import secrets
+
+    from app.config import AppEnv, Settings
+    from app.main import create_app
+
+    settings = Settings(  # placeholders: the schema does not depend on them
+        _env_file=None,
+        app_env=AppEnv.TEST,
+        database_url="postgresql+psycopg://unused@localhost/unused",
+        jwt_secret=secrets.token_urlsafe(32),  # throwaway; nothing is signed
+        expose_openapi=True,
+    )
+    schema = create_app(settings).openapi()
+    out.write_text(json.dumps(schema, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    typer.echo(f"wrote {out}")
+
+
 @contextmanager
 def _session() -> Iterator[Session]:
     """A database session from DATABASE_URL (tests replace this)."""
