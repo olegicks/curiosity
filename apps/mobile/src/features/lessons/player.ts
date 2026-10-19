@@ -7,6 +7,12 @@ import type { OptionState } from "@/ui/OptionCard";
 
 export type { OptionState } from "@/ui/OptionCard";
 
+/** What the server returns for any graded answer (lesson or review). */
+export type GradedAnswer = Pick<
+  AnswerResult,
+  "is_correct" | "selected_option_ids" | "correct_option_ids" | "option_feedback" | "explanation"
+>;
+
 /** Index of the first question step that has no answer yet. */
 export function firstUnansweredQuestion(steps: Step[], answered: ReadonlySet<string>): number {
   const index = steps.findIndex((s) => s.type === "question" && !answered.has(s.question_id));
@@ -58,7 +64,7 @@ export function toggleSelection(
 export function optionState(
   optionId: string,
   selection: readonly string[],
-  result: AnswerResult | undefined,
+  result: GradedAnswer | undefined,
 ): OptionState {
   if (!result) return selection.includes(optionId) ? "selected" : "idle";
   const chosen = result.selected_option_ids.includes(optionId);
@@ -68,7 +74,7 @@ export function optionState(
 }
 
 /** Feedback to show for an answer: the chosen options' feedback, then the explanation. */
-export function feedbackLines(result: AnswerResult): string[] {
+export function feedbackLines(result: GradedAnswer): string[] {
   const chosen = result.option_feedback.filter((f) =>
     result.selected_option_ids.includes(f.option_id),
   );

@@ -2,8 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams, usePreventRemove } from "expo-router";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { Alert, Pressable, ScrollView, StyleSheet, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Alert, View } from "react-native";
 
 import { errorMessage } from "@/api/errors";
 import type { AnswerResult, AttemptResponse, CompletionResponse } from "@/api/types";
@@ -16,10 +15,8 @@ import { strings } from "@/i18n/en";
 import { Banner } from "@/ui/Banner";
 import { Button } from "@/ui/Button";
 import { ProgressBar } from "@/ui/ProgressBar";
+import { HeaderButton, PlayerFrame, playerStyles } from "@/ui/PlayerFrame";
 import { ErrorState, LoadingBlocks } from "@/ui/States";
-import { Text } from "@/ui/Text";
-import { useTheme } from "@/ui/theme";
-import { readingMaxWidth, spacing, touchTarget } from "@/ui/tokens";
 
 const stepKey = (attemptId: string) => `attempt-step:${attemptId}`;
 
@@ -40,13 +37,15 @@ export default function LessonPlayerScreen() {
 
   if (attempt.data) return <Player key={attempt.data.attempt.id} data={attempt.data} />;
   return (
-    <Frame header={<CloseButton />}>
+    <PlayerFrame
+      header={<HeaderButton label={strings.lessons.close} text="✕" onPress={() => router.back()} />}
+    >
       {attempt.isError ? (
         <ErrorState message={errorMessage(attempt.error)} onRetry={() => void attempt.refetch()} />
       ) : (
         <LoadingBlocks count={3} />
       )}
-    </Frame>
+    </PlayerFrame>
   );
 }
 
@@ -131,7 +130,7 @@ function Player({ data }: { data: AttemptResponse }) {
 
   const header = (
     <>
-      <CloseButton />
+      <HeaderButton label={strings.lessons.close} text="✕" onPress={() => router.back()} />
       {index !== null && !completion ? (
         <ProgressBar
           value={index + 1}
@@ -139,19 +138,14 @@ function Player({ data }: { data: AttemptResponse }) {
           label={strings.lessons.step(index + 1, steps.length)}
         />
       ) : (
-        <View style={styles.flex} />
+        <View style={playerStyles.spacer} />
       )}
       {index !== null && index > 0 && !completion ? (
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={strings.lessons.back}
+        <HeaderButton
+          label={strings.lessons.back}
+          text={strings.lessons.back}
           onPress={() => setIndex(Math.max(index - 1, 0))}
-          style={styles.iconButton}
-        >
-          <Text variant="label" tone="accent">
-            {strings.lessons.back}
-          </Text>
-        </Pressable>
+        />
       ) : null}
     </>
   );
@@ -205,59 +199,9 @@ function Player({ data }: { data: AttemptResponse }) {
   }
 
   return (
-    <Frame header={header} footer={footer}>
+    <PlayerFrame header={header} footer={footer}>
       {body}
       {error ? <Banner message={error} tone="error" /> : null}
-    </Frame>
+    </PlayerFrame>
   );
 }
-
-function CloseButton() {
-  return (
-    <Pressable
-      accessibilityRole="button"
-      accessibilityLabel={strings.lessons.close}
-      onPress={() => router.back()}
-      style={styles.iconButton}
-    >
-      <Text variant="heading">✕</Text>
-    </Pressable>
-  );
-}
-
-function Frame({
-  header,
-  footer,
-  children,
-}: {
-  header: ReactNode;
-  footer?: ReactNode;
-  children: ReactNode;
-}) {
-  const { colors } = useTheme();
-  return (
-    <SafeAreaView style={[styles.root, { backgroundColor: colors.bg }]} edges={["top", "bottom"]}>
-      <View style={[styles.column, styles.header]}>{header}</View>
-      <ScrollView contentContainerStyle={styles.scroll}>
-        <View style={styles.column}>{children}</View>
-      </ScrollView>
-      {footer ? <View style={[styles.column, styles.footer]}>{footer}</View> : null}
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  root: { flex: 1 },
-  flex: { flex: 1 },
-  column: { width: "100%", maxWidth: readingMaxWidth, alignSelf: "center", gap: spacing.lg },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: spacing.md,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-  },
-  iconButton: { minWidth: touchTarget, minHeight: touchTarget, justifyContent: "center" },
-  scroll: { flexGrow: 1, paddingHorizontal: spacing.lg, paddingVertical: spacing.lg },
-  footer: { paddingHorizontal: spacing.lg, paddingBottom: spacing.lg, gap: spacing.sm },
-});

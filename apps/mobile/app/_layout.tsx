@@ -76,6 +76,10 @@ function Navigator({ ready }: { ready: boolean }) {
             name="lesson/[slug]/play"
             options={{ presentation: "fullScreenModal", gestureEnabled: false }}
           />
+          <Stack.Screen
+            name="review/index"
+            options={{ presentation: "fullScreenModal", gestureEnabled: false }}
+          />
         </Stack.Protected>
       </Stack>
     </>

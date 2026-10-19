@@ -37,3 +37,13 @@ export type CompletionResponse = Schemas["CompletionResponse"];
 export type XpAward = Schemas["XpAwardOut"];
 export type Achievement = Schemas["AchievementOut"];
 export type DiscoverOut = Schemas["DiscoverOut"];
+
+export type ReviewSummary = Schemas["ReviewSummaryOut"];
+export type ConceptPage = Schemas["ConceptPage"];
+export type Concept = Schemas["ConceptOut"];
+export type ReviewSessionResponse = Schemas["SessionResponse"];
+export type ReviewSession = Schemas["SessionOut"];
+export type ReviewItem = Schemas["SessionItemOut"];
+export type ReviewAnswerResult = Schemas["ReviewAnswerResult"];
+export type ReviewAnswerResponse = Schemas["ReviewAnswerResponse"];
+export type ReviewSessionSummary = Schemas["SessionSummaryOut"];

@@ -11,6 +11,10 @@ import type {
   MeOut,
   Preferences,
   PreferencesPatch,
+  ConceptPage,
+  ReviewAnswerResponse,
+  ReviewSessionResponse,
+  ReviewSummary,
   SubjectsOut,
 } from "./types";
 
@@ -58,6 +62,18 @@ export function createEndpoints(client: ApiClient) {
     },
     discover: {
       get: () => client.get<DiscoverOut>("/v1/discover"),
+    },
+    reviews: {
+      summary: () => client.get<ReviewSummary>("/v1/reviews/summary"),
+      concepts: () => client.get<ConceptPage>("/v1/reviews/concepts?limit=100"),
+      startSession: () => client.post<ReviewSessionResponse>("/v1/review-sessions"),
+      answer: (sessionId: string, itemId: string, optionIds: string[], guessed: boolean) =>
+        client.post<ReviewAnswerResponse>(
+          `/v1/review-sessions/${sessionId}/items/${itemId}/answer`,
+          { selected_option_ids: optionIds, guessed },
+        ),
+      endSession: (sessionId: string) =>
+        client.post<ReviewSessionResponse>(`/v1/review-sessions/${sessionId}/end`),
     },
   };
 }

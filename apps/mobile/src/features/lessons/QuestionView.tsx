@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { errorMessage } from "@/api/errors";
-import type { AnswerResult, QuestionOut } from "@/api/types";
+import type { QuestionOut } from "@/api/types";
 import { strings } from "@/i18n/en";
 import { haptics } from "@/lib/haptics";
 import { Banner } from "@/ui/Banner";
@@ -12,17 +12,33 @@ import { OptionCard } from "@/ui/OptionCard";
 import { Text } from "@/ui/Text";
 import { spacing } from "@/ui/tokens";
 
-import { feedbackLines, isSingleAnswer, optionState, toggleSelection } from "./player";
+import {
+  feedbackLines,
+  type GradedAnswer,
+  isSingleAnswer,
+  optionState,
+  toggleSelection,
+} from "./player";
 
-type Props = {
+type Props<T extends GradedAnswer> = {
   question: QuestionOut;
-  result: AnswerResult | undefined;
+  result: T | undefined;
   /** Sends the answer; the server grades it. */
-  onSubmit: (optionIds: string[]) => Promise<AnswerResult>;
+  onSubmit: (optionIds: string[]) => Promise<T>;
+  /** Extra controls shown above Check before answering (e.g. "I'm guessing"). */
+  beforeCheck?: ReactNode;
+  /** Extra content under the feedback once answered (e.g. scheduling). */
+  afterFeedback?: ReactNode;
 };
 
 /** Select -> Check -> server feedback (docs/spec/02 FR-LRN-4). No local grading. */
-export function QuestionView({ question, result, onSubmit }: Props) {
+export function QuestionView<T extends GradedAnswer>({
+  question,
+  result,
+  onSubmit,
+  beforeCheck,
+  afterFeedback,
+}: Props<T>) {
   const [selection, setSelection] = useState<string[]>([]);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -75,7 +91,7 @@ export function QuestionView({ question, result, onSubmit }: Props) {
       </View>
       {error ? <Banner message={error} tone="error" /> : null}
       {result ? (
-        <View accessibilityLiveRegion="polite">
+        <View accessibilityLiveRegion="polite" style={styles.stack}>
           <Card tone={result.is_correct ? "success" : "danger"}>
             <Text variant="heading" tone={result.is_correct ? "success" : "danger"}>
               {result.is_correct ? `✓ ${strings.lessons.correct}` : `✕ ${strings.lessons.notQuite}`}
@@ -84,14 +100,18 @@ export function QuestionView({ question, result, onSubmit }: Props) {
               <Text key={i}>{line}</Text>
             ))}
           </Card>
+          {afterFeedback}
         </View>
       ) : (
-        <Button
-          label={strings.lessons.check}
-          onPress={check}
-          loading={checking}
-          disabled={selection.length === 0}
-        />
+        <>
+          {beforeCheck}
+          <Button
+            label={strings.lessons.check}
+            onPress={check}
+            loading={checking}
+            disabled={selection.length === 0}
+          />
+        </>
       )}
     </View>
   );
