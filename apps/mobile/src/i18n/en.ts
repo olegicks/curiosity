@@ -1,0 +1,82 @@
+/** All user-facing copy (English only in the MVP, but centralised). */
+export const strings = {
+  appName: "Curiosity",
+  welcome: {
+    tagline: "Understand an idea, test your understanding, and remember what you learn.",
+    start: "Start learning",
+    haveAccount: "I already have an account",
+    legal: "By continuing you agree to the Terms and Privacy Policy.",
+  },
+  login: {
+    title: "Welcome back",
+    email: "Email",
+    password: "Password",
+    submit: "Sign in",
+    back: "Back",
+  },
+  createAccount: {
+    title: "Save your progress",
+    body: "Create an account to keep your lessons, reviews and streak on any device.",
+    email: "Email",
+    confirmEmail: "Confirm email",
+    password: "Password (at least 10 characters)",
+    displayName: "Display name (optional)",
+    submit: "Create account",
+    emailsDiffer: "The emails don't match.",
+    cancel: "Not now",
+  },
+  onboarding: {
+    interestsTitle: "What draws you in?",
+    interestsBody: "Pick any that interest you. This only changes the order of lessons.",
+    goalTitle: "Pick a daily goal",
+    goalBody: "You can change this any time in Settings.",
+    continue: "Continue",
+    skip: "Skip",
+    interests: {
+      thinking: {
+        title: "Thinking clearly",
+        description: "How we judge chances, numbers and evidence",
+      },
+      decisions: {
+        title: "Decisions & money",
+        description: "Losses, framing and choices over time",
+      },
+      people: { title: "People & society", description: "Beliefs, groups and how we judge others" },
+    },
+    goals: {
+      20: { title: "Light · 20 XP", description: "About one lesson a day" },
+      40: { title: "Steady · 40 XP", description: "A lesson and your reviews" },
+      60: { title: "Ambitious · 60 XP", description: "Two lessons and your reviews" },
+    },
+  },
+  tabs: { discover: "Discover", learn: "Learn", recall: "Recall" },
+  placeholder: "This screen is coming in the next slice.",
+  profile: {
+    title: "Profile",
+    guest: "Guest learner",
+    createAccount: "Create account",
+    logout: "Log out",
+    guestLogoutWarning:
+      "Guest progress can't be recovered after logging out. Create an account first?",
+    logoutAnyway: "Log out anyway",
+  },
+  session: {
+    expired: "Please sign in again.",
+    guestExpired: "Your guest session expired.",
+  },
+  errors: {
+    generic: "Something went wrong. Please try again.",
+    offline: "You're offline. Check your connection and try again.",
+    invalidCredentials: "Email or password is incorrect.",
+    emailTaken: "An account with this email already exists.",
+    weakPassword: "Choose a stronger password.",
+    passwordTooShort: "Use at least 10 characters.",
+    passwordTooLong: "Use at most 128 characters.",
+    passwordTooCommon: "That password is too common. Try a longer phrase.",
+    passwordSameAsEmail: "Your password can't be your email.",
+    rateLimited: "Too many attempts. Please wait a moment and try again.",
+    upgradeRequired: "Please update the app to continue.",
+    validation: "Please check the highlighted fields.",
+    unavailable: "The service is temporarily unavailable. Please try again soon.",
+  },
+} as const;
