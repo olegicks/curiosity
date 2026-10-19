@@ -70,7 +70,7 @@ class HookOut(BaseModel):
     image: ImageOut | None
 
 
-class ExplanationOut(BaseModel):
+class ExplanationStepOut(BaseModel):
     type: Literal["explanation"]
     title: str | None
     body: str
@@ -110,7 +110,7 @@ class SummaryOut(BaseModel):
 
 StepOut = Annotated[
     HookOut
-    | ExplanationOut
+    | ExplanationStepOut
     | ExampleOut
     | MisconceptionOut
     | EvidenceOut
