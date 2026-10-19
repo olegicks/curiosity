@@ -1,47 +1,53 @@
+import { useQuery } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { Pressable, StyleSheet, View } from "react-native";
 
+import { errorMessage } from "@/api/errors";
 import { useAuth } from "@/features/auth/AuthProvider";
-import { strings } from "@/i18n/en";
+import type { Destination } from "@/features/discover/discover";
+import { DiscoverView } from "@/features/discover/DiscoverView";
 import { Screen } from "@/ui/Screen";
-import { Text } from "@/ui/Text";
-import { useTheme } from "@/ui/theme";
-import { radius, touchTarget } from "@/ui/tokens";
+import { ErrorState, LoadingBlocks } from "@/ui/States";
 
-/** Discover (placeholder until the Discover client slice). */
+/** Discover home (docs/spec/02 §2.5): everything comes from one GET /discover call. */
 export default function DiscoverScreen() {
-  const { session } = useAuth();
-  const { colors } = useTheme();
+  const { api, session } = useAuth();
+  const discover = useQuery({ queryKey: ["discover"], queryFn: api.discover.get });
   const name = session.status === "signedIn" ? session.me.user.display_name : null;
-  const initial = (name ?? "?").slice(0, 1).toUpperCase();
+
+  const navigate = (destination: Destination) => {
+    switch (destination.kind) {
+      case "review":
+        router.push("/review");
+        return;
+      case "lesson":
+        router.push({ pathname: "/lesson/[slug]", params: { slug: destination.slug } });
+        return;
+      case "play":
+        router.push({ pathname: "/lesson/[slug]/play", params: { slug: destination.slug } });
+        return;
+      case "learn":
+        router.push("/learn");
+    }
+  };
 
   return (
-    <Screen>
-      <View style={styles.header}>
-        <Text variant="title" accessibilityRole="header">
-          {name ? `Hello, ${name}` : strings.tabs.discover}
-        </Text>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={strings.profile.title}
-          onPress={() => router.push("/profile")}
-          style={[styles.avatar, { backgroundColor: colors.surfaceMuted }]}
-        >
-          <Text variant="label">{initial}</Text>
-        </Pressable>
-      </View>
-      <Text tone="muted">{strings.placeholder}</Text>
+    <Screen refreshing={discover.isRefetching} onRefresh={() => void discover.refetch()}>
+      {discover.isPending ? <LoadingBlocks count={4} /> : null}
+      {discover.isError ? (
+        <ErrorState
+          message={errorMessage(discover.error)}
+          onRetry={() => void discover.refetch()}
+        />
+      ) : null}
+      {discover.data ? (
+        <DiscoverView
+          discover={discover.data}
+          displayName={name}
+          now={new Date()}
+          onNavigate={navigate}
+          onOpenProfile={() => router.push("/profile")}
+        />
+      ) : null}
     </Screen>
   );
 }
-
-const styles = StyleSheet.create({
-  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  avatar: {
-    width: touchTarget,
-    height: touchTarget,
-    borderRadius: radius.full,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -14,11 +14,13 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider, useAuth } from "@/features/auth/AuthProvider";
 import { routeFor } from "@/features/auth/session";
 import { UnavailableScreen } from "@/features/auth/UnavailableScreen";
+import { useAppStateFocus } from "@/lib/appFocus";
 import { ThemeProvider, useTheme } from "@/ui/theme";
 
 void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  useAppStateFocus();
   const [queryClient] = useState(
     () => new QueryClient({ defaultOptions: { queries: { retry: 1, staleTime: 30_000 } } }),
   );
