@@ -20,6 +20,7 @@ import { Button } from "@/ui/Button";
 import { HeaderButton, PlayerFrame, playerStyles } from "@/ui/PlayerFrame";
 import { ProgressBar } from "@/ui/ProgressBar";
 import { ErrorState, LoadingBlocks } from "@/ui/States";
+import { useTheme } from "@/ui/theme";
 import { Text } from "@/ui/Text";
 
 const AFFECTED_QUERIES = ["reviews", "lessons", "lesson", "discover", "progress"];
@@ -42,7 +43,9 @@ export default function ReviewSessionScreen() {
   const nothingDue = session.error instanceof ApiError && session.error.code === "NOTHING_DUE";
   return (
     <PlayerFrame
-      header={<HeaderButton label={strings.lessons.close} text="✕" onPress={() => router.back()} />}
+      header={
+        <HeaderButton label={strings.lessons.close} icon="close" onPress={() => router.back()} />
+      }
       footer={
         nothingDue ? <Button label={strings.recall.done} onPress={() => router.back()} /> : null
       }
@@ -58,6 +61,7 @@ export default function ReviewSessionScreen() {
 
 function Session({ data }: { data: ReviewSessionResponse }) {
   const { api } = useAuth();
+  const { colors } = useTheme();
   const queryClient = useQueryClient();
   const { id: sessionId, items } = data.session;
 
@@ -159,12 +163,14 @@ function Session({ data }: { data: ReviewSessionResponse }) {
     <PlayerFrame
       header={
         <>
-          <HeaderButton label={strings.recall.end} text="✕" onPress={() => router.back()} />
+          <HeaderButton label={strings.recall.end} icon="close" onPress={() => router.back()} />
           {!showSummary ? (
             <ProgressBar
               value={Object.keys(results).length}
               max={items.length}
               label={strings.recall.item(index + 1, items.length)}
+              height={16}
+              color={colors.success}
             />
           ) : (
             <View style={playerStyles.spacer} />

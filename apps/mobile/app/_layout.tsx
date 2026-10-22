@@ -1,8 +1,10 @@
-import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from "@expo-google-fonts/inter";
 import {
-  SourceSerif4_400Regular,
-  SourceSerif4_600SemiBold,
-} from "@expo-google-fonts/source-serif-4";
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+} from "@expo-google-fonts/inter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -28,8 +30,8 @@ export default function RootLayout() {
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
-    SourceSerif4_400Regular,
-    SourceSerif4_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
   });
 
   return (
@@ -71,7 +73,6 @@ function Navigator({ ready }: { ready: boolean }) {
         </Stack.Protected>
         <Stack.Protected guard={route === "app"}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="profile" />
           <Stack.Screen name="achievements" />
           <Stack.Screen name="settings" />
           <Stack.Screen name="account/create" options={{ presentation: "modal" }} />

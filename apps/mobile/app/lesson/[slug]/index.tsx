@@ -9,16 +9,19 @@ import { LessonRow } from "@/features/lessons/LessonRow";
 import { strings } from "@/i18n/en";
 import { Banner } from "@/ui/Banner";
 import { Button } from "@/ui/Button";
+import { Icon, type IconName } from "@/ui/Icon";
 import { MasteryDots } from "@/ui/MasteryDots";
 import { Screen } from "@/ui/Screen";
 import { ErrorState, LoadingBlocks } from "@/ui/States";
 import { Text } from "@/ui/Text";
-import { spacing, touchTarget } from "@/ui/tokens";
+import { useTheme } from "@/ui/theme";
+import { edge, radius, spacing, touchTarget } from "@/ui/tokens";
 
 /** Lesson intro (docs/spec/02 §2.7). */
 export default function LessonIntroScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const { api } = useAuth();
+  const { colors } = useTheme();
   const detail = useQuery({ queryKey: ["lesson", slug], queryFn: () => api.content.lesson(slug) });
   const lesson = detail.data?.lesson;
   const revisit =
@@ -58,23 +61,49 @@ export default function LessonIntroScreen() {
       ) : null}
       {lesson ? (
         <>
-          <Text variant="label" tone="muted">
-            {lesson.topic.title.toUpperCase()} · {strings.lessons.minutes(lesson.estimated_minutes)}
-          </Text>
-          <Text variant="display" accessibilityRole="header">
-            {lesson.title}
-          </Text>
-          <View style={styles.status}>
+          <View style={styles.hero}>
+            <View
+              style={[
+                styles.heroIcon,
+                { backgroundColor: colors.accent, borderColor: colors.accentEdge },
+              ]}
+            >
+              <Icon name="sparkles" color={colors.onAccent} size={44} />
+            </View>
+            <Text variant="label" tone="accent">
+              {lesson.topic.title.toUpperCase()}
+            </Text>
+            <Text variant="display" accessibilityRole="header" style={styles.center}>
+              {lesson.title}
+            </Text>
+          </View>
+          <View style={[styles.status, styles.centered]}>
             <Text variant="label">{statusLabel(lesson.progress)}</Text>
             {lesson.progress.mastery_stage > 0 ? (
               <MasteryDots stage={lesson.progress.mastery_stage} />
             ) : null}
           </View>
-          <View style={styles.section}>
+          <View
+            style={[styles.goal, { backgroundColor: colors.surface, borderColor: colors.border }]}
+          >
             <Text variant="label" tone="muted">
               {strings.lessons.objective}
             </Text>
             <Text variant="reading">{lesson.learning_objective}</Text>
+          </View>
+          <View style={styles.section}>
+            {(
+              [
+                ["time-outline", strings.lessons.minutes(lesson.estimated_minutes)],
+                ["help-circle-outline", strings.lessons.introChecks],
+                ["bulb-outline", strings.lessons.introRecall],
+              ] as [IconName, string][]
+            ).map(([icon, text]) => (
+              <View key={icon} style={styles.feature}>
+                <Icon name={icon} color={colors.accent} size={24} />
+                <Text style={styles.flex}>{text}</Text>
+              </View>
+            ))}
           </View>
           {lesson.evidence_status !== "established" ? (
             <Banner message={strings.lessons.debatedNote} />
@@ -97,7 +126,21 @@ export default function LessonIntroScreen() {
 
 const styles = StyleSheet.create({
   back: { minHeight: touchTarget, justifyContent: "center", alignSelf: "flex-start" },
+  hero: { alignItems: "center", gap: spacing.sm, paddingVertical: spacing.md },
+  heroIcon: {
+    width: 104,
+    height: 104,
+    borderRadius: radius.full,
+    borderBottomWidth: edge + 2,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  goal: { borderWidth: 2, borderRadius: radius.md, padding: spacing.lg, gap: spacing.xs },
+  feature: { flexDirection: "row", alignItems: "center", gap: spacing.md },
+  flex: { flex: 1 },
   status: { flexDirection: "row", alignItems: "center", gap: spacing.md },
   section: { gap: spacing.sm },
   center: { textAlign: "center" },
+  centered: { justifyContent: "center" },
 });

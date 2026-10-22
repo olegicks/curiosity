@@ -1,13 +1,16 @@
-import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Animated, StyleSheet, View } from "react-native";
 
 import type { CompletionResponse } from "@/api/types";
 import { strings } from "@/i18n/en";
+import { useReducedMotion } from "@/lib/motion";
 import { Button } from "@/ui/Button";
 import { Card } from "@/ui/Card";
-import { Markdown } from "@/ui/Markdown";
+import { Confetti } from "@/ui/Confetti";
+import { Icon, type IconName } from "@/ui/Icon";
 import { Text } from "@/ui/Text";
-import { spacing } from "@/ui/tokens";
+import { useTheme } from "@/ui/theme";
+import { edge, radius, spacing } from "@/ui/tokens";
 
 import { xpLabel } from "./library";
 
@@ -19,10 +22,26 @@ type Props = {
 
 const MAX_ACHIEVEMENTS_SHOWN = 2;
 
-/** Completion screen content (docs/spec/02 FR-LRN-6). Actions live in the player footer. */
+/** Celebration after a lesson (docs/spec/02 FR-LRN-6, D-16). Actions live in the player footer. */
 export function CompletionView({ completion, takeaways, onRate }: Props) {
+  const { colors } = useTheme();
+  const reduced = useReducedMotion();
+  const pop = useState(() => new Animated.Value(0))[0];
   const [rated, setRated] = useState(false);
-  const { attempt, xp_awarded, achievements_unlocked, first_review_on } = completion;
+  const { attempt, xp_awarded, achievements_unlocked, first_review_on, streak } = completion;
+  const xp = xp_awarded.reduce((sum, award) => sum + award.amount, 0);
+  const accuracy =
+    attempt.question_count > 0
+      ? Math.round((attempt.correct_first_try / attempt.question_count) * 100)
+      : 100;
+
+  useEffect(() => {
+    if (reduced) {
+      pop.setValue(1);
+      return;
+    }
+    Animated.spring(pop, { toValue: 1, friction: 5, tension: 80, useNativeDriver: true }).start();
+  }, [pop, reduced]);
 
   const rate = async (rating: "clear" | "unclear") => {
     setRated(true);
@@ -31,58 +50,141 @@ export function CompletionView({ completion, takeaways, onRate }: Props) {
 
   return (
     <View style={styles.stack}>
-      <Text variant="display" accessibilityRole="header">
-        {strings.lessons.completeTitle}
-      </Text>
-      <Text variant="heading">
-        {strings.lessons.score(attempt.correct_first_try, attempt.question_count)}
-      </Text>
-      {takeaways.length > 0 ? (
-        <Markdown source={takeaways.map((t) => `- ${t}`).join("\n")} />
-      ) : null}
-      {first_review_on ? <Text tone="muted">{strings.lessons.firstReview}</Text> : null}
-
-      <Card>
-        <Text variant="label" tone="muted">
-          {strings.lessons.xpEarned}
+      <View style={styles.hero}>
+        <Animated.View
+          style={[styles.trophy, { backgroundColor: colors.xp, transform: [{ scale: pop }] }]}
+        >
+          <Icon name="trophy" color="#FFFFFF" size={64} />
+        </Animated.View>
+        <Text variant="display" accessibilityRole="header" style={styles.center}>
+          {strings.lessons.completeTitle}
         </Text>
-        {xp_awarded.length === 0 ? <Text>{strings.lessons.noXpRevisit}</Text> : null}
-        {xp_awarded.map((award) => (
-          <View key={award.reason} style={styles.xpRow}>
-            <Text>{xpLabel(award.reason)}</Text>
-            <Text variant="label" tone="accent">
-              +{award.amount} XP
-            </Text>
-          </View>
-        ))}
-      </Card>
+        <Text tone="muted" style={styles.center}>
+          {strings.lessons.score(attempt.correct_first_try, attempt.question_count)}
+        </Text>
+      </View>
+
+      <View style={styles.tiles}>
+        <Tile icon="flash" color={colors.xp} label={strings.lessons.statXp} value={`+${xp}`} />
+        <Tile
+          icon="locate"
+          color={colors.success}
+          label={strings.lessons.statAccuracy}
+          value={`${accuracy}%`}
+        />
+        <Tile
+          icon="flame"
+          color={colors.streak}
+          label={strings.lessons.statStreak}
+          value={strings.lessons.days(streak.current)}
+        />
+      </View>
+
+      {xp_awarded.length === 0 ? (
+        <Text tone="muted" style={styles.center}>
+          {strings.lessons.noXpRevisit}
+        </Text>
+      ) : (
+        <View accessible accessibilityLabel={strings.lessons.xpEarned} style={styles.awards}>
+          {xp_awarded.map((award) => (
+            <View key={award.reason} style={styles.awardRow}>
+              <Text tone="muted">{xpLabel(award.reason)}</Text>
+              <Text variant="label">+{award.amount} XP</Text>
+            </View>
+          ))}
+        </View>
+      )}
 
       {achievements_unlocked.slice(0, MAX_ACHIEVEMENTS_SHOWN).map((a) => (
         <Card key={a.code} tone="success">
-          <Text variant="label" tone="success">
-            {strings.lessons.unlocked}
-          </Text>
-          <Text variant="heading">{a.title}</Text>
-          <Text tone="muted">{a.description}</Text>
+          <View style={styles.row}>
+            <Icon name="ribbon" color={colors.success} size={28} />
+            <View style={styles.flex}>
+              <Text variant="label" tone="success">
+                {strings.lessons.unlocked.toUpperCase()}
+              </Text>
+              <Text variant="heading">{a.title}</Text>
+              <Text tone="muted">{a.description}</Text>
+            </View>
+          </View>
         </Card>
       ))}
 
+      {takeaways.length > 0 ? (
+        <Card>
+          <Text variant="label" tone="muted">
+            {strings.lessons.keyPoints.toUpperCase()}
+          </Text>
+          {takeaways.map((point, i) => (
+            <View key={i} style={styles.row}>
+              <Icon name="checkmark-circle" color={colors.success} />
+              <Text style={styles.flex}>{point}</Text>
+            </View>
+          ))}
+        </Card>
+      ) : null}
+
+      {first_review_on ? (
+        <Card tone="accent">
+          <View style={styles.row}>
+            <Icon name="bulb" color={colors.accent} size={28} />
+            <Text style={styles.flex}>{strings.lessons.firstReview}</Text>
+          </View>
+        </Card>
+      ) : null}
+
       <View style={styles.rating}>
-        <Text variant="label">{rated ? strings.lessons.thanks : strings.lessons.wasClear}</Text>
+        <Text variant="label" style={styles.center}>
+          {rated ? strings.lessons.thanks : strings.lessons.wasClear}
+        </Text>
         {!rated ? (
           <View style={styles.ratingButtons}>
-            <Button
-              label={strings.lessons.clear}
-              variant="secondary"
-              onPress={() => rate("clear")}
-            />
-            <Button
-              label={strings.lessons.unclear}
-              variant="secondary"
-              onPress={() => rate("unclear")}
-            />
+            <View style={styles.flex}>
+              <Button
+                label={strings.lessons.clear}
+                variant="secondary"
+                onPress={() => rate("clear")}
+              />
+            </View>
+            <View style={styles.flex}>
+              <Button
+                label={strings.lessons.unclear}
+                variant="secondary"
+                onPress={() => rate("unclear")}
+              />
+            </View>
           </View>
         ) : null}
+      </View>
+      <Confetti />
+    </View>
+  );
+}
+
+function Tile({
+  icon,
+  color,
+  label,
+  value,
+}: {
+  icon: IconName;
+  color: string;
+  label: string;
+  value: string;
+}) {
+  const { colors } = useTheme();
+  return (
+    <View
+      accessible
+      accessibilityLabel={`${label}: ${value}`}
+      style={[styles.tile, { borderColor: color, backgroundColor: colors.surface }]}
+    >
+      <Text variant="caption" tone="muted" style={styles.center}>
+        {label.toUpperCase()}
+      </Text>
+      <View style={styles.tileBody}>
+        <Icon name={icon} color={color} size={22} />
+        <Text variant="heading">{value}</Text>
       </View>
     </View>
   );
@@ -90,7 +192,38 @@ export function CompletionView({ completion, takeaways, onRate }: Props) {
 
 const styles = StyleSheet.create({
   stack: { gap: spacing.lg },
-  xpRow: { flexDirection: "row", justifyContent: "space-between" },
+  hero: { alignItems: "center", gap: spacing.sm, paddingTop: spacing.md },
+  trophy: {
+    width: 120,
+    height: 120,
+    borderRadius: radius.full,
+    borderBottomWidth: edge + 2,
+    borderColor: "#C98500",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  center: { textAlign: "center" },
+  tiles: { flexDirection: "row", gap: spacing.sm },
+  tile: {
+    flex: 1,
+    borderWidth: 2,
+    borderBottomWidth: edge,
+    borderRadius: radius.md,
+    paddingTop: spacing.sm,
+  },
+  tileBody: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: spacing.xs,
+    paddingBottom: spacing.md,
+    paddingTop: spacing.xs,
+  },
+  awards: { gap: spacing.xs },
+  awardRow: { flexDirection: "row", justifyContent: "space-between" },
+  row: { flexDirection: "row", alignItems: "center", gap: spacing.md },
+  flex: { flex: 1 },
   rating: { gap: spacing.sm },
   ratingButtons: { flexDirection: "row", gap: spacing.sm },
 });

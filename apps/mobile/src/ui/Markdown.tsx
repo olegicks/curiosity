@@ -7,7 +7,7 @@ import { fonts, spacing } from "./tokens";
 type Props = { source: string; variant?: TextProps["variant"] };
 
 function Inlines({ inlines, variant }: { inlines: Inline[]; variant: TextProps["variant"] }) {
-  const bold = variant === "reading" ? fonts.serifSemibold : fonts.sansSemibold;
+  const bold = fonts.sansBold;
   return (
     <Text variant={variant}>
       {inlines.map((part, i) => (

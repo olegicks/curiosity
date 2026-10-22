@@ -62,7 +62,7 @@ test("check is disabled until an option is chosen, then the server's verdict is 
   await fireEvent.press(check);
 
   expect(submit).toHaveBeenCalledWith(["a"]);
-  expect(screen.getByText(`✕ ${strings.lessons.notQuite}`)).toBeOnTheScreen();
+  expect(screen.getByText(strings.lessons.notQuite)).toBeOnTheScreen();
   expect(screen.getByText("Those only fit the belief.")).toBeOnTheScreen();
   expect(screen.getByText("Look for evidence that could prove you wrong.")).toBeOnTheScreen();
   expect(screen.getByText(strings.lessons.correctAnswer)).toBeOnTheScreen();
@@ -75,7 +75,7 @@ test("a correct answer is announced as correct", async () => {
   await render(<Harness submit={async (ids) => graded(ids[0]!)} />);
   await fireEvent.press(option("Compare nights"));
   await fireEvent.press(screen.getByRole("button", { name: strings.lessons.check }));
-  expect(screen.getByText(`✓ ${strings.lessons.correct}`)).toBeOnTheScreen();
+  expect(screen.getByText(strings.lessons.correct)).toBeOnTheScreen();
 });
 
 test("a failed request unlocks the options and explains the error", async () => {

@@ -6,9 +6,9 @@ import { errorMessage } from "@/api/errors";
 import { useAuth } from "@/features/auth/AuthProvider";
 import { accuracyLabel, stageCounts } from "@/features/profile/profile";
 import { strings } from "@/i18n/en";
-import { BackHeader } from "@/ui/BackHeader";
 import { Button } from "@/ui/Button";
 import { Card } from "@/ui/Card";
+import { Icon } from "@/ui/Icon";
 import { MasteryDots } from "@/ui/MasteryDots";
 import { Screen } from "@/ui/Screen";
 import { StatTile } from "@/ui/StatTile";
@@ -37,21 +37,19 @@ export default function ProfileScreen() {
         void achievements.refetch();
       }}
     >
-      <BackHeader
-        title={strings.profile.title}
-        trailing={
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={strings.profile.settings}
-            onPress={() => router.push("/settings")}
-            style={styles.link}
-          >
-            <Text variant="label" tone="accent">
-              {strings.profile.settings}
-            </Text>
-          </Pressable>
-        }
-      />
+      <View style={styles.sectionHeader}>
+        <Text variant="title" accessibilityRole="header">
+          {strings.profile.title}
+        </Text>
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel={strings.profile.settings}
+          onPress={() => router.push("/settings")}
+          style={styles.link}
+        >
+          <Icon name="settings-outline" color={colors.accent} size={26} />
+        </Pressable>
+      </View>
       <View style={styles.identity}>
         <Text variant="heading">{user.display_name ?? strings.profile.guest}</Text>
         {user.email ? <Text tone="muted">{user.email}</Text> : null}

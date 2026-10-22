@@ -1,5 +1,5 @@
-import type { AnswerResult, LessonSummary, ProgressBrief, QuestionOut, Step } from "@/api/types";
-import { groupByTopic, progressBucket, startLabel, xpLabel } from "@/features/lessons/library";
+import type { AnswerResult, ProgressBrief, QuestionOut, Step } from "@/api/types";
+import { progressBucket, startLabel, xpLabel } from "@/features/lessons/library";
 import {
   canContinue,
   feedbackLines,
@@ -108,33 +108,10 @@ describe("library", () => {
       next_review_on: null,
       in_progress_attempt_id: attempt,
     }) as ProgressBrief;
-  const lesson = (slug: string, topic: string, status: ProgressBrief["status"]) =>
-    ({
-      slug,
-      title: slug,
-      description: "",
-      topic: { slug: topic, title: topic.toUpperCase() },
-      estimated_minutes: 5,
-      evidence_status: "established",
-      position: 1,
-      progress: progress(status),
-    }) as LessonSummary;
 
-  const lessons = [
-    lesson("a", "judgment", "not_started"),
-    lesson("b", "decisions", "started"),
-    lesson("c", "judgment", "understood"),
-  ];
-
-  test("groups by topic in curated order and filters by progress", () => {
-    expect(groupByTopic(lessons, "all").map((g) => [g.slug, g.lessons.map((l) => l.slug)])).toEqual(
-      [
-        ["judgment", ["a", "c"]],
-        ["decisions", ["b"]],
-      ],
-    );
-    expect(groupByTopic(lessons, "completed").map((g) => g.lessons[0]?.slug)).toEqual(["c"]);
-    expect(groupByTopic(lessons, "in_progress").map((g) => g.slug)).toEqual(["decisions"]);
+  test("progress buckets", () => {
+    expect(progressBucket(progress("not_started"))).toBe("not_started");
+    expect(progressBucket(progress("started"))).toBe("in_progress");
     expect(progressBucket(progress("retained"))).toBe("completed");
   });
 

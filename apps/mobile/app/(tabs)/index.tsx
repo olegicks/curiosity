@@ -3,49 +3,37 @@ import { router } from "expo-router";
 
 import { errorMessage } from "@/api/errors";
 import { useAuth } from "@/features/auth/AuthProvider";
-import type { Destination } from "@/features/discover/discover";
-import { DiscoverView } from "@/features/discover/DiscoverView";
+import { buildPath, currentSlug } from "@/features/path/path";
+import { PathView } from "@/features/path/PathView";
 import { Screen } from "@/ui/Screen";
 import { ErrorState, LoadingBlocks } from "@/ui/States";
 
-/** Discover home (docs/spec/02 §2.5): everything comes from one GET /discover call. */
-export default function DiscoverScreen() {
-  const { api, session } = useAuth();
+/** Path home (D-16): the lesson library as a path, with streak, XP and due reviews on top. */
+export default function PathScreen() {
+  const { api } = useAuth();
   const discover = useQuery({ queryKey: ["discover"], queryFn: api.discover.get });
-  const name = session.status === "signedIn" ? session.me.user.display_name : null;
-
-  const navigate = (destination: Destination) => {
-    switch (destination.kind) {
-      case "review":
-        router.push("/review");
-        return;
-      case "lesson":
-        router.push({ pathname: "/lesson/[slug]", params: { slug: destination.slug } });
-        return;
-      case "play":
-        router.push({ pathname: "/lesson/[slug]/play", params: { slug: destination.slug } });
-        return;
-      case "learn":
-        router.push("/learn");
-    }
-  };
+  const lessons = useQuery({ queryKey: ["lessons"], queryFn: api.content.lessons });
+  const items = lessons.data?.items ?? [];
+  const units = buildPath(items, currentSlug(items, discover.data));
 
   return (
-    <Screen refreshing={discover.isRefetching} onRefresh={() => void discover.refetch()}>
-      {discover.isPending ? <LoadingBlocks count={4} /> : null}
-      {discover.isError ? (
-        <ErrorState
-          message={errorMessage(discover.error)}
-          onRetry={() => void discover.refetch()}
-        />
+    <Screen
+      refreshing={discover.isRefetching || lessons.isRefetching}
+      onRefresh={() => {
+        void discover.refetch();
+        void lessons.refetch();
+      }}
+    >
+      {lessons.isPending ? <LoadingBlocks count={4} /> : null}
+      {lessons.isError ? (
+        <ErrorState message={errorMessage(lessons.error)} onRetry={() => void lessons.refetch()} />
       ) : null}
-      {discover.data ? (
-        <DiscoverView
+      {lessons.data ? (
+        <PathView
+          units={units}
           discover={discover.data}
-          displayName={name}
-          now={new Date()}
-          onNavigate={navigate}
-          onOpenProfile={() => router.push("/profile")}
+          onOpenLesson={(slug) => router.push({ pathname: "/lesson/[slug]", params: { slug } })}
+          onStartReview={() => router.push("/review")}
         />
       ) : null}
     </Screen>

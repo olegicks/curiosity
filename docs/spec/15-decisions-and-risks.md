@@ -24,6 +24,12 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | **D-14** | Backend concurrency model | **Synchronous** SQLAlchemy + threadpool | Async SQLAlchemy + asyncpg (more complex, and the benefit only shows at higher concurrency) | 06 |
 | **D-15** | Retention and deletion semantics | Guest accounts purged after 30 days of inactivity. Content-feedback messages and AI usage rows are kept unlinked after deletion. Backups ≤ 14 days. | Delete feedback messages on account deletion. Longer or shorter guest retention. | 04, 09 |
 
+### Decisions made after v1.0
+
+| ID | Decision | Chosen (owner, 2026-10-22) | Rejected for now | Affects |
+|---|---|---|---|---|
+| **D-16** | Visual direction and home screen | **Playful, game-like UI on the existing API.** The home tab is a learning **path**: one unit per topic in curated order, each lesson a node (done / current / upcoming) with a "Start" marker on the current one and a review node when concepts are due. Tabs become Path, Recall, Profile; the separate Learn library and Discover screens are replaced by the path. Bright palette with a colour per unit, bold sans type, chunky 3D buttons, icons (`@expo/vector-icons`), a stronger lesson player (thick progress bar, step-type badges, coloured feedback panel) and a celebratory completion screen with a short confetti burst (off when the OS reduces motion). The welcome screen explains the loop: learn → check → recall. No server changes. | Hearts or lives, leagues, and a mascot (the owner kept them out of the first redesign; lives would also need server rules). | 02 §2.1, §2.5, §2.6; 10 §10.1–10.3 |
+
 ## 15.2 Explicit assumptions
 
 1. A small team (one developer with AI assistance, plus content help) builds and runs the MVP. Hence no admin UI, single instance, and CLI tooling.
@@ -116,7 +122,7 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-25 | Content feedback on any lesson | Only published lessons accept reports. A version or question that doesn't belong to the lesson returns `422 INVALID_REFERENCE` (a new error code). | Retired lessons aren't shown in the app. Mismatched references would make reports unusable for editors. | None |
 | DEV-26 | `product_events.user_id` is a cascading FK | Same FK, but nullable, so `account_deleted` can be stored without a user id and survive the cascade | Spec 12 §12.2 requires the anonymised deletion event | None |
 | DEV-27 | Interest "Thinking clearly" maps to `foundations` and `judgment` | Each interest card maps to one topic (thinking → `judgment`, decisions → `decisions`, people → `social`) | With two topics, picking all three cards would exceed the API's limit of 3 interest topics. `foundations` comes first in curated order anyway. | None |
-| DEV-28 | After onboarding the user lands on the first lesson's intro (FR-ONB-4) | **Resolved:** after onboarding the app opens today's lesson intro, and Discover, Learn and Recall are all built. Tab icons are still hidden. | — | Tab icons with the design pass |
+| DEV-28 | After onboarding the user lands on the first lesson's intro (FR-ONB-4) | **Resolved:** after onboarding the app opens today's lesson intro, and Discover, Learn and Recall are all built. Tab icons arrived with D-16. | — | None |
 | DEV-29 | `make api-types` with openapi-typescript as a dev dependency | `npm run api-types` (backend `curiosity openapi`, then a pinned `npx openapi-typescript@7.13.0`) | openapi-typescript 7.13.0 (latest) requires TypeScript 5, and the app uses TypeScript 6 | Make it a dev dependency once a TypeScript 6-compatible release exists |
 | DEV-30 | Typed routes (06 §6.3) | Expo Router's typed routes are off | Their generated types live in `.expo/` (not committed), so CI and local type-checks would disagree | Turn on once route types can be generated in CI |
 | DEV-31 | Lesson player overflow menu with Sources and Report a problem (FR-LRN-5), "Explain differently" (J4), and offline caching of fetched lessons (FR-GLB-2) | Not in the player yet. Research examples show their citation inline. | Kept the slice to reading, answering and completing | Add with the mobile AI and offline slices |
@@ -130,3 +136,4 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 |---|---|---|
 | 0.1 | 2026-10-18 | Initial draft for approval |
 | 1.0 | 2026-10-18 | D-1 to D-15 approved as recommended. Spec is the baseline for implementation. |
+| 1.1 | 2026-10-22 | D-16: playful path-based UI replaces the editorial direction (02 §2.1, 10 §10.1). |

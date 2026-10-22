@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Icon, type IconName } from "./Icon";
 import { Text } from "./Text";
 import { useTheme } from "./theme";
 import { readingMaxWidth, spacing, touchTarget } from "./tokens";
@@ -31,12 +32,15 @@ export function PlayerFrame({
 export function HeaderButton({
   label,
   text,
+  icon,
   onPress,
 }: {
   label: string;
-  text: string;
+  text?: string;
+  icon?: IconName;
   onPress: () => void;
 }) {
+  const { colors } = useTheme();
   return (
     <Pressable
       accessibilityRole="button"
@@ -44,12 +48,12 @@ export function HeaderButton({
       onPress={onPress}
       style={styles.iconButton}
     >
-      <Text
-        variant={text.length === 1 ? "heading" : "label"}
-        tone={text.length === 1 ? "default" : "accent"}
-      >
-        {text}
-      </Text>
+      {icon ? <Icon name={icon} color={colors.textMuted} size={30} /> : null}
+      {text ? (
+        <Text variant="label" tone="accent">
+          {text}
+        </Text>
+      ) : null}
     </Pressable>
   );
 }

@@ -35,6 +35,7 @@ Root
 **Navigation rules**
 
 - There are exactly three tabs. Profile and Settings are secondary and reachable only from the Discover header avatar.
+- **D-16 (2026-10-22):** the tabs are now **Path** (home), **Recall** and **Profile**. Path replaces Discover (§2.5) and the Learn library (§2.6): it shows streak, today's XP and due reviews in a header, then one unit per topic with its lessons as nodes in curated order. Settings is reached from Profile.
 - The lesson player and review session are modals. Closing one mid-way asks "Leave lesson? Your progress is saved." (no confirmation is needed once the flow is complete). Progress is saved server-side per answer, so leaving loses nothing.
 - Implementation: **Expo Router** (file-based) with typed routes. Deep links: `curiosity://lesson/{slug}`, `curiosity://recall`, `curiosity://reset?token=…`.
 - Android back button: inside the player it behaves like the close button (with the same confirmation). On tab roots it follows the default behaviour.

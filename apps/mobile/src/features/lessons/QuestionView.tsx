@@ -8,9 +8,11 @@ import { haptics } from "@/lib/haptics";
 import { Banner } from "@/ui/Banner";
 import { Button } from "@/ui/Button";
 import { Card } from "@/ui/Card";
+import { Icon } from "@/ui/Icon";
 import { OptionCard } from "@/ui/OptionCard";
 import { Text } from "@/ui/Text";
-import { spacing } from "@/ui/tokens";
+import { useTheme } from "@/ui/theme";
+import { radius, spacing } from "@/ui/tokens";
 
 import {
   feedbackLines,
@@ -39,6 +41,7 @@ export function QuestionView<T extends GradedAnswer>({
   beforeCheck,
   afterFeedback,
 }: Props<T>) {
+  const { colors } = useTheme();
   const [selection, setSelection] = useState<string[]>([]);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,6 +69,12 @@ export function QuestionView<T extends GradedAnswer>({
 
   return (
     <View style={styles.stack}>
+      <View style={[styles.badge, { borderColor: colors.xp }]}>
+        <Icon name="flash" color={colors.xp} size={18} />
+        <Text variant="label" tone="muted">
+          {strings.lessons.badges.question.toUpperCase()}
+        </Text>
+      </View>
       <Text variant="title" accessibilityRole="header">
         {question.prompt}
       </Text>
@@ -93,9 +102,27 @@ export function QuestionView<T extends GradedAnswer>({
       {result ? (
         <View accessibilityLiveRegion="polite" style={styles.stack}>
           <Card tone={result.is_correct ? "success" : "danger"}>
-            <Text variant="heading" tone={result.is_correct ? "success" : "danger"}>
-              {result.is_correct ? `✓ ${strings.lessons.correct}` : `✕ ${strings.lessons.notQuite}`}
-            </Text>
+            <View style={styles.verdict}>
+              <View
+                style={[
+                  styles.verdictIcon,
+                  { backgroundColor: result.is_correct ? colors.success : colors.danger },
+                ]}
+              >
+                <Icon
+                  name={result.is_correct ? "checkmark" : "close"}
+                  color={colors.onAccent}
+                  size={26}
+                />
+              </View>
+              <Text
+                variant="heading"
+                tone={result.is_correct ? "success" : "danger"}
+                style={styles.flex}
+              >
+                {result.is_correct ? strings.lessons.correct : strings.lessons.notQuite}
+              </Text>
+            </View>
             {feedbackLines(result).map((line, i) => (
               <Text key={i}>{line}</Text>
             ))}
@@ -119,5 +146,24 @@ export function QuestionView<T extends GradedAnswer>({
 
 const styles = StyleSheet.create({
   stack: { gap: spacing.lg },
-  options: { gap: spacing.sm },
+  options: { gap: spacing.md },
+  badge: {
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    borderWidth: 2,
+    borderRadius: radius.full,
+    paddingHorizontal: spacing.md,
+    paddingVertical: 4,
+  },
+  verdict: { flexDirection: "row", alignItems: "center", gap: spacing.md },
+  verdictIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: radius.full,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  flex: { flex: 1 },
 });

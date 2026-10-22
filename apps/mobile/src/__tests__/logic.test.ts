@@ -4,7 +4,7 @@ import { topicsForSelection } from "@/features/onboarding/interests";
 import { strings } from "@/i18n/en";
 import { me } from "@/test/fakeApi";
 import { resolveScheme } from "@/ui/theme";
-import { palettes } from "@/ui/tokens";
+import { palettes, unitColors } from "@/ui/tokens";
 
 describe("errorMessage", () => {
   test("maps known codes to friendly copy and never shows raw messages", () => {
@@ -94,8 +94,19 @@ describe("theme", () => {
       }
     }
     expect(contrast(p.onAccent, p.accent)).toBeGreaterThanOrEqual(4.5);
-    for (const tint of [p.successBg, p.dangerBg, p.aiBg]) {
+    for (const tint of [p.successBg, p.dangerBg, p.aiBg, p.accentBg]) {
       expect(contrast(p.text, tint)).toBeGreaterThanOrEqual(4.5);
     }
+  });
+
+  test("white labels on unit and button fills meet AA", () => {
+    const fills = [
+      ...unitColors.map((u) => u.fill),
+      palettes.light.accent,
+      palettes.light.success,
+      palettes.light.danger,
+    ];
+    for (const fill of fills) expect(contrast("#FFFFFF", fill)).toBeGreaterThanOrEqual(4.5);
+    for (const u of unitColors) expect(contrast(u.fill, u.tint)).toBeGreaterThanOrEqual(4.5);
   });
 });

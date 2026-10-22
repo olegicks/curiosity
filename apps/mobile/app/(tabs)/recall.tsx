@@ -44,7 +44,7 @@ export default function RecallScreen() {
               <Button
                 label={strings.recall.goLearn}
                 variant="secondary"
-                onPress={() => router.push("/learn")}
+                onPress={() => router.navigate("/")}
               />
             </>
           ) : summary.data.due_count > 0 || summary.data.open_session_id ? (

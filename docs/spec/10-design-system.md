@@ -2,6 +2,8 @@
 
 ## 10.1 Design direction
 
+> **Superseded by D-16 (2026-10-22).** The app now uses a playful, game-like direction: a learning path on the home tab, a bright palette with one colour per unit, bold sans type for headings, chunky buttons with a darker bottom edge, icons, and a celebratory completion screen with a short confetti burst. `src/ui/tokens.ts` is the source of truth for the new tokens. Accessibility rules in this file still apply unchanged (AA contrast, colour never the only signal, text scaling, reduce motion). The text below records the original direction.
+
 **Editorial, calm, intelligent.** The app should feel like a well-edited magazine for ideas, not a game for children and not a generic AI dashboard.
 
 - Warm paper-like backgrounds, ink-coloured text, one confident accent colour.

@@ -17,6 +17,7 @@ import { Button } from "@/ui/Button";
 import { ProgressBar } from "@/ui/ProgressBar";
 import { HeaderButton, PlayerFrame, playerStyles } from "@/ui/PlayerFrame";
 import { ErrorState, LoadingBlocks } from "@/ui/States";
+import { useTheme } from "@/ui/theme";
 
 const stepKey = (attemptId: string) => `attempt-step:${attemptId}`;
 
@@ -38,7 +39,9 @@ export default function LessonPlayerScreen() {
   if (attempt.data) return <Player key={attempt.data.attempt.id} data={attempt.data} />;
   return (
     <PlayerFrame
-      header={<HeaderButton label={strings.lessons.close} text="✕" onPress={() => router.back()} />}
+      header={
+        <HeaderButton label={strings.lessons.close} icon="close" onPress={() => router.back()} />
+      }
     >
       {attempt.isError ? (
         <ErrorState message={errorMessage(attempt.error)} onRetry={() => void attempt.refetch()} />
@@ -51,6 +54,7 @@ export default function LessonPlayerScreen() {
 
 function Player({ data }: { data: AttemptResponse }) {
   const { api } = useAuth();
+  const { colors } = useTheme();
   const queryClient = useQueryClient();
   const steps = data.content.steps;
   const attemptId = data.attempt.id;
@@ -125,17 +129,22 @@ function Player({ data }: { data: AttemptResponse }) {
   };
 
   const step = index === null ? undefined : steps[index];
+  // After answering, Continue takes the verdict's colour, like the feedback above it.
+  const verdict = step?.type === "question" ? answers[step.question_id] : undefined;
+  const verdictVariant = verdict ? (verdict.is_correct ? "success" : "danger") : "primary";
   const last = index === steps.length - 1;
   const next = completion?.next_lesson ?? null;
 
   const header = (
     <>
-      <HeaderButton label={strings.lessons.close} text="✕" onPress={() => router.back()} />
+      <HeaderButton label={strings.lessons.close} icon="close" onPress={() => router.back()} />
       {index !== null && !completion ? (
         <ProgressBar
           value={index + 1}
           max={steps.length}
           label={strings.lessons.step(index + 1, steps.length)}
+          height={16}
+          color={colors.success}
         />
       ) : (
         <View style={playerStyles.spacer} />
@@ -169,6 +178,7 @@ function Player({ data }: { data: AttemptResponse }) {
   ) : step && index !== null ? (
     <Button
       label={last ? strings.lessons.finishLesson : strings.onboarding.continue}
+      variant={verdictVariant}
       onPress={() => (last ? void complete() : setIndex(index + 1))}
       loading={completing}
       disabled={!canContinue(step, answers)}
