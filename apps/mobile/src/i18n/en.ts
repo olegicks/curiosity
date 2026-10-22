@@ -196,11 +196,96 @@ export const strings = {
   profile: {
     title: "Profile",
     guest: "Guest learner",
+    saveProgressTitle: "Save your progress",
+    saveProgressBody:
+      "Guest progress lives only on this device's session. An account keeps it safe.",
     createAccount: "Create account",
+    settings: "Settings",
+    totalXp: "Total XP",
+    currentStreak: "Current streak",
+    longestStreak: "Longest streak",
+    days: (n: number) => `${n} day${n === 1 ? "" : "s"}`,
+    freezes: (n: number) =>
+      n === 0 ? "No streak freezes left" : `${n} streak freeze${n === 1 ? "" : "s"} ready`,
+    concepts: "Concepts",
+    accuracy: (correct: number, total: number) => `${correct} of last ${total} recalls correct`,
+    noAccuracy: "Your recall accuracy appears after your first review.",
+    achievements: "Achievements",
+    seeAll: "See all",
+    earned: (date: string) => `Earned ${date}`,
+    locked: "Not yet earned",
     logout: "Log out",
     guestLogoutWarning:
       "Guest progress can't be recovered after logging out. Create an account first?",
     logoutAnyway: "Log out anyway",
+  },
+  settings: {
+    title: "Settings",
+    back: "Back",
+    save: "Save",
+    saved: "Saved.",
+    sections: {
+      account: "Account",
+      learning: "Learning",
+      appearance: "Appearance",
+      privacy: "Privacy",
+      about: "About",
+    },
+    account: {
+      email: "Email",
+      displayName: "Display name",
+      displayNameHint: "Shown in your greeting. Leave empty to stay anonymous.",
+      changePassword: "Change password",
+      guestBody: "You're learning as a guest. Create an account to keep your progress.",
+    },
+    password: {
+      title: "Change password",
+      current: "Current password",
+      next: "New password (at least 10 characters)",
+      confirm: "Confirm new password",
+      mismatch: "The new passwords don't match.",
+      done: "Password changed. Other devices have been signed out.",
+    },
+    learning: {
+      goal: "Daily goal",
+      interests: "Interests",
+      interestsHint: "These only change the order of recommended lessons.",
+    },
+    appearance: {
+      system: "Match system",
+      light: "Light",
+      dark: "Dark",
+    },
+    privacy: {
+      exportTitle: "Export my data",
+      exportBody: "Download everything we store about you as a JSON file.",
+      exportCta: "Export data",
+      exportUnavailable: "Sharing isn't available on this device.",
+      deleteTitle: "Delete account",
+      deleteBody:
+        "This permanently deletes your account, progress, reviews, XP, streak and achievements. It can't be undone.",
+      deleteKept:
+        "Kept without any link to you: problem reports you sent and anonymous AI usage counts.",
+      passwordLabel: "Your password",
+      typeDelete: "Type DELETE to confirm",
+      deleteCta: "Delete my account",
+      confirmTitle: "Delete your account?",
+      confirmBody: "All your learning data will be deleted permanently.",
+      cancel: "Cancel",
+      confirmDelete: "Delete",
+    },
+    about: {
+      version: (version: string) => `Version ${version}`,
+      sourcesTitle: "How we choose sources",
+      sourcesBody:
+        "Every lesson is written from reputable academic and institutional sources, checked by an independent reviewer, and says plainly when findings are debated. Report anything that looks wrong from the lesson menu.",
+      disclaimerTitle: "Educational content",
+      disclaimerBody:
+        "Curiosity teaches ideas from psychology for learning purposes. It is not medical, clinical or financial advice.",
+      licensesTitle: "Open-source licenses",
+      licensesBody:
+        "Built with React Native, Expo and other open-source software. Fonts: Inter and Source Serif 4 (SIL Open Font License).",
+    },
   },
   session: {
     expired: "Please sign in again.",

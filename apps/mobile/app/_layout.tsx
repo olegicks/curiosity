@@ -72,6 +72,8 @@ function Navigator({ ready }: { ready: boolean }) {
         <Stack.Protected guard={route === "app"}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="profile" />
+          <Stack.Screen name="achievements" />
+          <Stack.Screen name="settings" />
           <Stack.Screen name="account/create" options={{ presentation: "modal" }} />
           <Stack.Screen name="lesson/[slug]/index" />
           <Stack.Screen

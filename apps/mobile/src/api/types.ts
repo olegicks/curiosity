@@ -47,3 +47,7 @@ export type ReviewItem = Schemas["SessionItemOut"];
 export type ReviewAnswerResult = Schemas["ReviewAnswerResult"];
 export type ReviewAnswerResponse = Schemas["ReviewAnswerResponse"];
 export type ReviewSessionSummary = Schemas["SessionSummaryOut"];
+
+export type ProgressOut = Schemas["ProgressOut"];
+export type AchievementsOut = Schemas["AchievementsOut"];
+export type UserResponse = Schemas["UserResponse"];

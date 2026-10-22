@@ -1,6 +1,7 @@
 /** One typed function per endpoint the app uses so far. Paths match docs/spec/05. */
 import type { ApiClient } from "./client";
 import type {
+  AchievementsOut,
   AnswerResponse,
   AttemptResponse,
   AuthOut,
@@ -11,6 +12,9 @@ import type {
   MeOut,
   Preferences,
   PreferencesPatch,
+  ProgressOut,
+  TokensResponse,
+  UserResponse,
   ConceptPage,
   ReviewAnswerResponse,
   ReviewSessionResponse,
@@ -38,6 +42,17 @@ export function createEndpoints(client: ApiClient) {
       get: () => client.get<MeOut>("/v1/me"),
       updatePreferences: (patch: PreferencesPatch) =>
         client.patch<Preferences>("/v1/me/preferences", patch),
+      updateDisplayName: (displayName: string | null) =>
+        client.patch<UserResponse>("/v1/me", { display_name: displayName }),
+      changePassword: (currentPassword: string, newPassword: string) =>
+        client.post<TokensResponse>("/v1/me/password", {
+          current_password: currentPassword,
+          new_password: newPassword,
+        }),
+      /** Full accounts confirm with their password; guests type DELETE. */
+      deleteAccount: (confirmation: { password: string } | { confirm: "DELETE" }) =>
+        client.delete<void>("/v1/me", confirmation),
+      exportData: () => client.get<Record<string, unknown>>("/v1/me/export"),
     },
     content: {
       subjects: () => client.get<SubjectsOut>("/v1/subjects"),
@@ -59,6 +74,10 @@ export function createEndpoints(client: ApiClient) {
         client.post<CompletionResponse>(`/v1/attempts/${attemptId}/complete`),
       rate: (attemptId: string, rating: "clear" | "unclear") =>
         client.post<void>(`/v1/attempts/${attemptId}/rating`, { rating }),
+    },
+    progress: {
+      get: () => client.get<ProgressOut>("/v1/progress"),
+      achievements: () => client.get<AchievementsOut>("/v1/achievements"),
     },
     discover: {
       get: () => client.get<DiscoverOut>("/v1/discover"),

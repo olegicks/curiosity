@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   createContext,
@@ -27,6 +28,10 @@ type AuthContextValue = {
   login(email: string, password: string): Promise<void>;
   upgrade(email: string, password: string, displayName: string | null): Promise<void>;
   logout(): Promise<void>;
+  /** Other sessions are revoked; this device keeps working with fresh tokens. */
+  changePassword(currentPassword: string, newPassword: string): Promise<void>;
+  /** Hard-deletes the account, then wipes everything stored on the device. */
+  deleteAccount(password: string | null): Promise<void>;
   /** Re-read /me (e.g. after onboarding changes preferences). */
   reloadMe(): Promise<void>;
   retry(): void;
@@ -117,6 +122,17 @@ export function AuthProvider({ children, tokenStore, fetchImpl }: Props) {
         const tokens = store.get();
         if (tokens) await api.auth.logout(tokens.refresh_token).catch(() => undefined);
         await store.set(null);
+        queryClient.clear();
+        dispatch({ type: "signedOut" });
+      },
+      changePassword: async (currentPassword, newPassword) => {
+        const result = await api.me.changePassword(currentPassword, newPassword);
+        await store.set(result.tokens);
+      },
+      deleteAccount: async (password) => {
+        await api.me.deleteAccount(password === null ? { confirm: "DELETE" } : { password });
+        await store.set(null);
+        await AsyncStorage.clear().catch(() => undefined);
         queryClient.clear();
         dispatch({ type: "signedOut" });
       },
