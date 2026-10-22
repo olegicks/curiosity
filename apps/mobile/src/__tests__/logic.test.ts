@@ -1,5 +1,5 @@
 import { ApiError, errorMessage, NETWORK_ERROR } from "@/api/errors";
-import { initialSession, routeFor, sessionReducer } from "@/features/auth/session";
+import { homeFor, initialSession, routeFor, sessionReducer } from "@/features/auth/session";
 import { topicsForSelection } from "@/features/onboarding/interests";
 import { strings } from "@/i18n/en";
 import { me } from "@/test/fakeApi";
@@ -40,6 +40,13 @@ describe("session", () => {
     });
     expect(routeFor(done)).toBe("app");
     expect(routeFor(sessionReducer(done, { type: "unavailable" }))).toBe("unavailable");
+  });
+
+  test("each group has a start screen for unreachable paths", () => {
+    expect(homeFor("auth")).toBe("/welcome");
+    expect(homeFor("onboarding")).toBe("/interests");
+    expect(homeFor("app")).toBe("/");
+    expect(homeFor("loading")).toBeNull();
   });
 
   test("meUpdated is ignored when signed out", () => {

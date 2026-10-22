@@ -46,3 +46,17 @@ export function routeFor(state: SessionState): Route {
       return state.me.preferences.onboarding_completed ? "app" : "onboarding";
   }
 }
+
+/** The first screen of each route group; where an unreachable path lands (app/+not-found). */
+export function homeFor(route: Route): "/welcome" | "/interests" | "/" | null {
+  switch (route) {
+    case "auth":
+      return "/welcome";
+    case "onboarding":
+      return "/interests";
+    case "app":
+      return "/";
+    default:
+      return null;
+  }
+}
