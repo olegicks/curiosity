@@ -122,6 +122,7 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-31 | Lesson player overflow menu with Sources and Report a problem (FR-LRN-5), "Explain differently" (J4), and offline caching of fetched lessons (FR-GLB-2) | Not in the player yet. Research examples show their citation inline. | Kept the slice to reading, answering and completing | Add with the mobile AI and offline slices |
 | DEV-32 | Recall: mastery dots animate on change; "Concepts in review" is paginated (FR-REC-1) | Dots update without animation. The concepts list loads the first 100 concepts only. | Animation belongs to the motion pass. 100 covers the whole MVP library (27 lessons). | Add motion with the design pass; paginate when the library passes 100 lessons |
 | DEV-33 | Discover header shows today's XP as a ring (02 §2.5, 10 §10.3 `XpRing`) | A pill with "15/20 XP today" and a thin progress bar | A ring needs an SVG dependency (react-native-svg) that nothing else needs yet | Add `XpRing` with the design pass if the ring is still wanted |
+| DEV-34 | Terms of Use and Privacy Policy linked from Welcome and About (09 §9.7) | Welcome mentions them in text; About has no links yet | The documents don't exist yet (R-13, owner action) | Add the URLs once the documents are published |
 
 ## 15.7 Change log for this spec
 
