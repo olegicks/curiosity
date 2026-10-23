@@ -8,6 +8,7 @@ from sqlalchemy import (
     CheckConstraint,
     Date,
     DateTime,
+    Double,
     ForeignKey,
     Index,
     Integer,
@@ -84,6 +85,7 @@ class LessonAttemptAnswer(Base):
     selected_option_ids: Mapped[list[uuid.UUID]] = mapped_column(
         ARRAY(UUID(as_uuid=True)), nullable=False
     )
+    value: Mapped[float | None] = mapped_column(Double)  # estimate questions only
     is_correct: Mapped[bool] = mapped_column(Boolean, nullable=False)
     answered_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 

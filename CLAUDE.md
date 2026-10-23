@@ -19,6 +19,7 @@ Key files by task:
 apps/api/      FastAPI modular monolith (Python 3.13, uv, SQLAlchemy 2 sync, Alembic, Postgres 16)
 apps/mobile/   Expo SDK 58 + React Native + TypeScript 6 (Expo Router, TanStack Query)
 content/       Lesson YAML files: the canonical content
+demo-content/  Demo lessons for local device testing only (not reviewed; never import into production)
 docs/spec/     Specification
 ```
 

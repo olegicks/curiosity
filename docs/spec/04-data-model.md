@@ -170,6 +170,8 @@ Constraints and indexes:
 - `CHECK ((status = 'completed') = (completed_at IS NOT NULL))`.
 
 ### `lesson_attempt_answers`
+
+D-18 (migration 0008): adds `value double precision null` (estimate answers; `selected_option_ids` is then empty), and `questions` gains `estimate jsonb null` with `type` allowing `estimate`.
 | Column | Type | Notes |
 |---|---|---|
 | `id` | uuid PK | |

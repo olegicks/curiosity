@@ -29,6 +29,8 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | ID | Decision | Chosen (owner, 2026-10-22) | Rejected for now | Affects |
 |---|---|---|---|---|
 | **D-16** | Visual direction and home screen | **Playful, game-like UI on the existing API.** The home tab is a learning **path**: one unit per topic in curated order, each lesson a node (done / current / upcoming) with a "Start" marker on the current one and a review node when concepts are due. Tabs become Path, Recall, Profile; the separate Learn library and Discover screens are replaced by the path. Bright palette with a colour per unit, bold sans type, chunky 3D buttons, icons (`@expo/vector-icons`), a stronger lesson player (thick progress bar, step-type badges, coloured feedback panel) and a celebratory completion screen with a short confetti burst (off when the OS reduces motion). The welcome screen explains the loop: learn → check → recall. No server changes. | Hearts or lives, leagues, and a mascot (the owner kept them out of the first redesign; lives would also need server rules). | 02 §2.1, §2.5, §2.6; 10 §10.1–10.3 |
+| **D-17** | Several subjects, one roadmap each | Psychology, Science, Math and Economics to start; Politics listed as coming soon. Each subject has its own path (one unit per topic). The learner picks a subject in onboarding and switches from the path header. The chosen subject is a device preference (AsyncStorage), like the theme; streak, XP and recall stay global. `GET /lessons?subject=` filters by subject. Demo lessons live in `demo-content/` for local testing only. | Per-subject streaks and XP; storing the chosen subject on the server. | 02, 03, 05 |
+| **D-18** | Estimate questions | New question type `estimate`: the learner picks a number on a slider and the server grades it within a tolerance. Lesson questions only for now (reviews keep option questions). New first-run tour, lesson card on node tap, mascot and reward screen are client-only. | Estimate questions in recall; free-text numeric input. | 03, 04, 05 |
 
 ## 15.2 Explicit assumptions
 
@@ -137,3 +139,4 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | 0.1 | 2026-10-18 | Initial draft for approval |
 | 1.0 | 2026-10-18 | D-1 to D-15 approved as recommended. Spec is the baseline for implementation. |
 | 1.1 | 2026-10-22 | D-16: playful path-based UI replaces the editorial direction (02 §2.1, 10 §10.1). |
+| 1.2 | 2026-10-23 | D-17 subjects with their own roadmaps; D-18 estimate questions (03, 04, 05). |

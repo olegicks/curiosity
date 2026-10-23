@@ -81,6 +81,7 @@ def submit_answer(
         attempt_id,
         question_id=body.question_id,
         selected=body.selected_option_ids,
+        value=body.value,
         now=now,
     )
     if not created:

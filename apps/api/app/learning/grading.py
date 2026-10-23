@@ -20,3 +20,18 @@ def selection_problem(
 def is_correct(selected: Collection[uuid.UUID], correct: Collection[uuid.UUID]) -> bool:
     """All-or-nothing: exactly the correct options and nothing else."""
     return set(selected) == set(correct)
+
+
+def estimate_problem(value: float | None, config: dict[str, float] | None) -> str | None:
+    """Estimate questions take a value inside the slider range; others take options."""
+    if config is None:
+        return "INVALID_OPTIONS" if value is not None else None
+    if value is None:
+        return "INVALID_VALUE"
+    if not config["min"] <= value <= config["max"]:
+        return "INVALID_VALUE"
+    return None
+
+
+def estimate_correct(value: float, config: dict[str, float]) -> bool:
+    return abs(value - config["answer"]) <= config["tolerance"]

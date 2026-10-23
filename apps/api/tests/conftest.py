@@ -134,8 +134,10 @@ def run_import(db_session: Session, clock: FixedClock, tmp_path: Path) -> Import
     """Write a content tree from lesson dicts and import it into the test database."""
     counter = iter(range(1000))
 
-    def run(lessons: list[dict[str, Any]], **kwargs: Any) -> ImportSummary:
-        root = write_content(tmp_path / f"content-{next(counter)}", lessons)
+    def run(
+        lessons: list[dict[str, Any]], *, subjects: dict[str, Any] | None = None, **kwargs: Any
+    ) -> ImportSummary:
+        root = write_content(tmp_path / f"content-{next(counter)}", lessons, subjects=subjects)
         content = load_content(root, today=date(2026, 11, 2))
         assert content.errors == []
         return import_content(db_session, content, now=clock.now(), **kwargs)

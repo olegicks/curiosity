@@ -28,6 +28,7 @@ class TopicOut(BaseModel):
 class SubjectOut(BaseModel):
     slug: str
     title: str
+    description: str
     topics: list[TopicOut]
 
 
@@ -39,6 +40,7 @@ class LessonSummary(BaseModel):
     slug: str
     title: str
     description: str
+    subject: TopicRef
     topic: TopicRef
     estimated_minutes: int
     evidence_status: Literal["established", "mixed", "contested"]
@@ -125,11 +127,22 @@ class OptionOut(BaseModel):
     text: str
 
 
+class EstimateOut(BaseModel):
+    """Slider settings for an estimate question. The answer is revealed only after grading."""
+
+    min: float
+    max: float
+    step: float
+    unit: str
+    anchor: float | None
+
+
 class QuestionOut(BaseModel):
     id: uuid.UUID
-    type: Literal["single_choice", "multi_select", "true_false"]
+    type: Literal["single_choice", "multi_select", "true_false", "estimate"]
     prompt: str
     options: list[OptionOut]
+    estimate: EstimateOut | None = None
 
 
 class LessonContent(BaseModel):

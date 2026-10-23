@@ -162,6 +162,7 @@ class QuestionType(StrEnum):
     SINGLE_CHOICE = "single_choice"
     MULTI_SELECT = "multi_select"
     TRUE_FALSE = "true_false"
+    ESTIMATE = "estimate"
 
 
 class OptionIn(Strict):
@@ -171,12 +172,25 @@ class OptionIn(Strict):
     feedback: Annotated[Text, StringConstraints(max_length=280)]
 
 
+class EstimateIn(Strict):
+    """A number the learner picks on a slider; correct within `tolerance` of `answer`."""
+
+    min: float
+    max: float
+    step: float = Field(gt=0)
+    unit: Annotated[Text, StringConstraints(max_length=20)]
+    answer: float
+    tolerance: float = Field(gt=0)
+    anchor: float | None = None
+
+
 class QuestionIn(Strict):
     key: Key
     role: QuestionRole
     type: QuestionType
     prompt: Annotated[Text, StringConstraints(max_length=300)]
-    options: list[OptionIn] = Field(min_length=2, max_length=6)
+    options: list[OptionIn] = Field(default_factory=list, max_length=6)
+    estimate: EstimateIn | None = None
     explanation: Annotated[Text, StringConstraints(max_length=400)]
     shuffle: bool = True
 
@@ -217,7 +231,7 @@ class LessonFile(Strict):
     def content_payload(self) -> dict[str, object]:
         """Fields that define a version's content. Editorial metadata and lesson-level
         relations (rewritten on every import) are excluded from the hash."""
-        return self.model_dump(
+        payload = self.model_dump(
             mode="json",
             exclude={
                 "status",
@@ -229,3 +243,8 @@ class LessonFile(Strict):
                 "prerequisites",
             },
         )
+        # `estimate` arrived after v1 content; leaving it out when unset keeps old hashes
+        for question in payload["questions"]:
+            if question.get("estimate") is None:
+                question.pop("estimate", None)
+        return payload

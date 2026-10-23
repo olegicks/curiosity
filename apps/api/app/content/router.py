@@ -23,6 +23,7 @@ def list_subjects(
 
 @router.get("/lessons", response_model=LessonPage)
 def list_lessons(
+    subject: Annotated[str | None, Query(max_length=60)] = None,
     topic: Annotated[str | None, Query(max_length=60)] = None,
     progress: Annotated[service.ProgressFilter | None, Query()] = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 20,
@@ -31,7 +32,7 @@ def list_lessons(
     db: Session = Depends(get_db),
 ) -> LessonPage:
     return service.list_lessons(
-        db, user.id, topic=topic, progress=progress, limit=limit, cursor=cursor
+        db, user.id, subject=subject, topic=topic, progress=progress, limit=limit, cursor=cursor
     )
 
 

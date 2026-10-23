@@ -159,9 +159,11 @@ Returns a JSON document with all personal data: user, preferences, interests, at
 200: `{ "items": [{ "slug", "title", "topics": [{ "slug", "title", "description", "position", "lesson_count" }] }] }`. Published subjects only.
 
 ### `GET /lessons`
-Query: `topic?` (slug), `progress?` (`not_started|in_progress|completed`), `limit` (1–100, default 20), `cursor?`.
+Query: `subject?` (slug, D-17), `topic?` (slug), `progress?` (`not_started|in_progress|completed`), `limit` (1–100, default 20), `cursor?`.
 Ordered by topic position, then lesson position.
 200: `{ "items": LessonSummary[], "next_cursor": string|null }`. Published lessons only.
+D-17: `LessonSummary` also carries `subject {slug, title}`, and `GET /subjects` items carry `description`.
+D-18: questions of type `estimate` have `options: []` and `estimate {min, max, step, unit, anchor}` (never the answer). `POST /attempts/{id}/answers` takes `value` instead of `selected_option_ids` for them (exactly one of the two; `422 INVALID_VALUE` outside min–max or when options are sent), and the result adds `estimate {value, answer, tolerance, unit}`.
 
 ### `GET /lessons/{slug}`
 200:

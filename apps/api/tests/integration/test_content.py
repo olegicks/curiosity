@@ -193,13 +193,21 @@ def test_lesson_detail_never_leaks_answers_or_recall_questions(
     response = db_client.get("/v1/lessons/availability", headers=auth)
     assert response.status_code == 200
     body = response.json()
-    assert not _all_keys(body) & {"is_correct", "correct", "feedback", "role"}
+    assert not _all_keys(body) & {
+        "is_correct",
+        "correct",
+        "feedback",
+        "role",
+        "answer",
+        "tolerance",
+    }
     assert "Recall question" not in json.dumps(body)
     assert "General explanation" not in json.dumps(body)
 
     content = body["content"]
     for question in content["questions"]:
-        assert set(question) == {"id", "type", "prompt", "options"}
+        assert set(question) == {"id", "type", "prompt", "options", "estimate"}
+        assert question["estimate"] is None
         assert all(set(option) == {"id", "text"} for option in question["options"])
     assert len(content["questions"]) == 2
     question_ids = {q["id"] for q in content["questions"]}

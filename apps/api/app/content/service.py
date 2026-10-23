@@ -21,6 +21,7 @@ from app.content.models import (
     Topic,
 )
 from app.content.schemas import (
+    EstimateOut,
     ImageOut,
     LessonContent,
     LessonDetail,
@@ -92,6 +93,7 @@ def _summary(row: _Row, progress: ProgressBrief) -> LessonSummary:
         slug=row.lesson.slug,
         title=row.version.title,
         description=row.version.description,
+        subject=TopicRef(slug=row.subject.slug, title=row.subject.title),
         topic=TopicRef(slug=row.topic.slug, title=row.topic.title),
         estimated_minutes=row.version.estimated_minutes,
         evidence_status=row.version.evidence_status,
@@ -126,6 +128,7 @@ def list_subjects(db: Session) -> SubjectsOut:
             SubjectOut(
                 slug=subject.slug,
                 title=subject.title,
+                description=subject.description,
                 topics=[
                     TopicOut(
                         slug=t.slug,
@@ -145,6 +148,7 @@ def list_lessons(
     db: Session,
     user_id: uuid.UUID,
     *,
+    subject: str | None = None,
     topic: str | None,
     progress: ProgressFilter | None,
     limit: int,
@@ -153,6 +157,8 @@ def list_lessons(
     """Filtering by progress needs per-user state, so the (small) published set is
     filtered in memory and paginated with a keyset cursor over the curated order."""
     rows = _published_rows(db)
+    if subject is not None:
+        rows = [r for r in rows if r.subject.slug == subject]
     if topic is not None:
         rows = [r for r in rows if r.topic.slug == topic]
     summaries = _summaries(db, user_id, rows)
@@ -316,6 +322,15 @@ def _lesson_content(
                 type=q.type,
                 prompt=q.prompt,
                 options=[OptionOut(id=o.id, text=o.text) for o in opts],
+                estimate=EstimateOut(
+                    min=q.estimate["min"],
+                    max=q.estimate["max"],
+                    step=q.estimate["step"],
+                    unit=q.estimate["unit"],
+                    anchor=q.estimate.get("anchor"),
+                )
+                if q.estimate
+                else None,
             )
         )
 

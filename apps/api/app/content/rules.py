@@ -27,8 +27,34 @@ READING_WORDS_RANGE = (350, 1100)
 REVIEW_STALE_AFTER = timedelta(days=365)
 
 
-def question_problems(q: QuestionIn) -> list[str]:
+def _estimate_problems(q: QuestionIn) -> list[str]:
+    e = q.estimate
+    if e is None:
+        return [f"question {q.key}: estimate needs an estimate block"]
     problems: list[str] = []
+    if q.options:
+        problems.append(f"question {q.key}: estimate questions have no options")
+    if q.role is not QuestionRole.LESSON:
+        problems.append(f"question {q.key}: estimate questions are lesson questions only")
+    if not e.min < e.max:
+        problems.append(f"question {q.key}: estimate min must be below max")
+    if not e.min <= e.answer <= e.max:
+        problems.append(f"question {q.key}: estimate answer must be within min-max")
+    if e.anchor is not None and not e.min <= e.anchor <= e.max:
+        problems.append(f"question {q.key}: estimate anchor must be within min-max")
+    if e.step > e.max - e.min or e.tolerance >= e.max - e.min:
+        problems.append(f"question {q.key}: estimate step and tolerance must fit the range")
+    return problems
+
+
+def question_problems(q: QuestionIn) -> list[str]:
+    if q.type is QuestionType.ESTIMATE:
+        return _estimate_problems(q)
+    problems: list[str] = []
+    if q.estimate is not None:
+        problems.append(f"question {q.key}: only estimate questions take an estimate block")
+    if len(q.options) < 2:
+        problems.append(f"question {q.key}: needs at least 2 options")
     keys = [o.key for o in q.options]
     if len(set(keys)) != len(keys):
         problems.append(f"question {q.key}: duplicate option keys")

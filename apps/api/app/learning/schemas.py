@@ -4,7 +4,7 @@ import uuid
 from datetime import date, datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.content.schemas import LessonContent, LessonSummary
 from app.gamification.schemas import AchievementOut, StreakOut, XpAwardOut, XpSummaryOut
@@ -19,8 +19,17 @@ class StartAttemptIn(StrictModel):
 
 
 class AnswerIn(StrictModel):
+    """Options for choice questions, or `value` for an estimate question."""
+
     question_id: uuid.UUID
-    selected_option_ids: list[uuid.UUID] = Field(min_length=1, max_length=6)
+    selected_option_ids: list[uuid.UUID] = Field(default_factory=list, max_length=6)
+    value: float | None = Field(default=None, allow_inf_nan=False)
+
+    @model_validator(mode="after")
+    def one_kind_of_answer(self) -> "AnswerIn":
+        if bool(self.selected_option_ids) == (self.value is not None):
+            raise ValueError("send selected_option_ids or value, not both or neither")
+        return self
 
 
 class OptionFeedbackOut(BaseModel):
@@ -36,6 +45,14 @@ class AnswerResult(BaseModel):
     correct_option_ids: list[uuid.UUID]
     option_feedback: list[OptionFeedbackOut]
     explanation: str
+    estimate: "EstimateResultOut | None" = None
+
+
+class EstimateResultOut(BaseModel):
+    value: float
+    answer: float
+    tolerance: float
+    unit: str
 
 
 class AnswerResponse(AnswerResult):

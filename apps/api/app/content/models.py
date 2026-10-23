@@ -123,7 +123,8 @@ class Question(Base):
         UniqueConstraint("lesson_version_id", "key"),
         CheckConstraint("role IN ('lesson','recall')", name="role_allowed"),
         CheckConstraint(
-            "type IN ('single_choice','multi_select','true_false')", name="type_allowed"
+            "type IN ('single_choice','multi_select','true_false','estimate')",
+            name="type_allowed",
         ),
         Index("ix_questions_lesson_version_id_role", "lesson_version_id", "role"),
     )
@@ -136,6 +137,8 @@ class Question(Base):
     role: Mapped[str] = mapped_column(SAText, nullable=False)
     type: Mapped[str] = mapped_column(SAText, nullable=False)
     prompt: Mapped[str] = mapped_column(SAText, nullable=False)
+    # estimate questions only: {min, max, step, unit, answer, tolerance, anchor}
+    estimate: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     explanation: Mapped[str] = mapped_column(SAText, nullable=False)
     shuffle: Mapped[bool] = mapped_column(Boolean, nullable=False)
     position: Mapped[int] = mapped_column(SmallInteger, nullable=False)

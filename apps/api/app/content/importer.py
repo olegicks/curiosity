@@ -219,6 +219,7 @@ def _write_version_content(
             role=q.role.value,
             type=q.type.value,
             prompt=q.prompt,
+            estimate=q.estimate.model_dump() if q.estimate else None,
             explanation=q.explanation,
             shuffle=q.shuffle,
             position=q_pos,

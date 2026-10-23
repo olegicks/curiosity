@@ -83,7 +83,7 @@ Authoring format: one YAML file per lesson at `content/<subject>/<topic>/<slug>.
 |---|---|
 | `key` | Unique within lesson. `^[a-z0-9-]+$`. |
 | `role` | `lesson` (used in the player) or `recall` (used only in reviews). |
-| `type` | `single_choice` (exactly 1 correct, 3–5 options), `multi_select` (≥ 2 correct, 4–6 options, all-or-nothing scoring), `true_false` (exactly 2 options keyed `true`/`false`). |
+| `type` | `single_choice` (exactly 1 correct, 3–5 options), `multi_select` (≥ 2 correct, 4–6 options, all-or-nothing scoring), `true_false` (exactly 2 options keyed `true`/`false`). `estimate` (D-18): no options; an `estimate` block `{min, max, step, unit, answer, tolerance, anchor?}`; correct when the value is within `tolerance` of `answer`; lesson role only. |
 | `prompt` | ≤ 300 chars. Scenario prompts are encouraged. |
 | `options[]` | `{key, text ≤ 160, correct: bool, feedback ≤ 280}`. Every option needs feedback explaining why it is right or wrong. |
 | `explanation` | ≤ 400 chars. A general explanation shown after any answer. |

@@ -20,7 +20,12 @@ from app.core.clock import to_local_date
 from app.core.errors import ConflictError, NotFoundError, ValidationError
 from app.gamification import service as gamification
 from app.learning import discover
-from app.learning.grading import is_correct, selection_problem
+from app.learning.grading import (
+    estimate_correct,
+    estimate_problem,
+    is_correct,
+    selection_problem,
+)
 from app.learning.models import LessonAttempt, LessonAttemptAnswer, UserLessonProgress
 from app.learning.schemas import (
     AnswerResponse,
@@ -29,6 +34,7 @@ from app.learning.schemas import (
     AttemptResponse,
     CompletedAttemptOut,
     CompletionResponse,
+    EstimateResultOut,
     OptionFeedbackOut,
 )
 from app.reviews.models import ReviewState
@@ -100,6 +106,14 @@ def _answer_result(
             for o in ordered
         ],
         explanation=lq.question.explanation,
+        estimate=EstimateResultOut(
+            value=answer.value,
+            answer=lq.question.estimate["answer"],
+            tolerance=lq.question.estimate["tolerance"],
+            unit=lq.question.estimate["unit"],
+        )
+        if lq.question.estimate and answer.value is not None
+        else None,
     )
 
 
@@ -230,6 +244,7 @@ def submit_answer(
     *,
     question_id: uuid.UUID,
     selected: list[uuid.UUID],
+    value: float | None = None,
     now: datetime,
 ) -> tuple[AnswerResponse, bool]:
     """Grade and store the first answer to a question. Return (response, created).
@@ -253,17 +268,26 @@ def submit_answer(
     lq = questions.get(question_id)
     if lq is None:
         raise QuestionNotInAttemptError(details=[{"field": "question_id", "issue": "unknown"}])
-    problem = selection_problem(lq.question.type, selected, [o.id for o in lq.options])
+    config = lq.question.estimate
+    problem = estimate_problem(value, config)
     if problem:
-        raise SelectionError(
-            code=problem, details=[{"field": "selected_option_ids", "issue": problem.lower()}]
-        )
+        raise SelectionError(code=problem, details=[{"field": "value", "issue": problem.lower()}])
+    if config is None or value is None:
+        problem = selection_problem(lq.question.type, selected, [o.id for o in lq.options])
+        if problem:
+            raise SelectionError(
+                code=problem, details=[{"field": "selected_option_ids", "issue": problem.lower()}]
+            )
+        correct = is_correct(selected, [o.id for o in lq.options if o.is_correct])
+    else:
+        correct = estimate_correct(value, config)
 
     answer = LessonAttemptAnswer(
         attempt_id=attempt.id,
         question_id=question_id,
         selected_option_ids=selected,
-        is_correct=is_correct(selected, [o.id for o in lq.options if o.is_correct]),
+        value=value,
+        is_correct=correct,
         answered_at=now,
     )
     db.add(answer)
