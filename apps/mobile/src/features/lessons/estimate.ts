@@ -38,3 +38,8 @@ export function formatNumber(n: number): string {
 export function startValue(config: EstimateConfig): number {
   return snap((config.min + config.max) / 2, config);
 }
+
+/** "3,700 km", but "93%" with no space before a percent sign. */
+export function withUnit(n: number, unit: string): string {
+  return unit === "%" ? `${formatNumber(n)}%` : `${formatNumber(n)} ${unit}`;
+}

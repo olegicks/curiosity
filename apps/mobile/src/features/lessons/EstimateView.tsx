@@ -14,7 +14,7 @@ import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { radius, spacing } from "@/ui/tokens";
 
-import { a11yStep, formatNumber, fraction, snap, startValue, valueAt } from "./estimate";
+import { a11yStep, formatNumber, fraction, snap, startValue, valueAt, withUnit } from "./estimate";
 
 type Props = {
   question: QuestionOut;
@@ -102,7 +102,7 @@ export function EstimateView({ question, result, onSubmit }: Props) {
             min: config.min,
             max: config.max,
             now: shown,
-            text: `${formatNumber(shown)} ${unit}`,
+            text: withUnit(shown, unit),
           }}
           accessibilityActions={[{ name: "increment" }, { name: "decrement" }]}
           onAccessibilityAction={(e) => nudge(e.nativeEvent.actionName === "increment" ? 1 : -1)}
@@ -149,14 +149,14 @@ export function EstimateView({ question, result, onSubmit }: Props) {
         </View>
         <View style={styles.ends}>
           <Text variant="caption" tone="muted">
-            {formatNumber(config.min)} {unit}
+            {withUnit(config.min, unit)}
           </Text>
           <Text variant="caption" tone="muted">
-            {formatNumber(config.max)} {unit}
+            {withUnit(config.max, unit)}
           </Text>
         </View>
         <Text variant="display" tone="accent" style={styles.center}>
-          {formatNumber(shown)} {unit}
+          {withUnit(shown, unit)}
         </Text>
         {!touched && !result ? (
           <Text variant="caption" tone="muted" style={styles.center}>
@@ -192,8 +192,8 @@ export function EstimateView({ question, result, onSubmit }: Props) {
             </View>
             <Text variant="label">
               {strings.lessons.estimate.result(
-                `${formatNumber(real.value)} ${unit}`,
-                `${formatNumber(real.answer)} ${unit}`,
+                withUnit(real.value, unit),
+                withUnit(real.answer, unit),
               )}
             </Text>
             <Text>{result.explanation}</Text>

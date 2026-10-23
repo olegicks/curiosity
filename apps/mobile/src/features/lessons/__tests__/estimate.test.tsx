@@ -9,6 +9,7 @@ import {
   snap,
   startValue,
   valueAt,
+  withUnit,
 } from "@/features/lessons/estimate";
 import { EstimateView } from "@/features/lessons/EstimateView";
 import { weekStrip } from "@/features/lessons/reward";
@@ -31,6 +32,8 @@ test("slider maths snaps to the grid and stays in range", () => {
   expect(formatNumber(3700)).toBe("3,700");
   expect(formatNumber(1234567.5)).toBe("1,234,567.5");
   expect(formatNumber(-2500)).toBe("-2,500");
+  expect(withUnit(3700, "km")).toBe("3,700 km");
+  expect(withUnit(93, "%")).toBe("93%");
 });
 
 test("week strip marks the streak days up to today", () => {
