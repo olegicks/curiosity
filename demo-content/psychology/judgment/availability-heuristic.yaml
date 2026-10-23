@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760202
+slug: availability-heuristic
+version: 1
+status: published
+subject: psychology
+topic: judgment
+position: 2
+title: The availability heuristic
+description: Why events that come to mind easily seem more common than they are.
+learning_objective: Recognize when ease of recall is standing in for real frequency, and name one way to check it.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [anchoring, confirmation-bias]
+sources:
+  - key: tversky-kahneman-1973
+  - key: tversky-kahneman-1974
+steps:
+  - type: hook
+    body: |
+      Are there more English words that start with the letter K, or more words
+      with K as the third letter? Notice which answer feels right, and why.
+  - type: explanation
+    title: The core idea
+    body: |
+      The **availability heuristic** is judging how common or likely something is
+      by how easily examples come to mind. It is often a useful shortcut, but
+      vivid, recent or emotional events are easy to recall without being common.
+  - type: question
+    question_key: check-define
+  - type: example
+    kind: research
+    source_key: tversky-kahneman-1973
+    title: Letters and words
+    body: |
+      Most people said words starting with K were more common. In fact words with
+      K in third position are more frequent, but words starting with K are much
+      easier to search for in memory.
+  - type: misconception
+    myth: If I can think of many examples, the event must be common.
+    correction: |
+      Ease of recall also depends on how vivid, recent and widely reported an
+      event is. Those things do not always track how often it really happens.
+  - type: question
+    question_key: check-media
+  - type: summary
+    points:
+      - We judge frequency by how easily examples come to mind.
+      - Vivid and recent events are easy to recall without being common.
+      - Checking real numbers is the best correction.
+questions:
+  - key: check-define
+    role: lesson
+    type: single_choice
+    prompt: Which judgment relies most on the availability heuristic?
+    options:
+      - key: a
+        text: Thinking plane crashes are common after seeing news coverage of one
+        correct: true
+        feedback: A vivid, recent example makes the event feel more frequent.
+      - key: b
+        text: Offering a price close to the seller's opening figure
+        correct: false
+        feedback: That is anchoring on a starting number.
+      - key: c
+        text: Checking official accident statistics before deciding
+        correct: false
+        feedback: Using real frequencies is the opposite of relying on what comes to mind.
+    explanation: Availability uses ease of recall as a stand-in for frequency.
+  - key: check-media
+    role: lesson
+    type: true_false
+    prompt: "True or false: how often an event is in the news can change how common it seems."
+    options:
+      - key: "true"
+        text: "True"
+        correct: true
+        feedback: Right. Coverage makes examples easier to recall.
+      - key: "false"
+        text: "False"
+        correct: false
+        feedback: Frequent coverage makes events easier to bring to mind, which makes them seem common.
+    explanation: Media coverage shapes what is available in memory.
+  - key: recall-k-words
+    role: recall
+    type: single_choice
+    prompt: Why do people guess that more words start with K than have K third?
+    options:
+      - key: a
+        text: Words starting with K are easier to bring to mind
+        correct: true
+        feedback: We search memory by first letter much more easily.
+      - key: b
+        text: Words starting with K really are more common
+        correct: false
+        feedback: Words with K in third position are more frequent.
+      - key: c
+        text: People are anchored by the letter K
+        correct: false
+        feedback: No starting number is involved here.
+    explanation: Ease of retrieval, not real frequency, drives the guess.
+  - key: recall-vivid
+    role: recall
+    type: single_choice
+    prompt: Which kind of event tends to be overestimated because of availability?
+    options:
+      - key: a
+        text: Rare but dramatic events, like shark attacks
+        correct: true
+        feedback: Vivid events are memorable and widely reported, so they feel common.
+      - key: b
+        text: Common but dull events, like minor colds
+        correct: false
+        feedback: Ordinary events are more often underestimated.
+      - key: c
+        text: Events with exact published statistics
+        correct: false
+        feedback: Statistics help correct availability, they are not caused by it.
+    explanation: Drama and coverage make rare events easy to recall.
+  - key: recall-vs-confirmation
+    role: recall
+    type: single_choice
+    prompt: Lena thinks burglaries in her area are rising because two neighbours mentioned one this month. What is this most likely?
+    options:
+      - key: a
+        text: The availability heuristic
+        correct: true
+        feedback: Two recent, memorable stories make burglaries feel more frequent.
+      - key: b
+        text: Confirmation bias
+        correct: false
+        feedback: She isn't testing an existing belief. She is judging frequency from recent examples.
+      - key: c
+        text: Anchoring
+        correct: false
+        feedback: No starting number is pulling her estimate.
+    explanation: Recent personal stories are easy to recall and inflate frequency estimates.
+  - key: recall-check
+    role: recall
+    type: multi_select
+    prompt: Which habits help when you suspect availability is skewing a judgment? Select all that apply.
+    options:
+      - key: a
+        text: Looking up base rates or statistics
+        correct: true
+        feedback: Real frequencies are the most direct correction.
+      - key: b
+        text: Asking whether an example is memorable because it is unusual
+        correct: true
+        feedback: Unusual events stick in memory precisely because they are rare.
+      - key: c
+        text: Counting how many examples you can remember
+        correct: false
+        feedback: That is the heuristic itself, not a check on it.
+      - key: d
+        text: Trusting the stories you heard most recently
+        correct: false
+        feedback: Recent stories are exactly what availability over-weights.
+    explanation: Separate how easy something is to recall from how often it happens.

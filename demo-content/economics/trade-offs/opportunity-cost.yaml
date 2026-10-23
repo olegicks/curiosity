@@ -1,0 +1,157 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760502
+slug: opportunity-cost
+version: 1
+status: published
+subject: economics
+topic: trade-offs
+position: 2
+title: Opportunity cost
+description: The real price of a choice is what you give up for it.
+learning_objective: Identify the opportunity cost of a choice and explain why people tend to overlook it.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [sunk-cost]
+sources:
+  - key: frederick-2009
+  - key: mankiw-2021
+steps:
+  - type: hook
+    body: |
+      A free concert ticket costs you nothing. Or does it? What else could you have
+      done with that evening?
+  - type: explanation
+    title: The core idea
+    body: |
+      The **opportunity cost** of a choice is the value of the best alternative you
+      give up. Time and money spent on one thing can't be spent on another, so
+      every choice has a hidden price tag.
+  - type: question
+    question_key: check-define
+  - type: example
+    kind: research
+    source_key: frederick-2009
+    title: Remind people and they choose differently
+    body: |
+      When shoppers deciding on a purchase were simply reminded that they could
+      keep the money for other things, more of them chose not to buy.
+  - type: misconception
+    myth: Free things have no cost.
+    correction: |
+      A free ticket can still cost you a whole evening, and whatever else you'd
+      have done with it.
+  - type: question
+    question_key: check-time
+  - type: summary
+    points:
+      - Every choice gives up the next-best alternative.
+      - People often forget alternatives unless reminded.
+      - Time has opportunity costs too, not just money.
+questions:
+  - key: check-define
+    role: lesson
+    type: single_choice
+    prompt: You spend Saturday working extra shifts instead of hiking. What's the opportunity cost?
+    options:
+      - key: a
+        text: The hike you gave up
+        correct: true
+        feedback: The best alternative you passed on.
+      - key: b
+        text: The money you earned
+        correct: false
+        feedback: That's what you gained.
+      - key: c
+        text: Nothing, because you got paid
+        correct: false
+        feedback: You still gave something up.
+    explanation: Opportunity cost is the value of what you didn't choose.
+  - key: check-time
+    role: lesson
+    type: true_false
+    prompt: "True or false: something given away free has no opportunity cost."
+    options:
+      - key: "true"
+        text: "True"
+        correct: false
+        feedback: It can still cost time or another choice.
+      - key: "false"
+        text: "False"
+        correct: true
+        feedback: Right. Your time and attention have value.
+    explanation: Free in money isn't free in time.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: Opportunity cost is…
+    options:
+      - key: a
+        text: The value of the best alternative you give up
+        correct: true
+        feedback: Right.
+      - key: b
+        text: The price on the tag
+        correct: false
+        feedback: The price is only part of the cost.
+      - key: c
+        text: Money you can't get back
+        correct: false
+        feedback: That's a sunk cost.
+    explanation: Every choice rules out other options.
+  - key: recall-neglect
+    role: recall
+    type: single_choice
+    prompt: What changed shoppers' choices in the opportunity cost study?
+    options:
+      - key: a
+        text: A reminder they could keep the money for other things
+        correct: true
+        feedback: Making the alternative visible changed decisions.
+      - key: b
+        text: A discount
+        correct: false
+        feedback: The price stayed the same.
+      - key: c
+        text: A longer warranty
+        correct: false
+        feedback: The product details didn't change.
+    explanation: People neglect alternatives unless prompted.
+  - key: recall-university
+    role: recall
+    type: single_choice
+    prompt: Which is part of the opportunity cost of going to university full time?
+    options:
+      - key: a
+        text: The wages you could have earned working instead
+        correct: true
+        feedback: That's the alternative you give up.
+      - key: b
+        text: The food you'd eat anyway
+        correct: false
+        feedback: You'd pay for that either way.
+      - key: c
+        text: The degree certificate
+        correct: false
+        feedback: That's what you gain.
+    explanation: Lost earnings are a classic opportunity cost.
+  - key: recall-vs-sunk
+    role: recall
+    type: single_choice
+    prompt: How does opportunity cost differ from sunk cost?
+    options:
+      - key: a
+        text: It's about alternatives you give up now, not money already spent
+        correct: true
+        feedback: One looks forward, the other back.
+      - key: b
+        text: They're the same thing
+        correct: false
+        feedback: Sunk costs are in the past.
+      - key: c
+        text: Opportunity cost only applies to businesses
+        correct: false
+        feedback: It applies to every choice.
+    explanation: Opportunity costs should count; sunk costs shouldn't.

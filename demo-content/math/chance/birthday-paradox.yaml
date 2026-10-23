@@ -1,0 +1,154 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760401
+slug: birthday-paradox
+version: 1
+status: published
+subject: math
+topic: chance
+position: 1
+title: The birthday paradox
+description: Why a shared birthday in a small group is more likely than it feels.
+learning_objective: Explain why coincidences are common when there are many possible pairs.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [gamblers-fallacy]
+sources:
+  - key: feller-1968
+  - key: tversky-kahneman-1971
+steps:
+  - type: hook
+    body: |
+      How many people need to be in a room before it's more likely than not that
+      two of them share a birthday? Make a guess before you read on.
+  - type: question
+    question_key: check-estimate
+  - type: explanation
+    title: Count the pairs
+    body: |
+      We tend to think about **our own** birthday matching someone. But any two
+      people can match. With 23 people there are 253 different pairs, and each
+      pair is another chance for a match.
+  - type: example
+    kind: illustrative
+    title: A football match
+    body: |
+      Two teams of 11 plus the referee make 23 people on the pitch. In about half
+      of all matches, two of them share a birthday.
+  - type: misconception
+    myth: You'd need about 183 people, half of 365.
+    correction: |
+      That would be true for matching **your** birthday. Matching **any** two
+      people grows much faster because the number of pairs grows quickly.
+  - type: question
+    question_key: check-pairs
+  - type: summary
+    points:
+      - With just 23 people a shared birthday is more likely than not.
+      - The number of pairs grows much faster than the number of people.
+      - Coincidences are common when there are many chances for them.
+questions:
+  - key: check-estimate
+    role: lesson
+    type: estimate
+    prompt: How many people do you need for a better-than-even chance that two share a birthday?
+    estimate:
+      min: 2
+      max: 200
+      step: 1
+      unit: people
+      answer: 23
+      tolerance: 5
+    explanation: Just 23. Most people guess far higher because they think about matching their own birthday.
+  - key: check-pairs
+    role: lesson
+    type: single_choice
+    prompt: Why is a shared birthday likely with only 23 people?
+    options:
+      - key: a
+        text: There are 253 different pairs, each a chance to match
+        correct: true
+        feedback: Pairs grow much faster than people.
+      - key: b
+        text: Birthdays cluster in summer
+        correct: false
+        feedback: The maths works even with evenly spread birthdays.
+      - key: c
+        text: It isn't likely. It's a myth
+        correct: false
+        feedback: It really is just over 50%.
+    explanation: Counting pairs, not people, explains the surprise.
+  - key: recall-number
+    role: recall
+    type: single_choice
+    prompt: About how many people give a 50% chance of a shared birthday?
+    options:
+      - key: a
+        text: "23"
+        correct: true
+        feedback: Just 23.
+      - key: b
+        text: "183"
+        correct: false
+        feedback: That's half of 365, the common wrong intuition.
+      - key: c
+        text: "365"
+        correct: false
+        feedback: Far fewer are needed.
+    explanation: 23 people make 253 pairs.
+  - key: recall-intuition
+    role: recall
+    type: single_choice
+    prompt: Why does our intuition get this wrong?
+    options:
+      - key: a
+        text: We imagine matching our own birthday, not any pair
+        correct: true
+        feedback: That's the trap.
+      - key: b
+        text: We don't know how many days are in a year
+        correct: false
+        feedback: The problem isn't the calendar.
+      - key: c
+        text: Birthdays are random
+        correct: false
+        feedback: Randomness is exactly what makes coincidences common.
+    explanation: Thinking about one person hides all the other pairs.
+  - key: recall-coincidence
+    role: recall
+    type: single_choice
+    prompt: You bump into a school friend on holiday abroad. What's the best way to see it?
+    options:
+      - key: a
+        text: Rare for that friend, but with so many people and places, some meeting is likely
+        correct: true
+        feedback: Many possible pairs make some coincidence likely.
+      - key: b
+        text: It must be fate
+        correct: false
+        feedback: Large numbers make coincidences ordinary.
+      - key: c
+        text: It's impossible by chance
+        correct: false
+        feedback: It's unlikely for one pair, likely across all of them.
+    explanation: With enough chances, surprising coincidences are expected.
+  - key: recall-growth
+    role: recall
+    type: single_choice
+    prompt: If a group doubles in size, the number of possible pairs…
+    options:
+      - key: a
+        text: Roughly quadruples
+        correct: true
+        feedback: Pairs grow with the square of the group size.
+      - key: b
+        text: Doubles
+        correct: false
+        feedback: It grows faster than that.
+      - key: c
+        text: Stays the same
+        correct: false
+        feedback: More people means many more pairs.
+    explanation: That's why coincidences pile up quickly in bigger groups.

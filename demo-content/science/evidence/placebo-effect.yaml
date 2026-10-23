@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760302
+slug: placebo-effect
+version: 1
+status: published
+subject: science
+topic: evidence
+position: 2
+title: The placebo effect
+description: Why fake pills can make people feel better, and why trials need them.
+learning_objective: Explain what a placebo is and why good medical trials compare against one.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [correlation-causation]
+sources:
+  - key: kaptchuk-miller-2015
+  - key: hrobjartsson-gotzsche-2001
+steps:
+  - type: hook
+    body: |
+      You take a pill for a headache and feel better in twenty minutes. Was it the
+      pill, or would you have felt better anyway?
+  - type: explanation
+    title: The core idea
+    body: |
+      A **placebo** is a treatment with no active ingredient, like a sugar pill.
+      People who take one often report feeling better, especially for symptoms
+      like pain or nausea. Expectation, attention and time all play a part.
+  - type: question
+    question_key: check-define
+  - type: example
+    kind: research
+    source_key: hrobjartsson-gotzsche-2001
+    title: How big is it really?
+    body: |
+      A large review compared placebo with no treatment at all. It found small
+      effects on reported symptoms like pain, but little effect on objective
+      measures such as blood tests.
+  - type: misconception
+    myth: The placebo effect can cure serious diseases.
+    correction: |
+      Placebos mostly change how people feel and report symptoms. They don't
+      shrink tumours or kill infections.
+  - type: question
+    question_key: check-trial
+  - type: summary
+    points:
+      - A placebo has no active ingredient but can change how people feel.
+      - Effects are mostly on reported symptoms like pain.
+      - Good trials compare a treatment against a placebo.
+questions:
+  - key: check-define
+    role: lesson
+    type: single_choice
+    prompt: What is a placebo?
+    options:
+      - key: a
+        text: A treatment with no active ingredient
+        correct: true
+        feedback: Like a sugar pill that looks like the real thing.
+      - key: b
+        text: A weaker dose of a real drug
+        correct: false
+        feedback: A placebo contains no active drug at all.
+      - key: c
+        text: A natural remedy
+        correct: false
+        feedback: Natural remedies can have active ingredients.
+    explanation: A placebo looks like a treatment but has nothing active in it.
+  - key: check-trial
+    role: lesson
+    type: single_choice
+    prompt: Why do drug trials give some people a placebo?
+    options:
+      - key: a
+        text: To see if the drug beats expectation and time alone
+        correct: true
+        feedback: The drug has to do better than the placebo to count.
+      - key: b
+        text: To save money on the real drug
+        correct: false
+        feedback: Cost isn't the reason.
+      - key: c
+        text: To make the drug look better
+        correct: false
+        feedback: It's the opposite. It's a tougher test.
+    explanation: The placebo group shows what happens without the active ingredient.
+  - key: recall-measure
+    role: recall
+    type: single_choice
+    prompt: Placebos tend to have the biggest effect on…
+    options:
+      - key: a
+        text: Reported symptoms like pain
+        correct: true
+        feedback: Subjective symptoms respond most.
+      - key: b
+        text: Blood test results
+        correct: false
+        feedback: Objective measures change little.
+      - key: c
+        text: Broken bones healing faster
+        correct: false
+        feedback: There's no good evidence for that.
+    explanation: Placebo effects show up mostly in how people feel.
+  - key: recall-blind
+    role: recall
+    type: single_choice
+    prompt: In a "blind" trial, who doesn't know who got the real drug?
+    options:
+      - key: a
+        text: The participants
+        correct: true
+        feedback: Otherwise their expectations would differ between groups.
+      - key: b
+        text: The drug company
+        correct: false
+        feedback: Blinding is about the people in the trial.
+      - key: c
+        text: Nobody is kept in the dark
+        correct: false
+        feedback: Blinding hides who got what.
+    explanation: Blinding keeps expectations the same in both groups.
+  - key: recall-headache
+    role: recall
+    type: single_choice
+    prompt: You feel better after a pill. Why isn't that proof it worked?
+    options:
+      - key: a
+        text: You might have recovered anyway, or felt better from expecting to
+        correct: true
+        feedback: Time and expectation are both possible explanations.
+      - key: b
+        text: Pills never work
+        correct: false
+        feedback: Many do. One experience just can't show it.
+      - key: c
+        text: It is proof
+        correct: false
+        feedback: One case can't separate the pill from time and expectation.
+    explanation: That's why trials compare against a placebo group.
+  - key: recall-cure
+    role: recall
+    type: single_choice
+    prompt: Which claim about placebos is accurate?
+    options:
+      - key: a
+        text: They can ease some symptoms but rarely change the disease itself
+        correct: true
+        feedback: That matches the research.
+      - key: b
+        text: They cure most illnesses
+        correct: false
+        feedback: The evidence doesn't support that.
+      - key: c
+        text: They have no effect at all
+        correct: false
+        feedback: Small effects on reported symptoms are common.
+    explanation: Placebo effects are real but limited.

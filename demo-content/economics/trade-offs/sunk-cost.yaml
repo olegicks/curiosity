@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760501
+slug: sunk-cost
+version: 1
+status: published
+subject: economics
+topic: trade-offs
+position: 1
+title: The sunk cost trap
+description: Why money already spent shouldn't decide what you do next.
+learning_objective: Recognise when past costs that can't be recovered are steering a decision.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [opportunity-cost]
+sources:
+  - key: arkes-blumer-1985
+  - key: mankiw-2021
+steps:
+  - type: hook
+    body: |
+      You paid for a concert ticket, but on the night you feel ill and it's
+      pouring with rain. Do you go anyway because you already paid?
+  - type: explanation
+    title: The core idea
+    body: |
+      A **sunk cost** is money, time or effort you've already spent and can't get
+      back. The **sunk cost fallacy** is letting it push you to continue something
+      that's no longer worth it, just to avoid "wasting" what's gone.
+  - type: question
+    question_key: check-define
+  - type: example
+    kind: research
+    source_key: arkes-blumer-1985
+    title: The ski trip
+    body: |
+      People were asked to imagine booking two ski trips for the same weekend by
+      mistake: an expensive one and a cheaper one they'd enjoy more. Many chose
+      the expensive trip, because they'd paid more for it.
+  - type: misconception
+    myth: Quitting means the money was wasted.
+    correction: |
+      The money is gone either way. The only question is which choice gives you
+      the better future from here.
+  - type: question
+    question_key: check-choice
+  - type: summary
+    points:
+      - Sunk costs are spent and can't be recovered.
+      - Good decisions look forward, not back.
+      - Ask what you'd choose if you hadn't paid anything yet.
+questions:
+  - key: check-define
+    role: lesson
+    type: single_choice
+    prompt: Which of these is a sunk cost?
+    options:
+      - key: a
+        text: The non-refundable ticket you already bought
+        correct: true
+        feedback: It's spent whatever you decide now.
+      - key: b
+        text: The taxi you'd need to get there
+        correct: false
+        feedback: That's a future cost you can still avoid.
+      - key: c
+        text: Tomorrow's lunch money
+        correct: false
+        feedback: That hasn't been spent yet.
+    explanation: A sunk cost can't be recovered by any future choice.
+  - key: check-choice
+    role: lesson
+    type: single_choice
+    prompt: You're two hours into a boring film you paid for. What's the sunk-cost-free way to decide?
+    options:
+      - key: a
+        text: Ask whether the rest of the film is worth your next hour
+        correct: true
+        feedback: Only the future matters now.
+      - key: b
+        text: Stay, or the ticket is wasted
+        correct: false
+        feedback: The ticket is spent either way.
+      - key: c
+        text: Stay because you've already watched two hours
+        correct: false
+        feedback: Those two hours are sunk too.
+    explanation: Compare future benefits and costs only.
+  - key: recall-project
+    role: recall
+    type: single_choice
+    prompt: A company keeps funding a failing project because it has "already spent millions". This is…
+    options:
+      - key: a
+        text: The sunk cost fallacy
+        correct: true
+        feedback: Past spending is driving a forward-looking decision.
+      - key: b
+        text: Opportunity cost
+        correct: false
+        feedback: Opportunity cost is what you give up by choosing.
+      - key: c
+        text: A good investment rule
+        correct: false
+        feedback: Past spending doesn't make the future more promising.
+    explanation: Decisions should rest on future value, not past spending.
+  - key: recall-question
+    role: recall
+    type: single_choice
+    prompt: What's a good question to beat the sunk cost trap?
+    options:
+      - key: a
+        text: Would I start this today if I hadn't spent anything?
+        correct: true
+        feedback: It takes the sunk cost out of the picture.
+      - key: b
+        text: How much have I spent so far?
+        correct: false
+        feedback: That keeps you focused on the past.
+      - key: c
+        text: Who will notice if I quit?
+        correct: false
+        feedback: Other people's opinions don't change the sunk cost.
+    explanation: Imagine starting fresh.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: A sunk cost is…
+    options:
+      - key: a
+        text: A past cost that can't be recovered
+        correct: true
+        feedback: Right.
+      - key: b
+        text: A cost you'll pay next month
+        correct: false
+        feedback: Future costs can still be avoided.
+      - key: c
+        text: A cost that sinks the company
+        correct: false
+        feedback: The name is about cost that's gone, not about failure.
+    explanation: Sunk means spent and unrecoverable.
+  - key: recall-ski
+    role: recall
+    type: single_choice
+    prompt: In the ski trip study, why did many people pick the trip they'd enjoy less?
+    options:
+      - key: a
+        text: They'd paid more for it
+        correct: true
+        feedback: The bigger sunk cost pulled their choice.
+      - key: b
+        text: It was closer to home
+        correct: false
+        feedback: Price was the only difference that mattered.
+      - key: c
+        text: It had better snow
+        correct: false
+        feedback: They expected to enjoy the cheaper trip more.
+    explanation: Bigger sunk costs feel harder to "waste".

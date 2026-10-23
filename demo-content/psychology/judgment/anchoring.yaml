@@ -1,0 +1,179 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760201
+slug: anchoring
+version: 2
+status: published
+subject: psychology
+topic: judgment
+position: 1
+title: Anchoring
+description: Why the first number you see pulls your estimate towards it.
+learning_objective: Recognize when an initial number is anchoring an estimate, and name one way to weaken its pull.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [availability-heuristic, confirmation-bias]
+sources:
+  - key: tversky-kahneman-1974
+  - key: furnham-boo-2011
+    note: Review of anchoring across many domains.
+steps:
+  - type: hook
+    body: |
+      A jacket is marked "was 300, now 150". Does 150 feel like a bargain? Would it
+      feel the same if you had never seen the 300?
+  - type: explanation
+    title: The core idea
+    body: |
+      **Anchoring** is the tendency for an initial number to pull later estimates
+      towards it. We start from the anchor and adjust, but usually not far enough,
+      so the final answer stays too close to where we began.
+  - type: question
+    question_key: check-define
+  - type: example
+    kind: research
+    source_key: tversky-kahneman-1974
+    title: The wheel of fortune
+    body: |
+      People watched a wheel land on a number that looked random, then estimated
+      the share of African countries in the United Nations. Those who saw a higher
+      number gave higher estimates, even though the wheel had nothing to do with
+      the question.
+  - type: misconception
+    myth: Only obviously relevant numbers can act as anchors.
+    correction: |
+      Even numbers that are clearly arbitrary can shift estimates. Relevance is
+      not required for the pull to work.
+  - type: question
+    question_key: check-arbitrary
+  - type: question
+    question_key: check-estimate
+  - type: summary
+    points:
+      - A first number pulls later estimates towards it.
+      - We adjust away from the anchor, but usually not enough.
+      - Arbitrary numbers can anchor us too.
+questions:
+  - key: check-define
+    role: lesson
+    type: single_choice
+    prompt: Which situation best shows anchoring?
+    options:
+      - key: a
+        text: A buyer's offer stays close to the seller's high asking price
+        correct: true
+        feedback: The asking price set a starting point and the offer adjusted only partly away from it.
+      - key: b
+        text: A buyer remembers only the good reviews of a car they like
+        correct: false
+        feedback: That is closer to confirmation bias in memory.
+      - key: c
+        text: A buyer picks the most recently advertised brand
+        correct: false
+        feedback: That is about what comes to mind easily, not a starting number.
+    explanation: Anchoring is about a starting value pulling an estimate towards it.
+  - key: check-arbitrary
+    role: lesson
+    type: true_false
+    prompt: "True or false: a number has to be relevant to the question to anchor an estimate."
+    options:
+      - key: "true"
+        text: "True"
+        correct: false
+        feedback: In the wheel of fortune study, a random number still shifted estimates.
+      - key: "false"
+        text: "False"
+        correct: true
+        feedback: Right. Even arbitrary numbers can act as anchors.
+    explanation: Anchors work even when people know they are irrelevant.
+  - key: check-estimate
+    role: lesson
+    type: estimate
+    prompt: A friend says the Mississippi is about 7,000 km long. How long do you think it really is?
+    estimate:
+      min: 0
+      max: 8000
+      step: 100
+      unit: km
+      answer: 3700
+      tolerance: 600
+      anchor: 7000
+    explanation: The Mississippi is roughly 3,700 km long. If your guess landed near 7,000, the number you heard first pulled it up. That's anchoring.
+  - key: recall-salary
+    role: recall
+    type: single_choice
+    prompt: In a salary negotiation, the first figure mentioned often shapes the final agreement. Why?
+    options:
+      - key: a
+        text: It acts as an anchor that later offers adjust from
+        correct: true
+        feedback: Both sides tend to adjust from the first figure rather than start fresh.
+      - key: b
+        text: People always accept the first offer
+        correct: false
+        feedback: They negotiate, but the adjustment usually stays close to the start.
+      - key: c
+        text: The first figure is usually the fairest one
+        correct: false
+        feedback: Its influence comes from being first, not from being fair.
+    explanation: Opening numbers set a reference point for the rest of the negotiation.
+  - key: recall-adjustment
+    role: recall
+    type: single_choice
+    prompt: What typically goes wrong when we adjust away from an anchor?
+    options:
+      - key: a
+        text: We adjust too far and overshoot
+        correct: false
+        feedback: The usual finding is the opposite.
+      - key: b
+        text: We stop adjusting too early
+        correct: true
+        feedback: Adjustment tends to be insufficient, leaving estimates near the anchor.
+      - key: c
+        text: We ignore the anchor completely
+        correct: false
+        feedback: If we ignored it, it would not change our estimates.
+    explanation: Insufficient adjustment is the classic explanation of anchoring.
+  - key: recall-sale
+    role: recall
+    type: single_choice
+    prompt: A shop shows a crossed-out "original" price next to the sale price. What is it relying on?
+    options:
+      - key: a
+        text: Anchoring
+        correct: true
+        feedback: The original price anchors your sense of what the item is worth.
+      - key: b
+        text: The availability heuristic
+        correct: false
+        feedback: Availability is about judging frequency by how easily examples come to mind.
+      - key: c
+        text: Hindsight bias
+        correct: false
+        feedback: Hindsight bias concerns outcomes that seem predictable afterwards.
+    explanation: A high reference price makes the sale price feel like a better deal.
+  - key: recall-counter
+    role: recall
+    type: multi_select
+    prompt: Which steps can weaken the pull of an anchor? Select all that apply.
+    options:
+      - key: a
+        text: Making your own estimate before seeing anyone else's number
+        correct: true
+        feedback: An independent estimate gives you your own starting point.
+      - key: b
+        text: Thinking of reasons the anchor might be wrong
+        correct: true
+        feedback: Considering the opposite can reduce anchoring in some studies.
+      - key: c
+        text: Looking at the anchor for longer
+        correct: false
+        feedback: More attention to the anchor does not weaken it.
+      - key: d
+        text: Telling yourself to ignore the anchor and nothing else
+        correct: false
+        feedback: Warnings alone tend to have little effect on anchoring.
+    explanation: These habits can help, but anchoring is hard to eliminate fully.

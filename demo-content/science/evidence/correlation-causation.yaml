@@ -1,0 +1,169 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760301
+slug: correlation-causation
+version: 1
+status: published
+subject: science
+topic: evidence
+position: 1
+title: Correlation isn't causation
+description: Why two things rising together doesn't mean one causes the other.
+learning_objective: Spot when a claimed cause might really be a coincidence, a hidden third factor, or reversed.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [placebo-effect]
+sources:
+  - key: messerli-2012
+  - key: tversky-kahneman-1971
+steps:
+  - type: hook
+    body: |
+      Countries that eat more chocolate win more Nobel Prizes. Should you start
+      eating chocolate to become a genius?
+  - type: explanation
+    title: The core idea
+    body: |
+      A **correlation** means two things tend to move together. A **cause** means
+      changing one actually changes the other. Correlations are easy to find;
+      causes are much harder to prove.
+  - type: explanation
+    title: Three usual suspects
+    body: |
+      When two things move together, ask: is there a **hidden third factor**
+      (wealth drives both chocolate and research)? Could it be **reversed**? Or is
+      it just **coincidence** in a small or cherry-picked set of data?
+  - type: question
+    question_key: check-third
+  - type: example
+    kind: research
+    source_key: messerli-2012
+    title: Chocolate and Nobel Prizes
+    body: |
+      A tongue-in-cheek paper found a strong link between national chocolate
+      consumption and Nobel laureates per person. Richer countries tend to have
+      both more chocolate and more research funding.
+  - type: misconception
+    myth: A strong correlation proves a cause.
+    correction: |
+      Even a very strong link can come from a third factor. To show a cause,
+      researchers change one thing on purpose and see what happens, ideally in a
+      randomised experiment.
+  - type: question
+    question_key: check-test
+  - type: summary
+    points:
+      - Moving together is not the same as one causing the other.
+      - Look for hidden third factors, reversed direction and coincidence.
+      - Experiments that change one thing on purpose are the best test.
+questions:
+  - key: check-third
+    role: lesson
+    type: single_choice
+    prompt: Ice-cream sales and drownings rise together. What's the most likely explanation?
+    options:
+      - key: a
+        text: Ice cream makes people worse swimmers
+        correct: false
+        feedback: There's no evidence for that. Look for something that drives both.
+      - key: b
+        text: Hot weather increases both
+        correct: true
+        feedback: Summer heat means more ice cream and more swimming, so more drownings.
+      - key: c
+        text: Drownings make people buy ice cream
+        correct: false
+        feedback: Reversing the arrow doesn't make sense here either.
+    explanation: A hidden third factor, the weather, drives both.
+  - key: check-test
+    role: lesson
+    type: single_choice
+    prompt: What's the best way to find out if a new study app really improves grades?
+    options:
+      - key: a
+        text: Compare students who chose the app with those who didn't
+        correct: false
+        feedback: Students who choose it may already be more motivated.
+      - key: b
+        text: Randomly assign students to use it or not, then compare
+        correct: true
+        feedback: Random assignment balances out hidden factors like motivation.
+      - key: c
+        text: Ask users whether their grades went up
+        correct: false
+        feedback: Self-reports are easily biased.
+    explanation: Randomised experiments separate cause from coincidence.
+  - key: recall-reverse
+    role: recall
+    type: single_choice
+    prompt: People who use more painkillers report more pain. What could explain this?
+    options:
+      - key: a
+        text: The arrow is reversed. Pain leads to painkiller use
+        correct: true
+        feedback: Pain causes the pills, not the other way round.
+      - key: b
+        text: Painkillers cause pain
+        correct: false
+        feedback: The simpler explanation is reversed direction.
+      - key: c
+        text: It's pure coincidence
+        correct: false
+        feedback: There's an obvious reason the two go together.
+    explanation: Always check which way the arrow could point.
+  - key: recall-third
+    role: recall
+    type: single_choice
+    prompt: Cities with more firefighters have more fires. Why?
+    options:
+      - key: a
+        text: Firefighters start fires
+        correct: false
+        feedback: Look for something that drives both numbers.
+      - key: b
+        text: Bigger cities have more of both
+        correct: true
+        feedback: City size is the hidden third factor.
+      - key: c
+        text: Fires attract firefighters to move there
+        correct: false
+        feedback: City size explains both more simply.
+    explanation: Population size is a classic hidden third factor.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: What does a correlation tell you on its own?
+    options:
+      - key: a
+        text: That two things tend to move together
+        correct: true
+        feedback: That's all a correlation shows.
+      - key: b
+        text: That one thing causes the other
+        correct: false
+        feedback: Cause needs more evidence than a correlation.
+      - key: c
+        text: That the result will always repeat
+        correct: false
+        feedback: Correlations can be coincidences that don't repeat.
+    explanation: Correlation describes a pattern, not a mechanism.
+  - key: recall-experiment
+    role: recall
+    type: single_choice
+    prompt: Why do randomised experiments beat simple comparisons?
+    options:
+      - key: a
+        text: Chance spreads hidden factors evenly across groups
+        correct: true
+        feedback: Random assignment balances what you can't see.
+      - key: b
+        text: They use more people
+        correct: false
+        feedback: Size helps, but randomisation is the key.
+      - key: c
+        text: They always find big effects
+        correct: false
+        feedback: They often find small or no effects.
+    explanation: Randomisation is what lets an experiment point to a cause.

@@ -1,0 +1,157 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760402
+slug: gamblers-fallacy
+version: 1
+status: published
+subject: math
+topic: chance
+position: 2
+title: The gambler's fallacy
+description: Why a coin doesn't "owe" you heads after a run of tails.
+learning_objective: Recognise when someone expects independent random events to even out in the short run.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-20
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [birthday-paradox]
+sources:
+  - key: croson-sundali-2005
+  - key: tversky-kahneman-1971
+steps:
+  - type: hook
+    body: |
+      A roulette wheel has landed on red eight times in a row. Is black now more
+      likely on the next spin?
+  - type: explanation
+    title: The core idea
+    body: |
+      The **gambler's fallacy** is believing that past random results change the
+      odds of the next one. A fair coin or wheel has no memory: each spin starts
+      fresh, whatever happened before.
+  - type: question
+    question_key: check-coin
+  - type: example
+    kind: research
+    source_key: croson-sundali-2005
+    title: Real casinos
+    body: |
+      Researchers watched roulette players in a casino. After long runs of one
+      colour, many players bet more on the other colour, as if it were due.
+  - type: misconception
+    myth: Things even out, so a streak makes the opposite more likely.
+    correction: |
+      Over thousands of spins, proportions get close to the odds. But that happens
+      because the streak gets diluted, not because the wheel corrects it.
+  - type: question
+    question_key: check-due
+  - type: summary
+    points:
+      - Independent random events have no memory.
+      - A streak doesn't make the opposite result "due".
+      - Long-run averages settle by dilution, not correction.
+questions:
+  - key: check-coin
+    role: lesson
+    type: single_choice
+    prompt: A fair coin lands tails five times in a row. What's the chance of heads next?
+    options:
+      - key: a
+        text: 50%
+        correct: true
+        feedback: Each flip is independent.
+      - key: b
+        text: More than 50%
+        correct: false
+        feedback: The coin has no memory of the last five flips.
+      - key: c
+        text: Less than 50%
+        correct: false
+        feedback: A streak doesn't change a fair coin.
+    explanation: Past flips don't change the next one.
+  - key: check-due
+    role: lesson
+    type: true_false
+    prompt: "True or false: after a long run of red, black is \"due\" on a fair wheel."
+    options:
+      - key: "true"
+        text: "True"
+        correct: false
+        feedback: The wheel has no memory, so nothing is ever due.
+      - key: "false"
+        text: "False"
+        correct: true
+        feedback: Right. The odds are the same every spin.
+    explanation: Expecting a correction is the gambler's fallacy.
+  - key: recall-memory
+    role: recall
+    type: single_choice
+    prompt: Why doesn't a roulette wheel "owe" you black?
+    options:
+      - key: a
+        text: Each spin is independent of the last
+        correct: true
+        feedback: The wheel doesn't remember.
+      - key: b
+        text: Casinos rig the wheel
+        correct: false
+        feedback: Even a fair wheel has no memory.
+      - key: c
+        text: Black is always less likely
+        correct: false
+        feedback: On a fair wheel the odds don't change.
+    explanation: Independence is the key idea.
+  - key: recall-family
+    role: recall
+    type: single_choice
+    prompt: A couple has three girls and expects a boy next because "it's their turn". This is…
+    options:
+      - key: a
+        text: The gambler's fallacy
+        correct: true
+        feedback: Previous births don't change the next one's odds.
+      - key: b
+        text: The birthday paradox
+        correct: false
+        feedback: That's about shared birthdays in groups.
+      - key: c
+        text: Sound reasoning
+        correct: false
+        feedback: The odds are about the same each time.
+    explanation: Expecting a "turn" treats chance as if it had memory.
+  - key: recall-dilution
+    role: recall
+    type: single_choice
+    prompt: How do long-run averages get close to the true odds?
+    options:
+      - key: a
+        text: Early streaks get diluted by many later results
+        correct: true
+        feedback: Dilution, not correction.
+      - key: b
+        text: Chance pushes back against streaks
+        correct: false
+        feedback: Nothing pushes back. Streaks just matter less over time.
+      - key: c
+        text: They never do
+        correct: false
+        feedback: Over many trials they do get close.
+    explanation: The law of large numbers works by dilution.
+  - key: recall-lottery
+    role: recall
+    type: single_choice
+    prompt: A number hasn't come up in the lottery for months. Is it more likely now?
+    options:
+      - key: a
+        text: No, every draw is independent
+        correct: true
+        feedback: The balls don't remember past draws.
+      - key: b
+        text: Yes, it's overdue
+        correct: false
+        feedback: Calling it overdue is the gambler's fallacy.
+      - key: c
+        text: Yes, if you buy more tickets
+        correct: false
+        feedback: More tickets change your odds, not the number's.
+    explanation: Lottery draws are independent events.

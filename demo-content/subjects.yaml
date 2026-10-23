@@ -1,0 +1,56 @@
+# DEMO ONLY: local device testing (D-17). Not editorially reviewed.
+subjects:
+  - slug: psychology
+    title: Psychology
+    description: How your mind takes shortcuts.
+    position: 1
+    published: true
+    topics:
+      - slug: judgment
+        title: How your mind takes shortcuts
+        description: How we estimate likelihoods and numbers.
+        position: 1
+      - slug: social
+        title: Beliefs and other people
+        description: How we weigh evidence about what we already believe.
+        position: 2
+  - slug: science
+    title: Science
+    description: How we know what's true.
+    position: 2
+    published: true
+    topics:
+      - slug: evidence
+        title: Telling evidence from noise
+        description: Why some findings convince and others mislead.
+        position: 1
+  - slug: math
+    title: Math
+    description: Chance, risk and numbers.
+    position: 3
+    published: true
+    topics:
+      - slug: chance
+        title: Chance is weirder than it feels
+        description: Probability puzzles that trip up intuition.
+        position: 1
+  - slug: economics
+    title: Economics
+    description: Money, choices and trade-offs.
+    position: 4
+    published: true
+    topics:
+      - slug: trade-offs
+        title: Every choice has a cost
+        description: How to think about what you give up.
+        position: 1
+  - slug: politics
+    title: Politics
+    description: How power and elections work.
+    position: 5
+    published: true
+    topics:
+      - slug: power
+        title: Who decides
+        description: Elections, institutions and influence.
+        position: 1

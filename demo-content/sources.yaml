@@ -1,0 +1,75 @@
+# DEMO ONLY: local device testing (D-17). Citations are real; lessons are not editorially reviewed.
+sources:
+  - key: nickerson-1998
+    type: journal_article
+    citation: "Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in many guises. Review of General Psychology, 2(2), 175–220."
+    doi: "10.1037/1089-2680.2.2.175"
+    peer_reviewed: true
+  - key: wason-1960
+    type: journal_article
+    citation: "Wason, P. C. (1960). On the failure to eliminate hypotheses in a conceptual task. Quarterly Journal of Experimental Psychology, 12(3), 129–140."
+    doi: "10.1080/17470216008416717"
+    peer_reviewed: true
+  - key: lord-ross-lepper-1979
+    type: journal_article
+    citation: "Lord, C. G., Ross, L., & Lepper, M. R. (1979). Biased assimilation and attitude polarization: The effects of prior theories on subsequently considered evidence. Journal of Personality and Social Psychology, 37(11), 2098–2109."
+    doi: "10.1037/0022-3514.37.11.2098"
+    peer_reviewed: true
+  - key: tversky-kahneman-1974
+    type: journal_article
+    citation: "Tversky, A., & Kahneman, D. (1974). Judgment under uncertainty: Heuristics and biases. Science, 185(4157), 1124–1131."
+    doi: "10.1126/science.185.4157.1124"
+    peer_reviewed: true
+  - key: tversky-kahneman-1973
+    type: journal_article
+    citation: "Tversky, A., & Kahneman, D. (1973). Availability: A heuristic for judging frequency and probability. Cognitive Psychology, 5(2), 207–232."
+    doi: "10.1016/0010-0285(73)90033-9"
+    peer_reviewed: true
+  - key: furnham-boo-2011
+    type: journal_article
+    citation: "Furnham, A., & Boo, H. C. (2011). A literature review of the anchoring effect. The Journal of Socio-Economics, 40(1), 35–42."
+    doi: "10.1016/j.socec.2010.10.008"
+    peer_reviewed: true
+  - key: messerli-2012
+    type: journal_article
+    citation: "Messerli, F. H. (2012). Chocolate consumption, cognitive function, and Nobel laureates. New England Journal of Medicine, 367(16), 1562–1564."
+    doi: "10.1056/NEJMon1211064"
+    peer_reviewed: true
+  - key: kaptchuk-miller-2015
+    type: journal_article
+    citation: "Kaptchuk, T. J., & Miller, F. G. (2015). Placebo effects in medicine. New England Journal of Medicine, 373(1), 8–9."
+    doi: "10.1056/NEJMp1504023"
+    peer_reviewed: true
+  - key: hrobjartsson-gotzsche-2001
+    type: journal_article
+    citation: "Hróbjartsson, A., & Gøtzsche, P. C. (2001). Is the placebo powerless? An analysis of clinical trials comparing placebo with no treatment. New England Journal of Medicine, 344(21), 1594–1602."
+    doi: "10.1056/NEJM200105243442106"
+    peer_reviewed: true
+  - key: tversky-kahneman-1971
+    type: journal_article
+    citation: "Tversky, A., & Kahneman, D. (1971). Belief in the law of small numbers. Psychological Bulletin, 76(2), 105–110."
+    doi: "10.1037/h0031322"
+    peer_reviewed: true
+  - key: croson-sundali-2005
+    type: journal_article
+    citation: "Croson, R., & Sundali, J. (2005). The gambler's fallacy and the hot hand: Empirical data from casinos. Journal of Risk and Uncertainty, 30(3), 195–209."
+    doi: "10.1007/s11166-005-1153-2"
+    peer_reviewed: true
+  - key: feller-1968
+    type: book
+    citation: "Feller, W. (1968). An introduction to probability theory and its applications (Vol. 1, 3rd ed.). Wiley."
+    peer_reviewed: false
+  - key: arkes-blumer-1985
+    type: journal_article
+    citation: "Arkes, H. R., & Blumer, C. (1985). The psychology of sunk cost. Organizational Behavior and Human Decision Processes, 35(1), 124–140."
+    doi: "10.1016/0749-5978(85)90049-4"
+    peer_reviewed: true
+  - key: frederick-2009
+    type: journal_article
+    citation: "Frederick, S., Novemsky, N., Wang, J., Dhar, R., & Nowlis, S. (2009). Opportunity cost neglect. Journal of Consumer Research, 36(4), 553–561."
+    doi: "10.1086/599764"
+    peer_reviewed: true
+  - key: mankiw-2021
+    type: book
+    citation: "Mankiw, N. G. (2021). Principles of economics (9th ed.). Cengage."
+    peer_reviewed: false
