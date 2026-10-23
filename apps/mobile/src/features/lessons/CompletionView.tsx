@@ -8,11 +8,13 @@ import { Button } from "@/ui/Button";
 import { Card } from "@/ui/Card";
 import { Confetti } from "@/ui/Confetti";
 import { Icon, type IconName } from "@/ui/Icon";
+import { Mascot } from "@/ui/Mascot";
 import { Text } from "@/ui/Text";
 import { useTheme } from "@/ui/theme";
 import { edge, radius, spacing } from "@/ui/tokens";
 
 import { xpLabel } from "./library";
+import { weekStrip } from "./reward";
 
 type Props = {
   completion: CompletionResponse;
@@ -52,9 +54,9 @@ export function CompletionView({ completion, takeaways, onRate }: Props) {
     <View style={styles.stack}>
       <View style={styles.hero}>
         <Animated.View
-          style={[styles.trophy, { backgroundColor: colors.xp, transform: [{ scale: pop }] }]}
+          style={[styles.trophy, { backgroundColor: colors.accentBg, transform: [{ scale: pop }] }]}
         >
-          <Icon name="trophy" color="#FFFFFF" size={64} />
+          <Mascot size={96} mood="cheer" />
         </Animated.View>
         <Text variant="display" accessibilityRole="header" style={styles.center}>
           {strings.lessons.completeTitle}
@@ -78,6 +80,44 @@ export function CompletionView({ completion, takeaways, onRate }: Props) {
           label={strings.lessons.statStreak}
           value={strings.lessons.days(streak.current)}
         />
+      </View>
+
+      <View style={[styles.week, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+        <View style={styles.awardRow}>
+          <Text variant="label">{strings.lessons.thisWeek}</Text>
+          {completion.xp.today >= completion.xp.goal ? (
+            <Text variant="label" tone="success">
+              {strings.discover.goalReached}
+            </Text>
+          ) : null}
+        </View>
+        <View style={styles.days}>
+          {weekStrip(new Date(), streak.current).map((day) => (
+            <View
+              key={day.label}
+              accessible
+              accessibilityLabel={`${day.label}, ${day.done ? strings.lessons.dayDone : strings.lessons.dayOpen}`}
+              style={styles.day}
+            >
+              <View
+                style={[
+                  styles.dayDot,
+                  {
+                    backgroundColor: day.done ? colors.streak : colors.idle,
+                    borderColor: day.today ? colors.text : "transparent",
+                  },
+                ]}
+              >
+                {day.done ? (
+                  <Icon name={day.today ? "flame" : "checkmark"} color="#FFFFFF" size={16} />
+                ) : null}
+              </View>
+              <Text variant="caption" tone={day.today ? "default" : "muted"}>
+                {day.today ? strings.lessons.today : day.label}
+              </Text>
+            </View>
+          ))}
+        </View>
       </View>
 
       {xp_awarded.length === 0 ? (
@@ -194,11 +234,9 @@ const styles = StyleSheet.create({
   stack: { gap: spacing.lg },
   hero: { alignItems: "center", gap: spacing.sm, paddingTop: spacing.md },
   trophy: {
-    width: 120,
-    height: 120,
+    width: 150,
+    height: 150,
     borderRadius: radius.full,
-    borderBottomWidth: edge + 2,
-    borderColor: "#C98500",
     alignItems: "center",
     justifyContent: "center",
     marginBottom: spacing.sm,
@@ -219,6 +257,23 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     paddingBottom: spacing.md,
     paddingTop: spacing.xs,
+  },
+  week: {
+    borderWidth: 2,
+    borderBottomWidth: edge,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    gap: spacing.sm,
+  },
+  days: { flexDirection: "row", justifyContent: "space-between" },
+  day: { alignItems: "center", gap: 4 },
+  dayDot: {
+    width: 32,
+    height: 32,
+    borderRadius: radius.full,
+    borderWidth: 3,
+    alignItems: "center",
+    justifyContent: "center",
   },
   awards: { gap: spacing.xs },
   awardRow: { flexDirection: "row", justifyContent: "space-between" },

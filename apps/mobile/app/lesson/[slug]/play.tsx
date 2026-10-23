@@ -7,7 +7,9 @@ import { Alert, View } from "react-native";
 import { errorMessage } from "@/api/errors";
 import type { AnswerResult, AttemptResponse, CompletionResponse } from "@/api/types";
 import { useAuth } from "@/features/auth/AuthProvider";
+import type { AnswerPayload } from "@/api/endpoints";
 import { CompletionView } from "@/features/lessons/CompletionView";
+import { EstimateView } from "@/features/lessons/EstimateView";
 import { canContinue, resumeIndex } from "@/features/lessons/player";
 import { QuestionView } from "@/features/lessons/QuestionView";
 import { StepView } from "@/features/lessons/StepView";
@@ -104,8 +106,8 @@ function Player({ data }: { data: AttemptResponse }) {
   });
 
   const submit = useCallback(
-    async (questionId: string, optionIds: string[]) => {
-      const result = await api.attempts.answer(attemptId, questionId, optionIds);
+    async (questionId: string, answer: AnswerPayload) => {
+      const result = await api.attempts.answer(attemptId, questionId, answer);
       setAnswers((current) => ({ ...current, [questionId]: result }));
       return result;
     },
@@ -196,14 +198,21 @@ function Player({ data }: { data: AttemptResponse }) {
     );
   } else if (step?.type === "question") {
     const question = data.content.questions.find((q) => q.id === step.question_id);
-    body = question ? (
+    body = !question ? null : question.type === "estimate" ? (
+      <EstimateView
+        key={question.id}
+        question={question}
+        result={answers[question.id]}
+        onSubmit={(value) => submit(question.id, { value })}
+      />
+    ) : (
       <QuestionView
         key={question.id}
         question={question}
         result={answers[question.id]}
-        onSubmit={(optionIds) => submit(question.id, optionIds)}
+        onSubmit={(optionIds) => submit(question.id, { optionIds })}
       />
-    ) : null;
+    );
   } else if (step) {
     body = <StepView key={index} step={step} content={data.content} />;
   }

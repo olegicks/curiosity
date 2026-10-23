@@ -131,6 +131,7 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-32 | Recall: mastery dots animate on change; "Concepts in review" is paginated (FR-REC-1) | Dots update without animation. The concepts list loads the first 100 concepts only. | Animation belongs to the motion pass. 100 covers the whole MVP library (27 lessons). | Add motion with the design pass; paginate when the library passes 100 lessons |
 | DEV-33 | Discover header shows today's XP as a ring (02 §2.5, 10 §10.3 `XpRing`) | A pill with "15/20 XP today" and a thin progress bar | A ring needs an SVG dependency (react-native-svg) that nothing else needs yet | Add `XpRing` with the design pass if the ring is still wanted |
 | DEV-34 | Terms of Use and Privacy Policy linked from Welcome and About (09 §9.7) | Welcome mentions them in text; About has no links yet | The documents don't exist yet (R-13, owner action) | Add the URLs once the documents are published |
+| DEV-35 | Onboarding is Interests then Daily goal, and ends on the first lesson's intro (FR-ONB-2, FR-ONB-4) | Onboarding is Subject (D-17) then Daily goal, and ends on the path, where a three-step first-run tour explains the roadmap, XP and recall. Interests stay editable in Settings › Learning. | The owner found the app's mechanics unclear; the tour and the lesson card on each node explain them where they appear | None |
 
 ## 15.7 Change log for this spec
 

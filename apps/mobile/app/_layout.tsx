@@ -16,6 +16,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider, useAuth } from "@/features/auth/AuthProvider";
 import { routeFor } from "@/features/auth/session";
 import { UnavailableScreen } from "@/features/auth/UnavailableScreen";
+import { SubjectProvider } from "@/features/subjects/SubjectProvider";
 import { useAppStateFocus } from "@/lib/appFocus";
 import { ThemeProvider, useTheme } from "@/ui/theme";
 
@@ -39,7 +40,9 @@ export default function RootLayout() {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
           <AuthProvider>
-            <Navigator ready={fontsLoaded} />
+            <SubjectProvider>
+              <Navigator ready={fontsLoaded} />
+            </SubjectProvider>
           </AuthProvider>
         </ThemeProvider>
       </QueryClientProvider>
@@ -74,6 +77,7 @@ function Navigator({ ready }: { ready: boolean }) {
         <Stack.Protected guard={route === "app"}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="achievements" />
+          <Stack.Screen name="subjects" options={{ presentation: "modal" }} />
           <Stack.Screen name="settings" />
           <Stack.Screen name="account/create" options={{ presentation: "modal" }} />
           <Stack.Screen name="lesson/[slug]/index" />

@@ -48,12 +48,12 @@ export function routeFor(state: SessionState): Route {
 }
 
 /** The first screen of each route group; where an unreachable path lands (app/+not-found). */
-export function homeFor(route: Route): "/welcome" | "/interests" | "/" | null {
+export function homeFor(route: Route): "/welcome" | "/subject" | "/" | null {
   switch (route) {
     case "auth":
       return "/welcome";
     case "onboarding":
-      return "/interests";
+      return "/subject";
     case "app":
       return "/";
     default:

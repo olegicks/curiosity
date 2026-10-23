@@ -595,7 +595,10 @@ export interface components {
       /** Items */
       items: components["schemas"]["AchievementOut"][];
     };
-    /** AnswerIn */
+    /**
+     * AnswerIn
+     * @description Options for choice questions, or `value` for an estimate question.
+     */
     AnswerIn: {
       /**
        * Question Id
@@ -603,12 +606,15 @@ export interface components {
        */
       question_id: string;
       /** Selected Option Ids */
-      selected_option_ids: string[];
+      selected_option_ids?: string[];
+      /** Value */
+      value?: number | null;
     };
     /** AnswerResponse */
     AnswerResponse: {
       /** Correct Option Ids */
       correct_option_ids: string[];
+      estimate?: components["schemas"]["EstimateResultOut"] | null;
       /** Explanation */
       explanation: string;
       /** Is Correct */
@@ -629,6 +635,7 @@ export interface components {
     AnswerResult: {
       /** Correct Option Ids */
       correct_option_ids: string[];
+      estimate?: components["schemas"]["EstimateResultOut"] | null;
       /** Explanation */
       explanation: string;
       /** Is Correct */
@@ -805,6 +812,33 @@ export interface components {
       today: number;
       /** Total */
       total: number;
+    };
+    /**
+     * EstimateOut
+     * @description Slider settings for an estimate question. The answer is revealed only after grading.
+     */
+    EstimateOut: {
+      /** Anchor */
+      anchor: number | null;
+      /** Max */
+      max: number;
+      /** Min */
+      min: number;
+      /** Step */
+      step: number;
+      /** Unit */
+      unit: string;
+    };
+    /** EstimateResultOut */
+    EstimateResultOut: {
+      /** Answer */
+      answer: number;
+      /** Tolerance */
+      tolerance: number;
+      /** Unit */
+      unit: string;
+      /** Value */
+      value: number;
     };
     /** EventIn */
     EventIn: {
@@ -1035,6 +1069,7 @@ export interface components {
       related: components["schemas"]["LessonSummary"][];
       /** Slug */
       slug: string;
+      subject: components["schemas"]["TopicRef"];
       /** Title */
       title: string;
       topic: components["schemas"]["TopicRef"];
@@ -1074,6 +1109,7 @@ export interface components {
       progress: components["schemas"]["ProgressBrief"];
       /** Slug */
       slug: string;
+      subject: components["schemas"]["TopicRef"];
       /** Title */
       title: string;
       topic: components["schemas"]["TopicRef"];
@@ -1224,6 +1260,7 @@ export interface components {
     };
     /** QuestionOut */
     QuestionOut: {
+      estimate?: components["schemas"]["EstimateOut"] | null;
       /**
        * Id
        * Format: uuid
@@ -1237,7 +1274,7 @@ export interface components {
        * Type
        * @enum {string}
        */
-      type: "single_choice" | "multi_select" | "true_false";
+      type: "single_choice" | "multi_select" | "true_false" | "estimate";
     };
     /** QuestionStepOut */
     QuestionStepOut: {
@@ -1502,6 +1539,8 @@ export interface components {
     };
     /** SubjectOut */
     SubjectOut: {
+      /** Description */
+      description: string;
       /** Slug */
       slug: string;
       /** Title */
@@ -2189,6 +2228,7 @@ export interface operations {
   list_lessons_v1_lessons_get: {
     parameters: {
       query?: {
+        subject?: string | null;
         topic?: string | null;
         progress?: ("not_started" | "in_progress" | "completed") | null;
         limit?: number;

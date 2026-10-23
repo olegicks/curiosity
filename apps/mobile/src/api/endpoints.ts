@@ -22,6 +22,9 @@ import type {
   SubjectsOut,
 } from "./types";
 
+/** Choice questions send option ids; estimate questions send a value (D-18). */
+export type AnswerPayload = { optionIds: string[] } | { value: number };
+
 export function createEndpoints(client: ApiClient) {
   return {
     auth: {
@@ -65,10 +68,12 @@ export function createEndpoints(client: ApiClient) {
         client.post<AttemptResponse>(`/v1/lessons/${encodeURIComponent(slug)}/attempts`, {
           restart,
         }),
-      answer: (attemptId: string, questionId: string, optionIds: string[]) =>
+      answer: (attemptId: string, questionId: string, answer: AnswerPayload) =>
         client.post<AnswerResponse>(`/v1/attempts/${attemptId}/answers`, {
           question_id: questionId,
-          selected_option_ids: optionIds,
+          ...("value" in answer
+            ? { value: answer.value }
+            : { selected_option_ids: answer.optionIds }),
         }),
       complete: (attemptId: string) =>
         client.post<CompletionResponse>(`/v1/attempts/${attemptId}/complete`),

@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { router, Tabs } from "expo-router";
-import { useEffect } from "react";
+import { Tabs } from "expo-router";
 
 import { useAuth } from "@/features/auth/AuthProvider";
-import { takeLandingLesson } from "@/features/onboarding/landing";
 import { dueCountLabel } from "@/features/reviews/recall";
 import { strings } from "@/i18n/en";
 import { Icon } from "@/ui/Icon";
@@ -16,11 +14,6 @@ export default function TabsLayout() {
   const { api } = useAuth();
   const reviews = useQuery({ queryKey: ["reviews", "summary"], queryFn: api.reviews.summary });
   const due = reviews.data?.due_count ?? 0;
-
-  useEffect(() => {
-    const slug = takeLandingLesson();
-    if (slug) router.push({ pathname: "/lesson/[slug]", params: { slug } });
-  }, []);
 
   return (
     <Tabs

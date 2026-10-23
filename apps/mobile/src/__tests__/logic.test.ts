@@ -44,7 +44,7 @@ describe("session", () => {
 
   test("each group has a start screen for unreachable paths", () => {
     expect(homeFor("auth")).toBe("/welcome");
-    expect(homeFor("onboarding")).toBe("/interests");
+    expect(homeFor("onboarding")).toBe("/subject");
     expect(homeFor("app")).toBe("/");
     expect(homeFor("loading")).toBeNull();
   });

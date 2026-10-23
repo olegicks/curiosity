@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import type { DiscoverOut, LessonSummary, ProgressBrief } from "@/api/types";
 import {
@@ -11,6 +12,7 @@ import {
 import { PathView } from "@/features/path/PathView";
 import { strings } from "@/i18n/en";
 import { ThemeProvider } from "@/ui/theme";
+import { unitColor } from "@/ui/tokens";
 
 const lesson = (
   slug: string,
@@ -21,6 +23,7 @@ const lesson = (
   slug,
   title: slug[0]!.toUpperCase() + slug.slice(1),
   description: "",
+  subject: { slug: "psychology", title: "Psychology" },
   topic: { slug: topic, title: topic[0]!.toUpperCase() + topic.slice(1) },
   estimated_minutes: 5,
   evidence_status: "established",
@@ -33,6 +36,11 @@ const lesson = (
     in_progress_attempt_id: status === "started" ? "attempt-1" : null,
   },
 });
+
+const METRICS = {
+  frame: { x: 0, y: 0, width: 390, height: 844 },
+  insets: { top: 0, left: 0, right: 0, bottom: 0 },
+};
 
 const lessons = [
   lesson("anchoring", "judgment", "understood", 3),
@@ -92,29 +100,48 @@ describe("path helpers", () => {
   });
 });
 
-test("the path shows stats, a recall prompt and tappable lesson nodes", async () => {
+test("the path shows stats, a recall prompt and a lesson card for each node", async () => {
   const onOpenLesson = jest.fn();
+  const onPlayLesson = jest.fn();
   const onStartReview = jest.fn();
+  const onSwitchSubject = jest.fn();
   await render(
-    <ThemeProvider>
-      <PathView
-        units={buildPath(lessons, "availability")}
-        discover={discover({ reviews_due: 2 })}
-        onOpenLesson={onOpenLesson}
-        onStartReview={onStartReview}
-      />
-    </ThemeProvider>,
+    <SafeAreaProvider initialMetrics={METRICS}>
+      <ThemeProvider>
+        <PathView
+          subject={{ title: "Psychology", icon: "bulb", color: unitColor(0) }}
+          units={buildPath(lessons, "availability")}
+          discover={discover({ reviews_due: 2 })}
+          onSwitchSubject={onSwitchSubject}
+          onOpenLesson={onOpenLesson}
+          onPlayLesson={onPlayLesson}
+          onStartReview={onStartReview}
+        />
+      </ThemeProvider>
+    </SafeAreaProvider>,
   );
   expect(screen.getByLabelText("3-day streak, learn today to keep it")).toBeOnTheScreen();
   expect(screen.getByLabelText("15/20 XP today")).toBeOnTheScreen();
   expect(screen.getByText(strings.path.reviewTitle)).toBeOnTheScreen();
   expect(screen.getByText(strings.path.continue.toUpperCase())).toBeOnTheScreen();
+  expect(screen.getByText(strings.path.nextUp("Availability"))).toBeOnTheScreen();
   expect(screen.getByLabelText(/^Unit 1: Judgment\. 1 of 2 lessons/)).toBeOnTheScreen();
 
+  await fireEvent.press(
+    screen.getByRole("button", { name: strings.subjects.switchTo("Psychology") }),
+  );
+  expect(onSwitchSubject).toHaveBeenCalled();
+
+  // a node opens its lesson card; the card starts the lesson or opens details
   await fireEvent.press(screen.getByRole("button", { name: "Availability, up next" }));
-  expect(onOpenLesson).toHaveBeenCalledWith("availability");
+  expect(screen.getByText(strings.lessonCard.position(2, 2).toUpperCase())).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole("button", { name: strings.lessons.continue }));
+  expect(onPlayLesson).toHaveBeenCalledWith("availability");
+
   await fireEvent.press(screen.getByRole("button", { name: "Framing, not started yet" }));
-  expect(onOpenLesson).toHaveBeenLastCalledWith("framing");
+  expect(screen.getByText(strings.lessonCard.earnXp)).toBeOnTheScreen();
+  await fireEvent.press(screen.getByRole("button", { name: strings.lessonCard.details }));
+  expect(onOpenLesson).toHaveBeenCalledWith("framing");
 
   await fireEvent.press(screen.getByRole("button", { name: strings.path.reviewCta }));
   await fireEvent.press(screen.getByRole("button", { name: strings.path.dueChip(2) }));
