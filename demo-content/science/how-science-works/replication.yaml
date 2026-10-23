@@ -1,0 +1,163 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760306
+slug: replication
+version: 1
+status: published
+subject: science
+topic: how-science-works
+position: 2
+title: One study isn't enough
+description: Why scientists repeat experiments, and what happened when they did.
+learning_objective: Explain what replication is and why a single study, however exciting, is weak evidence.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- falsifiability
+- small-samples
+sources:
+- key: osc-2015
+- key: ioannidis-2005
+steps:
+- type: hook
+  body: |
+    A headline says a new study proves that a two-minute power pose makes you more
+    confident. Should you start every meeting standing like a superhero?
+- type: explanation
+  title: The core idea
+  body: |
+    **Replication** means repeating a study, ideally by other researchers, to see if
+    the result holds up. A single study can be a fluke, especially if it's small or
+    the effect is surprising. Findings that replicate again and again are the ones
+    to trust.
+- type: question
+  question_key: check-define
+- type: example
+  kind: research
+  source_key: osc-2015
+  title: Testing 100 studies
+  body: |
+    A team of 270 researchers repeated 100 published psychology studies. Fewer
+    than half produced a clear result the second time, and the effects they found
+    were, on average, about half as big as in the originals.
+- type: misconception
+  myth: If it was published in a journal, it's established.
+  correction: |
+    Publication is a first step. Surprising results from small studies often shrink
+    or vanish when someone else tries to repeat them.
+- type: question
+  question_key: check-estimate
+- type: summary
+  points:
+  - One study can be a fluke, even a published one.
+  - Replication by others is how science checks itself.
+  - Trust findings that hold up again and again.
+questions:
+- key: check-define
+  role: lesson
+  type: single_choice
+  prompt: What does it mean for a finding to replicate?
+  options:
+  - key: a
+    text: Other researchers repeat the study and get a similar result
+    correct: true
+    feedback: That's replication.
+  - key: b
+    text: The original authors publish it twice
+    correct: false
+    feedback: Repeating the paper isn't repeating the study.
+  - key: c
+    text: Many news sites report it
+    correct: false
+    feedback: Coverage isn't evidence.
+  explanation: Replication is independent repetition.
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: In that project, what share of the repeated studies found a statistically significant result
+    again?
+  estimate:
+    min: 0
+    max: 100
+    step: 1
+    unit: '%'
+    answer: 36
+    tolerance: 10
+    anchor: 97
+  explanation: About 36%, compared with 97% of the originals.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Why repeat a study that was already published?
+  options:
+  - key: a
+    text: To check the result wasn't a fluke
+    correct: true
+    feedback: Any single study can be wrong by chance.
+  - key: b
+    text: To get another paper out of it
+    correct: false
+    feedback: The goal is checking the result.
+  - key: c
+    text: Because the first one is always wrong
+    correct: false
+    feedback: Many hold up. Replication tells us which.
+  explanation: Repetition separates real effects from luck.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: When 100 psychology studies were repeated, the effects found were on average…
+  options:
+  - key: a
+    text: About half as big
+    correct: true
+    feedback: Effects shrank a lot the second time.
+  - key: b
+    text: Twice as big
+    correct: false
+    feedback: They went the other way.
+  - key: c
+    text: Exactly the same
+    correct: false
+    feedback: Many changed substantially.
+  explanation: Original studies often overstate effects.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Which kind of result is most likely to fail replication?
+  options:
+  - key: a
+    text: A surprising effect from a small study
+    correct: true
+    feedback: Small and surprising is a risky combination.
+  - key: b
+    text: A modest effect from a huge study
+    correct: false
+    feedback: Those tend to hold up better.
+  - key: c
+    text: A result already repeated many times
+    correct: false
+    feedback: It has already passed the test.
+  explanation: Small, surprising findings deserve caution.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A single study links a food to long life. The best response?
+  options:
+  - key: a
+    text: Wait to see if other studies find the same
+    correct: true
+    feedback: One study is a starting point.
+  - key: b
+    text: Change your diet today
+    correct: false
+    feedback: One study is weak evidence.
+  - key: c
+    text: Ignore all nutrition research
+    correct: false
+    feedback: Replicated findings are worth knowing.
+  explanation: Look for results that replicate.

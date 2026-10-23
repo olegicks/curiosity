@@ -1,0 +1,161 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760405
+slug: relative-risk
+version: 1
+status: published
+subject: math
+topic: numbers-news
+position: 1
+title: Doubles your risk!
+description: Why relative risk headlines can scare you more than the numbers deserve.
+learning_objective: Convert a relative risk claim into absolute numbers before judging it.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- base-rate-neglect
+- misleading-percentages
+sources:
+- key: gigerenzer-2007
+- key: spiegelhalter-2019
+steps:
+- type: hook
+  body: |
+    A headline says a common pill doubles the risk of blood clots. Should everyone
+    stop taking it today?
+- type: explanation
+  title: The core idea
+  body: |
+    **Relative risk** tells you how much a risk changes ("100% higher"). **Absolute
+    risk** tells you how many people are actually affected ("1 more in 7,000").
+    A huge relative change can be a tiny absolute one when the starting risk is small.
+- type: question
+  question_key: check-which
+- type: example
+  kind: research
+  source_key: gigerenzer-2007
+  title: The 1995 pill scare
+  body: |
+    In the UK, a warning said newer contraceptive pills doubled the risk of a rare
+    blood clot. Many women stopped taking them. Researchers later linked the scare
+    to thousands of extra unwanted pregnancies, far more harm than the clot risk.
+- type: misconception
+  myth: A 100% increase in risk is always alarming.
+  correction: |
+    Doubling a tiny risk still leaves a tiny risk. Always ask: out of how many
+    people, before and after?
+- type: question
+  question_key: check-estimate
+- type: summary
+  points:
+  - Relative risk shows the change; absolute risk shows the people affected.
+  - Doubling a tiny risk still leaves a tiny risk.
+  - 'Ask: out of how many, before and after?'
+questions:
+- key: check-which
+  role: lesson
+  type: single_choice
+  prompt: Which statement tells you the absolute risk?
+  options:
+  - key: a
+    text: 2 in 7,000 women had a clot instead of 1 in 7,000
+    correct: true
+    feedback: It shows actual numbers of people.
+  - key: b
+    text: The risk went up by 100%
+    correct: false
+    feedback: That's relative.
+  - key: c
+    text: The pill doubles the risk
+    correct: false
+    feedback: That's relative too.
+  explanation: Absolute risk counts people.
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: Risk rose from 1 in 7,000 to 2 in 7,000. How many extra cases is that for every 7,000 women?
+  estimate:
+    min: 0
+    max: 100
+    step: 1
+    unit: cases
+    answer: 1
+    tolerance: 0.5
+    anchor: 100
+  explanation: Just 1 extra case per 7,000, even though the headline said 100% more.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Relative risk tells you…
+  options:
+  - key: a
+    text: How much a risk changed compared with before
+    correct: true
+    feedback: Right.
+  - key: b
+    text: How many people are affected
+    correct: false
+    feedback: That's absolute risk.
+  - key: c
+    text: Whether something is safe
+    correct: false
+    feedback: Neither number alone tells you that.
+  explanation: Relative is about the change.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: A drug cuts deaths from 2 in 100 to 1 in 100. How could an ad describe it?
+  options:
+  - key: a
+    text: Cuts deaths by 50%
+    correct: true
+    feedback: Relative framing sounds bigger.
+  - key: b
+    text: Cuts deaths by 50 in 100
+    correct: false
+    feedback: That overstates it.
+  - key: c
+    text: Has no effect
+    correct: false
+    feedback: One fewer in 100 is a real effect.
+  explanation: The same result can sound huge or modest.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: What question turns a scary headline into useful information?
+  options:
+  - key: a
+    text: Out of how many people, before and after?
+    correct: true
+    feedback: That gives the absolute numbers.
+  - key: b
+    text: Who wrote the headline?
+    correct: false
+    feedback: Useful sometimes, but it doesn't give the numbers.
+  - key: c
+    text: Is it on the news?
+    correct: false
+    feedback: Coverage doesn't change the risk.
+  explanation: Ask for the absolute numbers.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: What happened after the UK pill scare?
+  options:
+  - key: a
+    text: Many women stopped the pill, leading to more unwanted pregnancies
+    correct: true
+    feedback: The reaction caused more harm than the risk.
+  - key: b
+    text: Clot rates fell to zero
+    correct: false
+    feedback: The effect was mostly unwanted pregnancies.
+  - key: c
+    text: Nothing changed
+    correct: false
+    feedback: There was a big reaction.
+  explanation: Misread risks lead to harmful choices.

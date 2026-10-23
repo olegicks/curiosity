@@ -1,0 +1,169 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760305
+slug: falsifiability
+version: 1
+status: published
+subject: science
+topic: how-science-works
+position: 1
+title: Can it be proven wrong?
+description: Why a good scientific claim must risk being false.
+learning_objective: Tell whether a claim is falsifiable, and explain why claims that can't be tested aren't
+  scientific.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- replication
+- extraordinary-claims
+sources:
+- key: popper-1959
+- key: sagan-1995
+steps:
+- type: hook
+  body: |
+    A friend says there's a dragon in their garage. It's invisible, floats, and
+    breathes heatless fire. Every test you suggest, they explain away. Is there a
+    dragon?
+- type: explanation
+  title: The core idea
+  body: |
+    A claim is **falsifiable** if some possible observation could show it's wrong.
+    "All swans are white" is falsifiable: one black swan would sink it. A claim
+    that fits every possible result tells us nothing, because nothing could ever
+    count against it.
+- type: question
+  question_key: check-which
+- type: example
+  kind: illustrative
+  source_key: sagan-1995
+  title: The dragon in the garage
+  body: |
+    Carl Sagan imagined someone claiming an undetectable dragon. Flour on the floor?
+    It floats. Infrared camera? Its fire is heatless. Each excuse protects the
+    claim, but also empties it: an undetectable dragon is no different from no dragon.
+- type: misconception
+  myth: A theory that explains everything must be a great theory.
+  correction: |
+    If a theory can explain any outcome, it predicts nothing. Good theories forbid
+    certain results, and that's what makes them testable.
+- type: question
+  question_key: check-excuse
+- type: summary
+  points:
+  - A scientific claim must be testable and able to fail.
+  - Claims that fit every outcome predict nothing.
+  - Beware of excuses that rescue a claim from every test.
+questions:
+- key: check-which
+  role: lesson
+  type: single_choice
+  prompt: Which claim is falsifiable?
+  options:
+  - key: a
+    text: Water boils at 100 °C at sea level
+    correct: true
+    feedback: You can test it, and it could fail.
+  - key: b
+    text: Everything happens for a reason
+    correct: false
+    feedback: No observation could ever count against it.
+  - key: c
+    text: Invisible spirits guide us in ways we can't detect
+    correct: false
+    feedback: It's built to escape any test.
+  explanation: Falsifiable claims make risky, testable predictions.
+- key: check-excuse
+  role: lesson
+  type: single_choice
+  prompt: A psychic's prediction fails, and she says the energy was blocked. What's the problem?
+  options:
+  - key: a
+    text: The excuse makes the claim impossible to test
+    correct: true
+    feedback: If every failure has an excuse, no test can ever count.
+  - key: b
+    text: Nothing. Energy can be blocked
+    correct: false
+    feedback: That's an untestable excuse.
+  - key: c
+    text: She needs a bigger audience
+    correct: false
+    feedback: Audience size isn't the issue.
+  explanation: Excuses that rescue every failure make a claim unfalsifiable.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: What makes a claim falsifiable?
+  options:
+  - key: a
+    text: Some possible observation could show it's wrong
+    correct: true
+    feedback: Right.
+  - key: b
+    text: It has been proven true
+    correct: false
+    feedback: Falsifiable claims can be true or false.
+  - key: c
+    text: Many people believe it
+    correct: false
+    feedback: Popularity isn't the test.
+  explanation: It has to risk being wrong.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: One black swan disproves which claim?
+  options:
+  - key: a
+    text: All swans are white
+    correct: true
+    feedback: A single counterexample sinks a universal claim.
+  - key: b
+    text: Most swans are white
+    correct: false
+    feedback: One black swan doesn't contradict 'most'.
+  - key: c
+    text: Swans can be any colour
+    correct: false
+    feedback: A black swan fits that claim.
+  explanation: Universal claims are easy to test and easy to break.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Why isn't the invisible garage dragon a scientific claim?
+  options:
+  - key: a
+    text: No test could ever detect it
+    correct: true
+    feedback: It's built to dodge every test.
+  - key: b
+    text: Dragons don't exist
+    correct: false
+    feedback: The issue is testability, not the topic.
+  - key: c
+    text: Garages are too small
+    correct: false
+    feedback: Size isn't the problem.
+  explanation: Untestable claims sit outside science.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A theory explains any possible result. That means it…
+  options:
+  - key: a
+    text: Predicts nothing useful
+    correct: true
+    feedback: If anything can happen, it rules nothing out.
+  - key: b
+    text: Must be true
+    correct: false
+    feedback: Fitting everything isn't evidence.
+  - key: c
+    text: Is the strongest kind of theory
+    correct: false
+    feedback: It's the weakest kind.
+  explanation: Good theories forbid some outcomes.

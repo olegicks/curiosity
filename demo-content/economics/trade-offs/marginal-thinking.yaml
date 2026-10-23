@@ -1,0 +1,166 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760504
+slug: marginal-thinking
+version: 1
+status: published
+subject: economics
+topic: trade-offs
+position: 4
+title: Thinking at the margin
+description: Why the next slice of pizza is worth less than the first.
+learning_objective: Decide by comparing the extra benefit and extra cost of one more unit.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- opportunity-cost
+- loss-aversion
+sources:
+- key: jevons-1871
+- key: mankiw-2021
+steps:
+- type: hook
+  body: |
+    Water keeps you alive, yet it's cheap. Diamonds are useless for survival, yet
+    they're expensive. Why?
+- type: explanation
+  title: The core idea
+  body: |
+    **Thinking at the margin** means asking about **one more**: one more hour, one
+    more slice, one more worker. The value of one more usually falls as you have
+    more of it. Water is plentiful, so one more glass is worth little; diamonds are
+    rare, so one more is worth a lot.
+- type: question
+  question_key: check-pizza
+- type: example
+  kind: illustrative
+  title: Study time before an exam
+  body: |
+    The first hour of revision helps a lot. By the eighth hour you're tired and
+    learning little. Stopping when one more hour adds less than sleep would is a
+    marginal decision.
+- type: misconception
+  myth: If something is good, more of it is always better.
+  correction: |
+    Benefits usually shrink with each extra unit while costs stay the same or grow.
+    The best amount is where one more stops being worth it.
+- type: question
+  question_key: check-decide
+- type: summary
+  points:
+  - Ask about one more, not the total.
+  - The value of one more usually falls as you have more.
+  - Stop when the extra cost exceeds the extra benefit.
+questions:
+- key: check-pizza
+  role: lesson
+  type: single_choice
+  prompt: Why is your fourth slice of pizza less enjoyable than the first?
+  options:
+  - key: a
+    text: Each extra slice adds less satisfaction when you're already full
+    correct: true
+    feedback: That's diminishing marginal benefit.
+  - key: b
+    text: Later slices are smaller
+    correct: false
+    feedback: Even identical slices feel less satisfying.
+  - key: c
+    text: Pizza gets cold
+    correct: false
+    feedback: Maybe, but the main reason is you're less hungry.
+  explanation: The value of one more falls as you have more.
+- key: check-decide
+  role: lesson
+  type: single_choice
+  prompt: A café can stay open one more hour. What should decide it?
+  options:
+  - key: a
+    text: Whether that hour's extra sales beat that hour's extra costs
+    correct: true
+    feedback: Compare the margin, not the whole day.
+  - key: b
+    text: Whether the café made a profit today
+    correct: false
+    feedback: The whole day doesn't tell you about one more hour.
+  - key: c
+    text: What the café across the street does
+    correct: false
+    feedback: Their costs aren't yours.
+  explanation: Decide by the extra benefit versus the extra cost.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Thinking at the margin means…
+  options:
+  - key: a
+    text: Comparing the extra benefit and cost of one more unit
+    correct: true
+    feedback: Right.
+  - key: b
+    text: Thinking about extreme cases
+    correct: false
+    feedback: It's about the next unit.
+  - key: c
+    text: Looking at totals only
+    correct: false
+    feedback: Totals hide the margin.
+  explanation: One more at a time.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Why is water cheap but diamonds expensive?
+  options:
+  - key: a
+    text: Water is plentiful, so one more unit is worth little
+    correct: true
+    feedback: Marginal value, not total value, sets prices.
+  - key: b
+    text: Water is useless
+    correct: false
+    feedback: It's essential, just plentiful.
+  - key: c
+    text: Diamonds are essential for life
+    correct: false
+    feedback: They aren't.
+  explanation: Scarcity drives marginal value.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: The best amount of something is usually where…
+  options:
+  - key: a
+    text: One more adds less than it costs
+    correct: true
+    feedback: That's where to stop.
+  - key: b
+    text: You can't have any more
+    correct: false
+    feedback: You'd overshoot.
+  - key: c
+    text: The first unit is used
+    correct: false
+    feedback: Too early to stop.
+  explanation: Stop at the margin.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A gym membership is paid already. Should you go today?
+  options:
+  - key: a
+    text: Decide by today's benefit versus today's cost in time and effort
+    correct: true
+    feedback: The fee is sunk; the margin is today.
+  - key: b
+    text: Yes, or the fee is wasted
+    correct: false
+    feedback: That's sunk-cost thinking.
+  - key: c
+    text: No, you've paid enough
+    correct: false
+    feedback: Paying doesn't decide today's choice.
+  explanation: Margins look forward.

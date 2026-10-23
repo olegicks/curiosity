@@ -1,0 +1,167 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760505
+slug: supply-and-demand
+version: 1
+status: published
+subject: economics
+topic: markets
+position: 1
+title: Supply and demand
+description: Why concert tickets sell out and why prices move.
+learning_objective: Explain how supply and demand together set prices, and predict what happens when one
+  changes.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- marginal-thinking
+- inflation
+sources:
+- key: marshall-1890
+- key: mankiw-2021
+steps:
+- type: hook
+  body: |
+    A famous band plays a small venue. Tickets sell out in minutes and resell for
+    five times the price. Who set the real price?
+- type: explanation
+  title: The core idea
+  body: |
+    **Demand** is how much people want to buy at each price. **Supply** is how much
+    sellers offer at each price. The market price settles where the two meet. When
+    demand rises or supply falls, prices go up; the reverse pushes them down.
+- type: question
+  question_key: check-tickets
+- type: example
+  kind: research
+  source_key: marshall-1890
+  title: The two blades of the scissors
+  body: |
+    The economist Alfred Marshall compared supply and demand to the two blades of
+    a pair of scissors: asking which one sets the price is like asking which blade
+    does the cutting.
+- type: misconception
+  myth: Prices are set by whoever is selling.
+  correction: |
+    Sellers can ask anything, but if buyers won't pay, goods don't sell. Prices
+    emerge from both sides together.
+- type: question
+  question_key: check-frost
+- type: summary
+  points:
+  - Prices settle where supply meets demand.
+  - More demand or less supply pushes prices up.
+  - Both sides set the price together.
+questions:
+- key: check-tickets
+  role: lesson
+  type: single_choice
+  prompt: Why do resale prices for sold-out concerts soar?
+  options:
+  - key: a
+    text: Many more people want tickets than there are seats
+    correct: true
+    feedback: High demand and fixed supply push prices up.
+  - key: b
+    text: Resellers set any price they like
+    correct: false
+    feedback: They can only charge what buyers will pay.
+  - key: c
+    text: The band raises prices after selling out
+    correct: false
+    feedback: The resale market sets those prices.
+  explanation: Price rises when demand outstrips supply.
+- key: check-frost
+  role: lesson
+  type: single_choice
+  prompt: A frost destroys half the orange crop. What happens to orange prices?
+  options:
+  - key: a
+    text: They rise, because supply fell
+    correct: true
+    feedback: Less supply, same demand, higher price.
+  - key: b
+    text: They fall, because oranges are damaged
+    correct: false
+    feedback: Scarcity pushes prices up.
+  - key: c
+    text: They stay the same
+    correct: false
+    feedback: A big supply shock moves prices.
+  explanation: Lower supply raises prices.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: If demand for bikes rises and supply stays the same, prices…
+  options:
+  - key: a
+    text: Rise
+    correct: true
+    feedback: More buyers competing for the same bikes.
+  - key: b
+    text: Fall
+    correct: false
+    feedback: That would need more supply or less demand.
+  - key: c
+    text: Stay the same
+    correct: false
+    feedback: Higher demand moves prices.
+  explanation: Demand up, price up.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Marshall compared supply and demand to…
+  options:
+  - key: a
+    text: The two blades of scissors
+    correct: true
+    feedback: Both are needed to cut.
+  - key: b
+    text: A see-saw
+    correct: false
+    feedback: He used scissors.
+  - key: c
+    text: A river
+    correct: false
+    feedback: Not his image.
+  explanation: Neither side sets the price alone.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A new factory doubles the supply of phones. Prices are likely to…
+  options:
+  - key: a
+    text: Fall
+    correct: true
+    feedback: More supply, same demand.
+  - key: b
+    text: Rise
+    correct: false
+    feedback: More supply pushes prices down.
+  - key: c
+    text: Double
+    correct: false
+    feedback: That's the wrong direction.
+  explanation: Supply up, price down.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Why can't a seller just charge any price?
+  options:
+  - key: a
+    text: Buyers won't pay more than it's worth to them
+    correct: true
+    feedback: Demand limits prices.
+  - key: b
+    text: The government sets all prices
+    correct: false
+    feedback: Most prices come from markets.
+  - key: c
+    text: Prices are random
+    correct: false
+    feedback: They follow supply and demand.
+  explanation: Both sides matter.

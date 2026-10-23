@@ -1,0 +1,167 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760507
+slug: incentives
+version: 1
+status: published
+subject: economics
+topic: markets
+position: 3
+title: Incentives can backfire
+description: Why rewards and fines sometimes produce the opposite of what was intended.
+learning_objective: Predict how people respond to incentives, including the unintended ways.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- supply-and-demand
+- tragedy-of-the-commons
+sources:
+- key: gneezy-rustichini-2000
+- key: mankiw-2021
+steps:
+- type: hook
+  body: |
+    A daycare is fed up with parents picking up their children late. It introduces
+    a fine. What happens to late pickups?
+- type: explanation
+  title: The core idea
+  body: |
+    **Incentives** are rewards or penalties that change behaviour. People respond
+    to them, but not always as planned: they look for the cheapest way to get the
+    reward or avoid the penalty, and money can replace other reasons to behave well.
+- type: question
+  question_key: check-daycare
+- type: example
+  kind: research
+  source_key: gneezy-rustichini-2000
+  title: A fine is a price
+  body: |
+    In daycares in Israel, introducing a small fine for late pickups led to more
+    late pickups, not fewer. Parents treated it as paying for extra time. When the
+    fine was removed, lateness stayed high.
+- type: misconception
+  myth: Paying people to do something always makes them do more of it.
+  correction: |
+    Payment can crowd out other motives, like duty or guilt, and people may game the
+    rule. Good incentives consider what people will actually do.
+- type: question
+  question_key: check-cobra
+- type: summary
+  points:
+  - People respond to incentives, often in unplanned ways.
+  - Money can replace guilt or duty as a reason to act.
+  - Before setting a reward or fine, ask how it could be gamed.
+questions:
+- key: check-daycare
+  role: lesson
+  type: single_choice
+  prompt: After the daycare fine was introduced, late pickups…
+  options:
+  - key: a
+    text: Increased
+    correct: true
+    feedback: The fine felt like a price for extra time, not a punishment.
+  - key: b
+    text: Stopped completely
+    correct: false
+    feedback: That's what the daycare hoped for.
+  - key: c
+    text: Stayed the same
+    correct: false
+    feedback: They changed, in the wrong direction.
+  explanation: A small fine turned guilt into a fee.
+- key: check-cobra
+  role: lesson
+  type: single_choice
+  prompt: 'A story often told: officials pay a bounty for dead cobras, and people start breeding cobras.
+    What does it show?'
+  options:
+  - key: a
+    text: An incentive can reward the wrong behaviour
+    correct: true
+    feedback: People found a cheaper way to get the reward.
+  - key: b
+    text: Bounties always work
+    correct: false
+    feedback: This one backfired.
+  - key: c
+    text: Cobras are easy to catch
+    correct: false
+    feedback: The point is about incentives.
+  explanation: Ask how people could game a reward.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: What did the daycare fine study find?
+  options:
+  - key: a
+    text: Late pickups increased after the fine
+    correct: true
+    feedback: Parents saw the fine as a price.
+  - key: b
+    text: Late pickups disappeared
+    correct: false
+    feedback: They went up.
+  - key: c
+    text: Parents stopped using the daycare
+    correct: false
+    feedback: They kept using it, and came later.
+  explanation: Fines can become fees.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Why did lateness stay high after the fine was removed?
+  options:
+  - key: a
+    text: The guilt that kept parents on time didn't come back
+    correct: true
+    feedback: The money had replaced the moral reason.
+  - key: b
+    text: Parents forgot the fine ended
+    correct: false
+    feedback: The study points to changed motives.
+  - key: c
+    text: The daycare closed earlier
+    correct: false
+    feedback: That's not the explanation.
+  explanation: Incentives can change motives for good.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A school pays students per book read. What might go wrong?
+  options:
+  - key: a
+    text: Students pick very short books
+    correct: true
+    feedback: They find the cheapest way to earn the reward.
+  - key: b
+    text: Students read longer books
+    correct: false
+    feedback: The reward doesn't encourage that.
+  - key: c
+    text: Nothing could go wrong
+    correct: false
+    feedback: Rewards can be gamed.
+  explanation: Rewards shape exactly what they measure.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A good incentive design starts by asking…
+  options:
+  - key: a
+    text: How will people actually respond, including gaming it?
+    correct: true
+    feedback: Predict real behaviour.
+  - key: b
+    text: How big can we make the reward?
+    correct: false
+    feedback: Size isn't the main issue.
+  - key: c
+    text: What do we want people to feel?
+    correct: false
+    feedback: Behaviour is what changes.
+  explanation: Think like the people affected.

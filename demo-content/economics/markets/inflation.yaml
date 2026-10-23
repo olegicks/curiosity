@@ -1,0 +1,160 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760506
+slug: inflation
+version: 1
+status: published
+subject: economics
+topic: markets
+position: 2
+title: Inflation
+description: Why the same money buys less over time.
+learning_objective: Explain what inflation is and estimate how quickly it shrinks what money can buy.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- supply-and-demand
+- compound-growth
+sources:
+- key: shiller-1997
+- key: mankiw-2021
+steps:
+- type: hook
+  body: |
+    Your grandparents talk about prices from their youth that sound unbelievably
+    cheap. Did things get more expensive, or did money get weaker?
+- type: explanation
+  title: The core idea
+  body: |
+    **Inflation** is a general rise in prices, which means each unit of money buys
+    less. It's measured as a yearly percentage. Like compound growth in reverse,
+    steady inflation halves what money can buy surprisingly fast.
+- type: question
+  question_key: check-define
+- type: example
+  kind: research
+  source_key: shiller-1997
+  title: Why people dislike inflation
+  body: |
+    Surveys found many people believe inflation makes them poorer, because they
+    notice rising prices more than their own rising pay. Economists point out that
+    wages often rise too, but not always as fast.
+- type: misconception
+  myth: Inflation only matters if prices double.
+  correction: |
+    Even modest inflation compounds. Savings that earn less than inflation lose
+    real value every year.
+- type: question
+  question_key: check-estimate
+- type: summary
+  points:
+  - Inflation means each unit of money buys less.
+  - Steady inflation compounds, like growth in reverse.
+  - Savings must earn more than inflation to keep their value.
+questions:
+- key: check-define
+  role: lesson
+  type: single_choice
+  prompt: What does 5% inflation mean?
+  options:
+  - key: a
+    text: Prices overall are about 5% higher than a year ago
+    correct: true
+    feedback: So money buys about 5% less.
+  - key: b
+    text: Every price rose exactly 5%
+    correct: false
+    feedback: It's an average across many prices.
+  - key: c
+    text: Wages rose 5%
+    correct: false
+    feedback: Wages may or may not keep up.
+  explanation: Inflation is a general rise in prices.
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: At 7% inflation a year, roughly how many years until money buys half as much?
+  estimate:
+    min: 1
+    max: 50
+    step: 1
+    unit: years
+    answer: 10
+    tolerance: 2
+  explanation: 'About 10 years. Using the rule of 70: 70 ÷ 7 = 10.'
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Inflation is…
+  options:
+  - key: a
+    text: A general rise in prices over time
+    correct: true
+    feedback: Right.
+  - key: b
+    text: A rise in one product's price
+    correct: false
+    feedback: That's a single price change.
+  - key: c
+    text: A fall in prices
+    correct: false
+    feedback: That's deflation.
+  explanation: Money buys less.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Savings earn 2% while inflation is 5%. What happens?
+  options:
+  - key: a
+    text: They lose about 3% of buying power a year
+    correct: true
+    feedback: Real value falls.
+  - key: b
+    text: They grow in real terms
+    correct: false
+    feedback: They grow less than prices do.
+  - key: c
+    text: Nothing changes
+    correct: false
+    feedback: Inflation eats into them.
+  explanation: Compare returns with inflation.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: At 3.5% inflation, money halves in value in about…
+  options:
+  - key: a
+    text: 20 years
+    correct: true
+    feedback: 70 ÷ 3.5 = 20.
+  - key: b
+    text: 3.5 years
+    correct: false
+    feedback: Far too fast.
+  - key: c
+    text: 70 years
+    correct: false
+    feedback: Too slow.
+  explanation: Rule of 70 again.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Why do people often feel inflation makes them poorer?
+  options:
+  - key: a
+    text: They notice rising prices more than rising pay
+    correct: true
+    feedback: Shiller's surveys found this.
+  - key: b
+    text: Inflation always cuts wages
+    correct: false
+    feedback: Wages often rise too.
+  - key: c
+    text: Prices never rise
+    correct: false
+    feedback: They do under inflation.
+  explanation: Perception and reality can differ.

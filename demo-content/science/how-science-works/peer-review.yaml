@@ -1,0 +1,166 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760307
+slug: peer-review
+version: 1
+status: published
+subject: science
+topic: how-science-works
+position: 3
+title: Who checks the checkers?
+description: What peer review does, and what it can't promise.
+learning_objective: Describe what peer review checks and why it is a filter, not a guarantee.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- replication
+- extraordinary-claims
+sources:
+- key: smith-2006
+- key: ioannidis-2005
+steps:
+- type: hook
+  body: |
+    "Published in a peer-reviewed journal" sounds like a stamp of truth. What does
+    peer review actually involve, and how often does it miss mistakes?
+- type: explanation
+  title: The core idea
+  body: |
+    In **peer review**, a journal sends a paper to a few experts who look for flaws
+    before it's published. It catches many problems, but reviewers usually can't
+    rerun the experiment or check the raw data. It's a filter, not a guarantee.
+- type: question
+  question_key: check-what
+- type: example
+  kind: research
+  source_key: smith-2006
+  title: Planted errors
+  body: |
+    A former editor of the BMJ described tests in which journals sent reviewers a
+    paper with deliberate errors. Most reviewers spotted only some of them, and
+    some missed the major ones.
+- type: misconception
+  myth: Peer-reviewed means proven.
+  correction: |
+    Peer review lowers the chance of obvious mistakes, but flawed and even fraudulent
+    papers still get through. Replication and open data catch what reviewers miss.
+- type: question
+  question_key: check-best
+- type: summary
+  points:
+  - Peer review is expert checking before publication.
+  - It catches many problems but not all of them.
+  - Agreement across several independent studies is stronger evidence.
+questions:
+- key: check-what
+  role: lesson
+  type: single_choice
+  prompt: What do peer reviewers usually do?
+  options:
+  - key: a
+    text: Read the paper and look for flaws in its methods and reasoning
+    correct: true
+    feedback: That's their main job.
+  - key: b
+    text: Repeat the experiment themselves
+    correct: false
+    feedback: They rarely have time or resources for that.
+  - key: c
+    text: Guarantee the result is true
+    correct: false
+    feedback: They can't guarantee that.
+  explanation: Peer review is expert reading, not re-running.
+- key: check-best
+  role: lesson
+  type: single_choice
+  prompt: Which is the strongest evidence for a claim?
+  options:
+  - key: a
+    text: Several peer-reviewed studies by different teams agreeing
+    correct: true
+    feedback: Independent agreement beats a single paper.
+  - key: b
+    text: One peer-reviewed study
+    correct: false
+    feedback: A good start, but one paper can be wrong.
+  - key: c
+    text: An expert's opinion in an interview
+    correct: false
+    feedback: Opinion isn't evidence.
+  explanation: Look for independent agreement, not just publication.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Peer review is best described as…
+  options:
+  - key: a
+    text: A filter that catches many but not all mistakes
+    correct: true
+    feedback: Right.
+  - key: b
+    text: A guarantee that the result is true
+    correct: false
+    feedback: It's not a guarantee.
+  - key: c
+    text: A repeat of the experiment
+    correct: false
+    feedback: Reviewers rarely repeat studies.
+  explanation: Useful, but not proof.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: In tests with planted errors, reviewers…
+  options:
+  - key: a
+    text: Spotted only some of the mistakes
+    correct: true
+    feedback: Many errors slipped past.
+  - key: b
+    text: Found every mistake
+    correct: false
+    feedback: They missed many.
+  - key: c
+    text: Refused to review
+    correct: false
+    feedback: They reviewed but missed errors.
+  explanation: Reviewers are human.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: What catches errors that peer review misses?
+  options:
+  - key: a
+    text: Other teams repeating the work and checking the data
+    correct: true
+    feedback: Replication and open data are the backup.
+  - key: b
+    text: More press coverage
+    correct: false
+    feedback: Coverage doesn't check anything.
+  - key: c
+    text: A longer paper
+    correct: false
+    feedback: Length doesn't help.
+  explanation: Science corrects itself over time.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A claim says 'peer-reviewed' but only one small study supports it. Your view?
+  options:
+  - key: a
+    text: Promising, but not settled
+    correct: true
+    feedback: One reviewed study is a start.
+  - key: b
+    text: Proven
+    correct: false
+    feedback: Review isn't proof.
+  - key: c
+    text: Worthless
+    correct: false
+    feedback: It's still some evidence.
+  explanation: Weigh the whole body of evidence.

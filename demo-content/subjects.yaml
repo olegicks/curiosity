@@ -24,6 +24,10 @@ subjects:
         title: Telling evidence from noise
         description: Why some findings convince and others mislead.
         position: 1
+      - slug: how-science-works
+        title: How science works
+        description: How claims get tested, checked and trusted.
+        position: 2
   - slug: math
     title: Math
     description: Chance, risk and numbers.
@@ -34,6 +38,10 @@ subjects:
         title: Chance is weirder than it feels
         description: Probability puzzles that trip up intuition.
         position: 1
+      - slug: numbers-news
+        title: Numbers in the news
+        description: How statistics get used, and misused, in headlines.
+        position: 2
   - slug: economics
     title: Economics
     description: Money, choices and trade-offs.
@@ -44,6 +52,10 @@ subjects:
         title: Every choice has a cost
         description: How to think about what you give up.
         position: 1
+      - slug: markets
+        title: Markets and money
+        description: Prices, incentives and shared resources.
+        position: 2
   - slug: politics
     title: Politics
     description: How power and elections work.

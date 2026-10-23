@@ -1,0 +1,161 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760503
+slug: loss-aversion
+version: 1
+status: published
+subject: economics
+topic: trade-offs
+position: 3
+title: Losses loom larger
+description: Why losing 100 hurts more than winning 100 feels good.
+learning_objective: Recognise loss aversion in choices and judge gains and losses on the same scale.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- sunk-cost
+- framing-effect
+sources:
+- key: kahneman-tversky-1979
+- key: kahneman-knetsch-thaler-1990
+steps:
+- type: hook
+  body: |
+    A coin flip: tails, you lose 100. Heads, you win 100. Most people say no. How
+    much would heads have to pay before you'd take the bet?
+- type: question
+  question_key: check-estimate
+- type: explanation
+  title: The core idea
+  body: |
+    **Loss aversion** means losses feel stronger than gains of the same size. It
+    makes us turn down good bets, hold on to things we own, and fight harder to
+    avoid a loss than to win an equal gain.
+- type: example
+  kind: research
+  source_key: kahneman-knetsch-thaler-1990
+  title: The mug experiment
+  body: |
+    Students given a mug asked about twice as much to sell it as other students
+    were willing to pay for the same mug. Owning it for a few minutes made giving
+    it up feel like a loss.
+- type: misconception
+  myth: Turning down a fair bet is always the sensible, cautious choice.
+  correction: |
+    Sometimes it is. But loss aversion also makes us refuse bets that are clearly in
+    our favour, and keep things we'd never buy at today's price.
+- type: question
+  question_key: check-own
+- type: summary
+  points:
+  - Losses feel about twice as strong as equal gains.
+  - We overvalue what we already own.
+  - 'Ask: would I choose this if I were starting from nothing?'
+questions:
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: To accept a 50/50 bet that could lose 100, how much do most people need to be able to win?
+  estimate:
+    min: 0
+    max: 500
+    step: 10
+    unit: coins
+    answer: 200
+    tolerance: 60
+    anchor: 100
+  explanation: Around 200. For many people, a loss feels roughly twice as strong as an equal gain.
+- key: check-own
+  role: lesson
+  type: single_choice
+  prompt: You'd never pay 50 for a jacket you own, but you won't sell it for 50 either. Why?
+  options:
+  - key: a
+    text: Giving it up feels like a loss, so you value it more
+    correct: true
+    feedback: That's loss aversion, also called the endowment effect.
+  - key: b
+    text: The jacket is worth exactly 50
+    correct: false
+    feedback: Then you'd be fine either buying or selling.
+  - key: c
+    text: Selling is illegal
+    correct: false
+    feedback: It's about how the loss feels.
+  explanation: Owning something raises what we'd want to give it up.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Loss aversion means…
+  options:
+  - key: a
+    text: Losses feel stronger than equal gains
+    correct: true
+    feedback: Right.
+  - key: b
+    text: People love taking risks
+    correct: false
+    feedback: It usually makes us avoid risks with possible losses.
+  - key: c
+    text: Spent money shouldn't matter
+    correct: false
+    feedback: That's about sunk costs.
+  explanation: Losing hurts more than winning pleases.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: In the mug study, sellers asked about…
+  options:
+  - key: a
+    text: Twice what buyers would pay
+    correct: true
+    feedback: Ownership raised the price they wanted.
+  - key: b
+    text: The same as buyers
+    correct: false
+    feedback: There was a large gap.
+  - key: c
+    text: Half what buyers would pay
+    correct: false
+    feedback: It went the other way.
+  explanation: That gap is the endowment effect.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Which question helps against loss aversion?
+  options:
+  - key: a
+    text: Would I buy this today at this price?
+    correct: true
+    feedback: It puts owning and buying on equal footing.
+  - key: b
+    text: How much did I pay for it?
+    correct: false
+    feedback: That invites sunk-cost thinking.
+  - key: c
+    text: What if I lose?
+    correct: false
+    feedback: That feeds the bias.
+  explanation: Imagine starting fresh.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A shop says 'Don't lose your 10% discount!' instead of 'Get 10% off'. Why?
+  options:
+  - key: a
+    text: Framing it as a loss is more motivating
+    correct: true
+    feedback: Loss frames push harder.
+  - key: b
+    text: It's a bigger discount
+    correct: false
+    feedback: It's the same discount.
+  - key: c
+    text: Losses are illegal to mention
+    correct: false
+    feedback: It's just persuasion.
+  explanation: Marketers use loss aversion.

@@ -1,0 +1,160 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760408
+slug: misleading-percentages
+version: 1
+status: published
+subject: math
+topic: numbers-news
+position: 4
+title: Up 50%, down 50%
+description: Why percentage changes don't simply cancel out.
+learning_objective: Work out what successive percentage changes do, and spot percentages that mislead.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- compound-growth
+- relative-risk
+sources:
+- key: huff-1954
+- key: gigerenzer-2007
+steps:
+- type: hook
+  body: |
+    A share price rises 50% on Monday and falls 50% on Tuesday. Are you back where
+    you started?
+- type: question
+  question_key: check-estimate
+- type: explanation
+  title: The core idea
+  body: |
+    A percentage is always **of something**, and that something changes. After a
+    rise, the base is bigger, so the same percentage fall takes away more. Watch
+    also for **percentage points**: a rate going from 2% to 3% is one point, but a
+    50% rise.
+- type: example
+  kind: illustrative
+  title: Discounts that stack
+  body: |
+    A shop offers 20% off, then another 20% off the sale price. That's not 40% off:
+    it's 20% off, then 20% off what's left, which is 36% off in total.
+- type: misconception
+  myth: Equal percentage gains and losses cancel out.
+  correction: |
+    They don't. A 50% loss needs a 100% gain to get back to where you started,
+    because each change applies to a different base.
+- type: question
+  question_key: check-points
+- type: summary
+  points:
+  - Percentages are always of something, and that base changes.
+  - Equal gains and losses don't cancel out.
+  - Percentage points and percent mean different things.
+questions:
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: You start with 100 coins. They rise 50%, then fall 50%. How many do you have now?
+  estimate:
+    min: 0
+    max: 200
+    step: 1
+    unit: coins
+    answer: 75
+    tolerance: 2
+    anchor: 100
+  explanation: 75 coins. The fall is 50% of 150, which is 75, so you lose more than you gained.
+- key: check-points
+  role: lesson
+  type: single_choice
+  prompt: Unemployment goes from 4% to 6%. Which description is accurate?
+  options:
+  - key: a
+    text: It rose 2 percentage points, which is a 50% increase
+    correct: true
+    feedback: Both are true; points and percent differ.
+  - key: b
+    text: It rose 2%
+    correct: false
+    feedback: It rose 2 points, which is 50% in relative terms.
+  - key: c
+    text: It rose 6%
+    correct: false
+    feedback: That mixes up the new level and the change.
+  explanation: Percentage points and percent are different things.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: After falling 50%, what rise gets you back to the start?
+  options:
+  - key: a
+    text: 100%
+    correct: true
+    feedback: Half needs to double to get back.
+  - key: b
+    text: 50%
+    correct: false
+    feedback: 50% of half only gets you to 75%.
+  - key: c
+    text: 25%
+    correct: false
+    feedback: Far too little.
+  explanation: Losses need bigger gains to recover.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Two discounts of 20% one after the other equal…
+  options:
+  - key: a
+    text: 36% off in total
+    correct: true
+    feedback: The second 20% applies to the reduced price.
+  - key: b
+    text: 40% off
+    correct: false
+    feedback: They don't simply add.
+  - key: c
+    text: 20% off
+    correct: false
+    feedback: The second discount still saves more.
+  explanation: Stacked percentages multiply.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A tax rate goes from 10% to 12%. How much did it rise?
+  options:
+  - key: a
+    text: 2 percentage points, or 20%
+    correct: true
+    feedback: Points and percent give different numbers.
+  - key: b
+    text: 2%
+    correct: false
+    feedback: That confuses points with percent.
+  - key: c
+    text: 12%
+    correct: false
+    feedback: That's the new rate, not the change.
+  explanation: Know which one is being reported.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Why might a headline use percent instead of points?
+  options:
+  - key: a
+    text: Percent can make a change sound bigger
+    correct: true
+    feedback: From 1% to 2% sounds dramatic as '100% higher'.
+  - key: b
+    text: Points are illegal
+    correct: false
+    feedback: Both are allowed.
+  - key: c
+    text: Percent is always more accurate
+    correct: false
+    feedback: Both are accurate; they answer different questions.
+  explanation: The choice of number shapes the message.

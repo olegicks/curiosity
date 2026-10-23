@@ -1,0 +1,168 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760304
+slug: survivorship-bias
+version: 1
+status: published
+subject: science
+topic: evidence
+position: 4
+title: Survivorship bias
+description: Why looking only at winners gives you the wrong lesson.
+learning_objective: Spot when only the survivors of a process are being counted, and ask what happened
+  to the rest.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- small-samples
+- correlation-causation
+sources:
+- key: mangel-samaniego-1984
+- key: brown-1992
+steps:
+- type: hook
+  body: |
+    In the Second World War, planes came back from missions full of bullet holes on
+    the wings and body. Where should the extra armour go?
+- type: explanation
+  title: The core idea
+  body: |
+    **Survivorship bias** is drawing conclusions only from the things that made it
+    through a process, while forgetting the ones that didn't. The missing cases
+    are often the most important ones, because they show what really fails.
+- type: question
+  question_key: check-planes
+- type: example
+  kind: research
+  source_key: mangel-samaniego-1984
+  title: Abraham Wald's insight
+  body: |
+    The statistician Abraham Wald worked on how to protect bombers. He reasoned
+    that the damage on returning planes showed where a plane could be hit and still
+    fly home, so the undamaged areas needed protection most.
+- type: misconception
+  myth: Studying successful people tells you what makes people successful.
+  correction: |
+    Many people did the same things and failed, but nobody writes books about them.
+    Without the failures, you can't tell which habits mattered.
+- type: question
+  question_key: check-funds
+- type: summary
+  points:
+  - Looking only at survivors hides the cases that failed.
+  - The missing cases often hold the real lesson.
+  - 'Always ask: what happened to the ones we can''t see?'
+questions:
+- key: check-planes
+  role: lesson
+  type: single_choice
+  prompt: Returning planes had few holes on the engines. Where did the armour need to go?
+  options:
+  - key: a
+    text: On the engines
+    correct: true
+    feedback: Planes hit there didn't come back to be counted.
+  - key: b
+    text: On the wings, where most holes were
+    correct: false
+    feedback: Planes could survive wing hits. That's why they returned.
+  - key: c
+    text: Spread evenly everywhere
+    correct: false
+    feedback: The pattern of missing holes tells you where hits were fatal.
+  explanation: The missing planes show where damage was deadly.
+- key: check-funds
+  role: lesson
+  type: single_choice
+  prompt: A report says investment funds averaged great returns, but it only includes funds still open
+    today. What's wrong?
+  options:
+  - key: a
+    text: Funds that did badly and closed are left out
+    correct: true
+    feedback: Dropping the failures makes the average look better.
+  - key: b
+    text: Nothing, open funds are the ones that matter
+    correct: false
+    feedback: Investors also lost money in the closed ones.
+  - key: c
+    text: The report is too long
+    correct: false
+    feedback: The problem is what's missing, not the length.
+  explanation: Counting only survivors inflates success.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Old buildings look better made than new ones. What's the survivorship explanation?
+  options:
+  - key: a
+    text: The badly built old buildings fell down long ago
+    correct: true
+    feedback: We only see the old ones that lasted.
+  - key: b
+    text: Builders were more skilled in the past
+    correct: false
+    feedback: Survivorship explains it without that assumption.
+  - key: c
+    text: New buildings use worse materials
+    correct: false
+    feedback: That may or may not be true. The survivors skew the comparison.
+  explanation: We compare today's average with yesterday's best.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Where did Wald suggest adding armour?
+  options:
+  - key: a
+    text: Where returning planes had no holes
+    correct: true
+    feedback: Hits there were the ones that brought planes down.
+  - key: b
+    text: Where returning planes had the most holes
+    correct: false
+    feedback: Those hits were survivable.
+  - key: c
+    text: Nowhere, armour was too heavy
+    correct: false
+    feedback: He argued for armour in the right places.
+  explanation: The absence of damage was the clue.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A college dropout became a billionaire. Should you drop out?
+  options:
+  - key: a
+    text: No. Many dropouts didn't succeed, and you don't hear about them
+    correct: true
+    feedback: Famous survivors hide the many failures.
+  - key: b
+    text: Yes, it worked for them
+    correct: false
+    feedback: One survivor tells you little about the odds.
+  - key: c
+    text: Yes, degrees are useless
+    correct: false
+    feedback: The story doesn't show that.
+  explanation: Success stories are a biased sample.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Survivorship bias is…
+  options:
+  - key: a
+    text: Drawing conclusions only from cases that made it through
+    correct: true
+    feedback: Right.
+  - key: b
+    text: Overrating your own skills
+    correct: false
+    feedback: That's overconfidence.
+  - key: c
+    text: Seeing patterns in random data
+    correct: false
+    feedback: Related, but survivorship is about missing failures.
+  explanation: The failures are missing from the picture.

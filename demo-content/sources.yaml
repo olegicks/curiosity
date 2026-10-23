@@ -118,3 +118,120 @@ sources:
     citation: "Thorndike, E. L. (1920). A constant error in psychological ratings. Journal of Applied Psychology, 4(1), 25–29."
     doi: "10.1037/h0071663"
     peer_reviewed: true
+  - key: wainer-2007
+    type: journal_article
+    citation: "Wainer, H. (2007). The most dangerous equation. American Scientist, 95(3), 249–256."
+    doi: "10.1511/2007.65.249"
+    peer_reviewed: true
+  - key: mangel-samaniego-1984
+    type: journal_article
+    citation: "Mangel, M., & Samaniego, F. J. (1984). Abraham Wald's work on aircraft survivability. Journal of the American Statistical Association, 79(386), 259–267."
+    doi: "10.1080/01621459.1984.10478038"
+    peer_reviewed: true
+  - key: brown-1992
+    type: journal_article
+    citation: "Brown, S. J., Goetzmann, W., Ibbotson, R. G., & Ross, S. A. (1992). Survivorship bias in performance studies. Review of Financial Studies, 5(4), 553–580."
+    doi: "10.1093/rfs/5.4.553"
+    peer_reviewed: true
+  - key: popper-1959
+    type: book
+    citation: "Popper, K. R. (1959). The logic of scientific discovery. Hutchinson."
+    peer_reviewed: false
+  - key: sagan-1995
+    type: book
+    citation: "Sagan, C. (1995). The demon-haunted world: Science as a candle in the dark. Random House."
+    peer_reviewed: false
+  - key: osc-2015
+    type: journal_article
+    citation: "Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. Science, 349(6251), aac4716."
+    doi: "10.1126/science.aac4716"
+    peer_reviewed: true
+  - key: ioannidis-2005
+    type: journal_article
+    citation: "Ioannidis, J. P. A. (2005). Why most published research findings are false. PLoS Medicine, 2(8), e124."
+    doi: "10.1371/journal.pmed.0020124"
+    peer_reviewed: true
+  - key: smith-2006
+    type: journal_article
+    citation: "Smith, R. (2006). Peer review: A flawed process at the heart of science and journals. Journal of the Royal Society of Medicine, 99(4), 178–182."
+    doi: "10.1177/014107680609900414"
+    peer_reviewed: true
+  - key: bem-2011
+    type: journal_article
+    citation: "Bem, D. J. (2011). Feeling the future: Experimental evidence for anomalous retroactive influences on cognition and affect. Journal of Personality and Social Psychology, 100(3), 407–425."
+    doi: "10.1037/a0021524"
+    peer_reviewed: true
+  - key: ritchie-2012
+    type: journal_article
+    citation: "Ritchie, S. J., Wiseman, R., & French, C. C. (2012). Failing the future: Three unsuccessful attempts to replicate Bem's 'retroactive facilitation of recall' effect. PLoS ONE, 7(3), e33423."
+    doi: "10.1371/journal.pone.0033423"
+    peer_reviewed: true
+  - key: gigerenzer-hoffrage-1995
+    type: journal_article
+    citation: "Gigerenzer, G., & Hoffrage, U. (1995). How to improve Bayesian reasoning without instruction: Frequency formats. Psychological Review, 102(4), 684–704."
+    doi: "10.1037/0033-295X.102.4.684"
+    peer_reviewed: true
+  - key: kahneman-tversky-1973
+    type: journal_article
+    citation: "Kahneman, D., & Tversky, A. (1973). On the psychology of prediction. Psychological Review, 80(4), 237–251."
+    doi: "10.1037/h0034747"
+    peer_reviewed: true
+  - key: galton-1886
+    type: journal_article
+    citation: "Galton, F. (1886). Regression towards mediocrity in hereditary stature. Journal of the Anthropological Institute of Great Britain and Ireland, 15, 246–263."
+    doi: "10.2307/2841583"
+    peer_reviewed: true
+  - key: gigerenzer-2007
+    type: journal_article
+    citation: "Gigerenzer, G., Gaissmaier, W., Kurz-Milcke, E., Schwartz, L. M., & Woloshin, S. (2007). Helping doctors and patients make sense of health statistics. Psychological Science in the Public Interest, 8(2), 53–96."
+    doi: "10.1111/j.1539-6053.2008.00033.x"
+    peer_reviewed: true
+  - key: spiegelhalter-2019
+    type: book
+    citation: "Spiegelhalter, D. (2019). The art of statistics: Learning from data. Pelican."
+    peer_reviewed: false
+  - key: huff-1954
+    type: book
+    citation: "Huff, D. (1954). How to lie with statistics. W. W. Norton."
+    peer_reviewed: false
+  - key: bartlett-1978
+    type: journal_article
+    citation: "Bartlett, A. A. (1978). Forgotten fundamentals of the energy crisis. American Journal of Physics, 46(9), 876–888."
+    doi: "10.1119/1.11217"
+    peer_reviewed: true
+  - key: kahneman-tversky-1979
+    type: journal_article
+    citation: "Kahneman, D., & Tversky, A. (1979). Prospect theory: An analysis of decision under risk. Econometrica, 47(2), 263–291."
+    doi: "10.2307/1914185"
+    peer_reviewed: true
+  - key: kahneman-knetsch-thaler-1990
+    type: journal_article
+    citation: "Kahneman, D., Knetsch, J. L., & Thaler, R. H. (1990). Experimental tests of the endowment effect and the Coase theorem. Journal of Political Economy, 98(6), 1325–1348."
+    doi: "10.1086/261737"
+    peer_reviewed: true
+  - key: jevons-1871
+    type: book
+    citation: "Jevons, W. S. (1871). The theory of political economy. Macmillan."
+    peer_reviewed: false
+  - key: marshall-1890
+    type: book
+    citation: "Marshall, A. (1890). Principles of economics. Macmillan."
+    peer_reviewed: false
+  - key: shiller-1997
+    type: book_chapter
+    citation: "Shiller, R. J. (1997). Why do people dislike inflation? In C. D. Romer & D. H. Romer (Eds.), Reducing inflation: Motivation and strategy (pp. 13–70). University of Chicago Press."
+    peer_reviewed: false
+  - key: gneezy-rustichini-2000
+    type: journal_article
+    citation: "Gneezy, U., & Rustichini, A. (2000). A fine is a price. Journal of Legal Studies, 29(1), 1–17."
+    doi: "10.1086/468061"
+    peer_reviewed: true
+  - key: hardin-1968
+    type: journal_article
+    citation: "Hardin, G. (1968). The tragedy of the commons. Science, 162(3859), 1243–1248."
+    doi: "10.1126/science.162.3859.1243"
+    peer_reviewed: true
+  - key: ostrom-1990
+    type: book
+    citation: "Ostrom, E. (1990). Governing the commons: The evolution of institutions for collective action. Cambridge University Press."
+    peer_reviewed: false

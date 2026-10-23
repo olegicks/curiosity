@@ -1,0 +1,163 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760404
+slug: regression-to-the-mean
+version: 1
+status: published
+subject: math
+topic: chance
+position: 4
+title: Regression to the mean
+description: Why extreme results are usually followed by more ordinary ones.
+learning_objective: Recognise regression to the mean and avoid crediting or blaming it on the wrong cause.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- base-rate-neglect
+- gamblers-fallacy
+sources:
+- key: galton-1886
+- key: tversky-kahneman-1974
+steps:
+- type: hook
+  body: |
+    Athletes who appear on a magazine cover after a brilliant season often do worse
+    the next year. Is the cover cursed?
+- type: explanation
+  title: The core idea
+  body: |
+    An extreme result is usually partly skill and partly luck. Next time, the luck
+    part is unlikely to be as extreme, so results drift back toward average. This is
+    **regression to the mean**, and it happens without any cause at all.
+- type: question
+  question_key: check-cover
+- type: example
+  kind: research
+  source_key: tversky-kahneman-1974
+  title: Praise and punishment
+  body: |
+    Flight instructors noticed that cadets praised for a great landing usually did
+    worse next time, while cadets criticised for a bad one usually improved. They
+    concluded criticism works. Regression explains the pattern without it.
+- type: misconception
+  myth: If things improve after an action, the action caused it.
+  correction: |
+    If you act when things are at their worst, they would often have improved anyway.
+    To know if the action worked, compare with a group that didn't get it.
+- type: question
+  question_key: check-tf
+- type: summary
+  points:
+  - Extreme results are usually followed by more ordinary ones.
+  - This happens by chance, with no cause needed.
+  - Compare with a group that got no treatment before crediting an action.
+questions:
+- key: check-cover
+  role: lesson
+  type: single_choice
+  prompt: Why do cover athletes often have a worse season next?
+  options:
+  - key: a
+    text: Their record season included unusual luck that won't repeat
+    correct: true
+    feedback: Results drift back toward their usual level.
+  - key: b
+    text: The cover causes pressure
+    correct: false
+    feedback: Possible, but regression explains it without any curse.
+  - key: c
+    text: Magazines pick bad athletes
+    correct: false
+    feedback: They pick athletes at their peak.
+  explanation: Peaks are partly luck, and luck doesn't repeat on demand.
+- key: check-tf
+  role: lesson
+  type: true_false
+  prompt: 'True or false: very tall parents tend to have children who are tall, but less extreme than
+    themselves.'
+  options:
+  - key: 'true'
+    text: 'True'
+    correct: true
+    feedback: Right. Galton found children of extreme parents drift toward the average.
+  - key: 'false'
+    text: 'False'
+    correct: false
+    feedback: Galton found that children of very tall parents are tall, but usually closer to average.
+  explanation: Extreme traits regress toward the mean across generations.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Regression to the mean is…
+  options:
+  - key: a
+    text: Extreme results tending to be followed by less extreme ones
+    correct: true
+    feedback: Right.
+  - key: b
+    text: Averages always being wrong
+    correct: false
+    feedback: Averages aren't the issue.
+  - key: c
+    text: Results getting steadily worse
+    correct: false
+    feedback: They move toward average, up or down.
+  explanation: Luck evens out.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Why did flight instructors wrongly believe criticism works?
+  options:
+  - key: a
+    text: Bad landings were usually followed by better ones anyway
+    correct: true
+    feedback: Regression made criticism look effective.
+  - key: b
+    text: Cadets liked being criticised
+    correct: false
+    feedback: That isn't the explanation.
+  - key: c
+    text: Praise was never given
+    correct: false
+    feedback: Praise was given and seemed to backfire.
+  explanation: Regression fools us about cause and effect.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: You take a remedy on your worst headache day and feel better next day. Why be careful?
+  options:
+  - key: a
+    text: You'd probably feel better after the worst day anyway
+    correct: true
+    feedback: Worst days are usually followed by better ones.
+  - key: b
+    text: Remedies never work
+    correct: false
+    feedback: Some do. You need a fair comparison.
+  - key: c
+    text: Headaches always get worse
+    correct: false
+    feedback: They usually ease after the peak.
+  explanation: Starting at an extreme guarantees some improvement.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: What's the best way to check if an action really helped?
+  options:
+  - key: a
+    text: Compare with a similar group that didn't get it
+    correct: true
+    feedback: A comparison group removes regression effects.
+  - key: b
+    text: Measure only before and after
+    correct: false
+    feedback: Regression can create a fake effect.
+  - key: c
+    text: Ask people if they feel it worked
+    correct: false
+    feedback: Feelings are fooled too.
+  explanation: Use a control group.

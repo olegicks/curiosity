@@ -1,0 +1,164 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760508
+slug: tragedy-of-the-commons
+version: 1
+status: published
+subject: economics
+topic: markets
+position: 4
+title: The tragedy of the commons
+description: Why shared resources get overused, and how communities protect them.
+learning_objective: Explain why shared resources are overused and name ways people prevent it.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- incentives
+- opportunity-cost
+sources:
+- key: hardin-1968
+- key: ostrom-1990
+steps:
+- type: hook
+  body: |
+    Every fishing boat gains by catching one more fish. But if every boat does the
+    same, the fish run out for everyone. Who's to blame?
+- type: explanation
+  title: The core idea
+  body: |
+    The **tragedy of the commons** happens when a resource is shared and open to
+    all. Each user gets the full benefit of taking more but shares the cost with
+    everyone, so the resource gets overused, even when everyone would be better off
+    holding back.
+- type: question
+  question_key: check-why
+- type: example
+  kind: research
+  source_key: ostrom-1990
+  title: Communities that manage the commons
+  body: |
+    The political scientist Elinor Ostrom studied fisheries, forests and pastures
+    around the world. Many communities avoided the tragedy with their own rules:
+    clear boundaries, shared monitoring and fair penalties.
+- type: misconception
+  myth: Shared resources are always doomed unless they're privatised.
+  correction: |
+    Ostrom showed many communities manage shared resources well for centuries
+    through local rules. Privatisation and regulation are not the only answers.
+- type: question
+  question_key: check-tf
+- type: summary
+  points:
+  - Open, shared resources tend to be overused.
+  - Each user gains fully but shares the cost.
+  - Clear rules, monitoring and fair penalties can protect commons.
+questions:
+- key: check-why
+  role: lesson
+  type: single_choice
+  prompt: Why does each fisher keep fishing even as stocks fall?
+  options:
+  - key: a
+    text: They get all the benefit of their catch but share the cost of depletion
+    correct: true
+    feedback: Individual gain, shared loss.
+  - key: b
+    text: Fishers don't care about the future
+    correct: false
+    feedback: Even caring fishers face this trap.
+  - key: c
+    text: Fish breed faster when caught
+    correct: false
+    feedback: Overfishing reduces stocks.
+  explanation: Benefits are private; costs are shared.
+- key: check-tf
+  role: lesson
+  type: true_false
+  prompt: 'True or false: Elinor Ostrom found that communities can manage shared resources without outside
+    control.'
+  options:
+  - key: 'true'
+    text: 'True'
+    correct: true
+    feedback: Right. Clear rules, monitoring and fair penalties worked in many places.
+  - key: 'false'
+    text: 'False'
+    correct: false
+    feedback: Ostrom documented many communities that did exactly that.
+  explanation: Local rules can solve the tragedy.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: The tragedy of the commons is…
+  options:
+  - key: a
+    text: Overuse of a shared resource because costs are spread out
+    correct: true
+    feedback: Right.
+  - key: b
+    text: A play about farmers
+    correct: false
+    feedback: It's an economic idea.
+  - key: c
+    text: A market where prices are too high
+    correct: false
+    feedback: It's about shared resources.
+  explanation: Private gain, shared loss.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Which is a classic example?
+  options:
+  - key: a
+    text: Overfishing in open seas
+    correct: true
+    feedback: Everyone fishes, stocks collapse.
+  - key: b
+    text: A private garden
+    correct: false
+    feedback: Its owner bears the cost of overuse.
+  - key: c
+    text: A library book you borrowed
+    correct: false
+    feedback: Rules and return dates protect it.
+  explanation: Open access invites overuse.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: What did Ostrom find protects commons?
+  options:
+  - key: a
+    text: Clear boundaries, monitoring and fair penalties
+    correct: true
+    feedback: Local rules worked well.
+  - key: b
+    text: Ignoring the problem
+    correct: false
+    feedback: That leads to the tragedy.
+  - key: c
+    text: Letting the biggest user decide
+    correct: false
+    feedback: Fair rules matter.
+  explanation: Communities can self-govern.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Why might a caring fisher still overfish?
+  options:
+  - key: a
+    text: Holding back alone doesn't save the fish if others keep fishing
+    correct: true
+    feedback: The trap is in the setup, not the person.
+  - key: b
+    text: Caring people never overfish
+    correct: false
+    feedback: The incentives push everyone.
+  - key: c
+    text: Fish are infinite
+    correct: false
+    feedback: They aren't.
+  explanation: Fix the rules, not just the people.

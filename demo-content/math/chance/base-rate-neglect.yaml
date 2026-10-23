@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760403
+slug: base-rate-neglect
+version: 1
+status: published
+subject: math
+topic: chance
+position: 3
+title: The 99% accurate test
+description: Why a positive result from a good test can still probably be wrong.
+learning_objective: Use natural frequencies to work out what a positive test result really means.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- birthday-paradox
+- relative-risk
+sources:
+- key: gigerenzer-hoffrage-1995
+- key: tversky-kahneman-1974
+steps:
+- type: hook
+  body: |
+    A disease affects 1 in 1,000 people. A test catches 99% of cases but also flags
+    5% of healthy people. You test positive. How worried should you be?
+- type: question
+  question_key: check-estimate
+- type: explanation
+  title: Count people, not percentages
+  body: |
+    **Base-rate neglect** is ignoring how common something is to begin with. Picture
+    1,000 people: 1 has the disease and tests positive. Of the 999 healthy people,
+    5% (about 50) also test positive. So only 1 of about 51 positives is real.
+- type: example
+  kind: research
+  source_key: gigerenzer-hoffrage-1995
+  title: Frequencies help
+  body: |
+    When problems like this were given as percentages, most people got them wrong.
+    When the same numbers were given as counts of people ("10 out of 1,000"), far
+    more people reached the right answer.
+- type: misconception
+  myth: A 99% accurate test means a positive result is 99% likely to be right.
+  correction: |
+    When a condition is rare, false alarms from the many healthy people can outnumber
+    the true cases. How rare it is matters as much as how good the test is.
+- type: question
+  question_key: check-why
+- type: summary
+  points:
+  - How common something is (the base rate) changes what a test result means.
+  - With rare conditions, false alarms can outnumber true cases.
+  - Turn percentages into counts of people to see it clearly.
+questions:
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: You test positive. What's the chance you actually have the disease?
+  estimate:
+    min: 0
+    max: 100
+    step: 1
+    unit: '%'
+    answer: 2
+    tolerance: 3
+    anchor: 99
+  explanation: Only about 2%. Out of 1,000 people, about 1 sick person tests positive, but so do about
+    50 healthy people.
+- key: check-why
+  role: lesson
+  type: single_choice
+  prompt: Why are most positives false in this example?
+  options:
+  - key: a
+    text: Healthy people vastly outnumber sick ones, so their false alarms dominate
+    correct: true
+    feedback: 50 false alarms beat 1 true case.
+  - key: b
+    text: The test is badly made
+    correct: false
+    feedback: It's quite accurate. The disease is just rare.
+  - key: c
+    text: Sick people avoid tests
+    correct: false
+    feedback: That's not part of the example.
+  explanation: Rare conditions make false positives common.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Base-rate neglect means…
+  options:
+  - key: a
+    text: Ignoring how common something is to begin with
+    correct: true
+    feedback: Right.
+  - key: b
+    text: Trusting small samples
+    correct: false
+    feedback: That's a different mistake.
+  - key: c
+    text: Believing a streak must end
+    correct: false
+    feedback: That's the gambler's fallacy.
+  explanation: Start from how common it is.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Which format helps people reason about tests?
+  options:
+  - key: a
+    text: Counts like '1 out of 1,000'
+    correct: true
+    feedback: Natural frequencies make it concrete.
+  - key: b
+    text: More decimal places
+    correct: false
+    feedback: Precision doesn't help understanding.
+  - key: c
+    text: Bigger percentages
+    correct: false
+    feedback: The format matters, not the size.
+  explanation: Count people.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A rare disease, a good test, a positive result. What should come next?
+  options:
+  - key: a
+    text: A second, independent test
+    correct: true
+    feedback: Confirming reduces the false-alarm problem.
+  - key: b
+    text: Panic
+    correct: false
+    feedback: Most positives here are false alarms.
+  - key: c
+    text: Ignore it
+    correct: false
+    feedback: It still raises the chance, just not to 99%.
+  explanation: Confirm before concluding.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: If a disease were very common, a positive test would be…
+  options:
+  - key: a
+    text: More likely to be a true case
+    correct: true
+    feedback: Higher base rate, fewer false alarms in comparison.
+  - key: b
+    text: Less likely to be true
+    correct: false
+    feedback: It goes the other way.
+  - key: c
+    text: Exactly as likely as before
+    correct: false
+    feedback: The base rate changes the answer.
+  explanation: Base rates shift the meaning of results.

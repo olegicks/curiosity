@@ -1,0 +1,166 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760406
+slug: mean-vs-median
+version: 1
+status: published
+subject: math
+topic: numbers-news
+position: 2
+title: Average of what?
+description: Why the average salary in a room jumps when a billionaire walks in.
+learning_objective: Tell the mean from the median and pick the one that describes a typical case.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- relative-risk
+- misleading-percentages
+sources:
+- key: spiegelhalter-2019
+- key: huff-1954
+steps:
+- type: hook
+  body: |
+    Nine people in a café each earn about 30,000 a year. A billionaire walks in.
+    Suddenly the average person in the café is a multi-millionaire. Who got richer?
+- type: explanation
+  title: The core idea
+  body: |
+    The **mean** adds everything up and divides by the number of people. The
+    **median** is the middle value when everyone is lined up. One extreme value can
+    drag the mean far away, while the median stays put, so the median often better
+    describes a typical person.
+- type: question
+  question_key: check-typical
+- type: example
+  kind: illustrative
+  title: House prices
+  body: |
+    Reports of house prices usually give the median. A few mansions sold for
+    fortunes would push the mean up, making ordinary homes look more expensive
+    than they are.
+- type: misconception
+  myth: The average always tells you what's typical.
+  correction: |
+    "Average" usually means the mean, which extreme values distort. When data is
+    lopsided, like incomes, ask for the median too.
+- type: question
+  question_key: check-skew
+- type: summary
+  points:
+  - The mean is pulled by extreme values; the median isn't.
+  - For lopsided data like income, the median is more typical.
+  - When you hear 'average', ask which one.
+questions:
+- key: check-typical
+  role: lesson
+  type: single_choice
+  prompt: Which number best describes a typical person in the café?
+  options:
+  - key: a
+    text: The median
+    correct: true
+    feedback: It stays near 30,000, like most people there.
+  - key: b
+    text: The mean
+    correct: false
+    feedback: The billionaire drags it far above everyone else.
+  - key: c
+    text: The highest salary
+    correct: false
+    feedback: That describes only one person.
+  explanation: The median resists extreme values.
+- key: check-skew
+  role: lesson
+  type: single_choice
+  prompt: A company says its average salary is high, but most staff earn little. How is that possible?
+  options:
+  - key: a
+    text: A few very high salaries pull the mean up
+    correct: true
+    feedback: The mean is sensitive to extremes.
+  - key: b
+    text: They counted wrong
+    correct: false
+    feedback: The maths can be correct and still mislead.
+  - key: c
+    text: Medians are always higher than means
+    correct: false
+    feedback: With high outliers, the mean is higher.
+  explanation: Lopsided data makes the mean misleading.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: The median is…
+  options:
+  - key: a
+    text: The middle value when everything is lined up
+    correct: true
+    feedback: Right.
+  - key: b
+    text: The total divided by the count
+    correct: false
+    feedback: That's the mean.
+  - key: c
+    text: The most common value
+    correct: false
+    feedback: That's the mode.
+  explanation: Middle, not total.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: Why does a billionaire change the mean but not the median?
+  options:
+  - key: a
+    text: One huge value shifts the total but not the middle position
+    correct: true
+    feedback: The middle person still earns about the same.
+  - key: b
+    text: Medians ignore rich people
+    correct: false
+    feedback: They include everyone but only look at the middle.
+  - key: c
+    text: The mean is wrong
+    correct: false
+    feedback: It's correct, just not typical.
+  explanation: Extremes move the mean.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Which is usually reported for house prices?
+  options:
+  - key: a
+    text: The median
+    correct: true
+    feedback: It isn't skewed by a few mansions.
+  - key: b
+    text: The mean
+    correct: false
+    feedback: Mansions would distort it.
+  - key: c
+    text: The highest price
+    correct: false
+    feedback: That's not typical.
+  explanation: Medians describe typical homes.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: When should you be most suspicious of 'the average'?
+  options:
+  - key: a
+    text: When a few values are far bigger than the rest
+    correct: true
+    feedback: That's when mean and median split apart.
+  - key: b
+    text: When all values are similar
+    correct: false
+    feedback: Then mean and median agree.
+  - key: c
+    text: Never
+    correct: false
+    feedback: Averages can mislead.
+  explanation: Lopsided data needs the median.

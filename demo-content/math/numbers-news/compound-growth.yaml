@@ -1,0 +1,161 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760407
+slug: compound-growth
+version: 1
+status: published
+subject: math
+topic: numbers-news
+position: 3
+title: Folding paper to the Moon
+description: Why doubling grows faster than our intuition expects.
+learning_objective: Recognise exponential growth and use doubling time to estimate how fast things grow.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- mean-vs-median
+- misleading-percentages
+sources:
+- key: bartlett-1978
+- key: spiegelhalter-2019
+steps:
+- type: hook
+  body: |
+    A sheet of paper is about 0.1 mm thick. Each fold doubles its thickness. Ignoring
+    that it's physically impossible, how many folds would reach the Moon?
+- type: question
+  question_key: check-estimate
+- type: explanation
+  title: The core idea
+  body: |
+    **Exponential growth** means growing by the same percentage again and again, so
+    the amount keeps doubling. Early on it looks slow; then it explodes. A handy
+    rule: at a growth rate of r% a year, things double in about 70 ÷ r years.
+- type: example
+  kind: research
+  source_key: bartlett-1978
+  title: Steady growth adds up
+  body: |
+    A physicist showed that a "modest" 7% yearly growth in resource use means use
+    doubles every 10 years. Within a few doublings, demand outruns supplies that
+    looked enormous.
+- type: misconception
+  myth: Small growth rates don't matter much.
+  correction: |
+    A few percent a year compounds into huge changes over decades. That works in
+    your favour with savings, and against you with debt.
+- type: question
+  question_key: check-rule
+- type: summary
+  points:
+  - Exponential growth keeps doubling and outruns intuition.
+  - Doubling time is about 70 divided by the growth rate.
+  - Small yearly rates become huge over decades.
+questions:
+- key: check-estimate
+  role: lesson
+  type: estimate
+  prompt: How many folds would a 0.1 mm sheet need to reach the Moon, about 384,000 km away?
+  estimate:
+    min: 1
+    max: 1000
+    step: 1
+    unit: folds
+    answer: 42
+    tolerance: 4
+  explanation: Just 42. Each fold doubles the thickness, and 42 doublings turn 0.1 mm into over 400,000
+    km.
+- key: check-rule
+  role: lesson
+  type: single_choice
+  prompt: Savings grow 7% a year. Roughly how long until they double?
+  options:
+  - key: a
+    text: About 10 years
+    correct: true
+    feedback: 70 ÷ 7 = 10.
+  - key: b
+    text: About 70 years
+    correct: false
+    feedback: That ignores compounding.
+  - key: c
+    text: About 2 years
+    correct: false
+    feedback: That's far too fast for 7%.
+  explanation: Use the rule of 70.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Exponential growth means…
+  options:
+  - key: a
+    text: Growing by the same percentage repeatedly
+    correct: true
+    feedback: So the amount keeps doubling.
+  - key: b
+    text: Growing by the same amount each time
+    correct: false
+    feedback: That's linear growth.
+  - key: c
+    text: Growing randomly
+    correct: false
+    feedback: It's very regular.
+  explanation: Percentages compound.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: At 2% a year, roughly how long to double?
+  options:
+  - key: a
+    text: About 35 years
+    correct: true
+    feedback: 70 ÷ 2 = 35.
+  - key: b
+    text: About 2 years
+    correct: false
+    feedback: Far too short.
+  - key: c
+    text: About 140 years
+    correct: false
+    feedback: That's too long.
+  explanation: Rule of 70.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Why does exponential growth surprise us?
+  options:
+  - key: a
+    text: It looks slow at first, then suddenly huge
+    correct: true
+    feedback: Intuition expects straight-line growth.
+  - key: b
+    text: It's always slow
+    correct: false
+    feedback: It ends up very fast.
+  - key: c
+    text: It only happens in biology
+    correct: false
+    feedback: 'It''s everywhere: money, populations, viruses.'
+  explanation: The early part fools us.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A debt grows 20% a year. Roughly how long until it doubles?
+  options:
+  - key: a
+    text: About 3.5 years
+    correct: true
+    feedback: 70 ÷ 20 = 3.5.
+  - key: b
+    text: About 20 years
+    correct: false
+    feedback: Much faster than that.
+  - key: c
+    text: About 1 year
+    correct: false
+    feedback: Not quite that fast.
+  explanation: High rates double quickly.

@@ -1,0 +1,166 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760303
+slug: small-samples
+version: 1
+status: published
+subject: science
+topic: evidence
+position: 3
+title: Small samples, big swings
+description: Why the best and the worst results both come from small groups.
+learning_objective: Explain why small samples produce extreme results, and check sample size before trusting
+  a finding.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- correlation-causation
+- gamblers-fallacy
+sources:
+- key: wainer-2007
+- key: tversky-kahneman-1971
+steps:
+- type: hook
+  body: |
+    The schools with the highest test scores are mostly small. Should we split big
+    schools into small ones? Before you answer: the schools with the lowest scores
+    are mostly small too.
+- type: explanation
+  title: The core idea
+  body: |
+    Results from **small samples** swing more than results from big ones. With few
+    people, a handful of unusual cases can push the average far up or far down. Big
+    samples average those cases out, so their results sit closer to the truth.
+- type: question
+  question_key: check-why
+- type: example
+  kind: research
+  source_key: wainer-2007
+  title: The small-schools idea
+  body: |
+    Foundations spent large sums turning big schools into small ones, because the
+    top-scoring schools were small. Statisticians pointed out that the
+    lowest-scoring schools were small too: small size mostly made results more
+    variable.
+- type: misconception
+  myth: A striking result from a few people is just as convincing as one from thousands.
+  correction: |
+    Small studies are more likely to find extreme effects by chance. A surprising
+    finding from a tiny sample needs a bigger study before it's trusted.
+- type: question
+  question_key: check-hospital
+- type: summary
+  points:
+  - Small samples swing further from the truth than big ones.
+  - Extreme results, best and worst, often come from small groups.
+  - Check how many people a surprising finding is based on.
+questions:
+- key: check-why
+  role: lesson
+  type: single_choice
+  prompt: Why do small schools show up at both the top and the bottom of rankings?
+  options:
+  - key: a
+    text: Their averages swing more because they have fewer students
+    correct: true
+    feedback: A few very high or low scores move a small average a lot.
+  - key: b
+    text: Small schools have better teachers
+    correct: false
+    feedback: That wouldn't explain why they're also at the bottom.
+  - key: c
+    text: Big schools hide their results
+    correct: false
+    feedback: Big schools' averages are simply more stable.
+  explanation: Small samples produce more extreme results in both directions.
+- key: check-hospital
+  role: lesson
+  type: true_false
+  prompt: 'True or false: a small hospital will have more days when over 60% of babies born are boys than
+    a large hospital.'
+  options:
+  - key: 'true'
+    text: 'True'
+    correct: true
+    feedback: Right. Fewer births a day means bigger swings away from 50%.
+  - key: 'false'
+    text: 'False'
+    correct: false
+    feedback: With fewer births each day, the share of boys swings further from 50%.
+  explanation: Small samples stray further from the true average.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Two towns report cancer rates. The highest and the lowest rates are both in tiny villages. Why?
+  options:
+  - key: a
+    text: Small populations give more extreme rates by chance
+    correct: true
+    feedback: A few cases move a small town's rate a lot.
+  - key: b
+    text: Villages are healthier and unhealthier at once
+    correct: false
+    feedback: Chance explains both extremes more simply.
+  - key: c
+    text: The data must be wrong
+    correct: false
+    feedback: The pattern is exactly what small samples produce.
+  explanation: Rates from small groups are noisy.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: A study of 12 people finds a huge effect. What's the sensible reaction?
+  options:
+  - key: a
+    text: Interesting, but wait for a bigger study
+    correct: true
+    feedback: Small studies often find effects that shrink later.
+  - key: b
+    text: Accept it, the effect is huge
+    correct: false
+    feedback: Huge effects in small studies are often flukes.
+  - key: c
+    text: Reject it, small studies are worthless
+    correct: false
+    feedback: They're useful as a first look, not as proof.
+  explanation: Treat small-sample findings as provisional.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: Why are big samples more reliable?
+  options:
+  - key: a
+    text: Unusual cases get averaged out
+    correct: true
+    feedback: The more people, the less any one case matters.
+  - key: b
+    text: Big samples are always randomised
+    correct: false
+    feedback: Size and randomisation are different things.
+  - key: c
+    text: Bigger studies use better scientists
+    correct: false
+    feedback: It's about maths, not people.
+  explanation: Averages settle down as samples grow.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: A coin lands heads 7 times in 10 flips. Is it biased?
+  options:
+  - key: a
+    text: Not necessarily. 10 flips is too few to tell
+    correct: true
+    feedback: Results like 7 of 10 happen often by chance.
+  - key: b
+    text: Yes, 70% is far from 50%
+    correct: false
+    feedback: With only 10 flips that's not unusual.
+  - key: c
+    text: Yes, any result above 50% shows bias
+    correct: false
+    feedback: Random flips rarely land exactly on 50%.
+  explanation: Small samples can look biased when they aren't.

@@ -1,0 +1,167 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760308
+slug: extraordinary-claims
+version: 1
+status: published
+subject: science
+topic: how-science-works
+position: 4
+title: Extraordinary claims
+description: Why surprising claims need stronger evidence than ordinary ones.
+learning_objective: Explain why the evidence a claim needs depends on how surprising it is.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: '2026-10-23'
+reviewers:
+- Demo author
+- Demo reviewer
+prerequisites: []
+related:
+- peer-review
+- falsifiability
+sources:
+- key: bem-2011
+- key: ritchie-2012
+steps:
+- type: hook
+  body: |
+    A friend says they saw a dog in the park. You believe them. Another says they
+    saw a tiger in the park. Do you need more proof for the second claim?
+- type: explanation
+  title: The core idea
+  body: |
+    **Extraordinary claims need extraordinary evidence.** The more a claim conflicts
+    with everything else we know, the more likely the evidence is a mistake, a
+    fluke or a trick, and the stronger the evidence has to be before we accept it.
+- type: question
+  question_key: check-which
+- type: example
+  kind: research
+  source_key: bem-2011
+  title: Feeling the future
+  body: |
+    A respected psychologist published nine experiments suggesting people could
+    sense future events. The result would overturn physics. When other teams
+    repeated the studies with careful methods, they found no effect.
+- type: misconception
+  myth: Rejecting a surprising claim is being closed-minded.
+  correction: |
+    Being open-minded means accepting surprising claims when the evidence is strong
+    enough, not before. Science changes its mind regularly, but only after
+    extraordinary evidence.
+- type: question
+  question_key: check-explain
+- type: summary
+  points:
+  - Surprising claims need stronger evidence than ordinary ones.
+  - Mistakes, flukes and tricks are more likely than miracles.
+  - Open minds still ask for evidence that matches the claim.
+questions:
+- key: check-which
+  role: lesson
+  type: single_choice
+  prompt: Which claim needs the strongest evidence?
+  options:
+  - key: a
+    text: A pill that reverses ageing
+    correct: true
+    feedback: It contradicts a huge amount of biology.
+  - key: b
+    text: Exercise improves heart health
+    correct: false
+    feedback: That fits a mountain of existing evidence.
+  - key: c
+    text: It rained in London yesterday
+    correct: false
+    feedback: Ordinary and easy to check.
+  explanation: The more surprising the claim, the more evidence it needs.
+- key: check-explain
+  role: lesson
+  type: single_choice
+  prompt: A video seems to show a ghost. What's the most reasonable first step?
+  options:
+  - key: a
+    text: Look for ordinary explanations like editing or reflections
+    correct: true
+    feedback: Ordinary causes are far more likely.
+  - key: b
+    text: Accept it, video doesn't lie
+    correct: false
+    feedback: Video is easy to fake or misread.
+  - key: c
+    text: Ignore it completely
+    correct: false
+    feedback: Checking it is fine. Accepting it needs strong evidence.
+  explanation: Rule out ordinary explanations first.
+- key: recall-1
+  role: recall
+  type: single_choice
+  prompt: Why do extraordinary claims need extraordinary evidence?
+  options:
+  - key: a
+    text: Errors and tricks are more likely than overturning what we know
+    correct: true
+    feedback: Right.
+  - key: b
+    text: Scientists dislike new ideas
+    correct: false
+    feedback: New ideas win when the evidence is strong.
+  - key: c
+    text: Ordinary claims never need evidence
+    correct: false
+    feedback: All claims need some evidence.
+  explanation: Weigh the claim against everything else we know.
+- key: recall-2
+  role: recall
+  type: single_choice
+  prompt: What happened when others repeated the 'feeling the future' studies?
+  options:
+  - key: a
+    text: They found no effect
+    correct: true
+    feedback: Careful replications didn't reproduce it.
+  - key: b
+    text: They confirmed it
+    correct: false
+    feedback: They didn't.
+  - key: c
+    text: They found a stronger effect
+    correct: false
+    feedback: No effect appeared.
+  explanation: Extraordinary claims often vanish under scrutiny.
+- key: recall-3
+  role: recall
+  type: single_choice
+  prompt: A claim fits well with established science. How much evidence does it need?
+  options:
+  - key: a
+    text: Ordinary evidence
+    correct: true
+    feedback: It doesn't have to overcome much.
+  - key: b
+    text: None at all
+    correct: false
+    feedback: Every claim needs some support.
+  - key: c
+    text: Extraordinary evidence
+    correct: false
+    feedback: That's for claims that conflict with what we know.
+  explanation: Evidence should match the claim.
+- key: recall-4
+  role: recall
+  type: single_choice
+  prompt: Being open-minded means…
+  options:
+  - key: a
+    text: Accepting surprising claims when the evidence is strong enough
+    correct: true
+    feedback: Open but not gullible.
+  - key: b
+    text: Believing anything new
+    correct: false
+    feedback: That's gullibility.
+  - key: c
+    text: Never changing your mind
+    correct: false
+    feedback: That's closed-mindedness.
+  explanation: Follow the evidence.
