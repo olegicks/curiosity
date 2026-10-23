@@ -79,3 +79,5 @@ npm run api-types                # regenerate src/api/schema.d.ts from the API (
 
 - The primary developer machine is Windows. Prefer `uv run …` commands over `make`.
 - Docker and a local Postgres may not be installed. When they are missing, DB-backed tests are skipped locally and run in CI.
+- The development database is a Neon (hosted Postgres) project. Its connection string and a local `JWT_SECRET` live in `apps/api/.env`, which is gitignored: never print, log or commit it. Start the API from `apps/api/` with no `DATABASE_URL` in the shell so `.env` is used.
+- Never point `TEST_DATABASE_URL` at the Neon database: tests reset tables. Use a throwaway local Postgres for tests.

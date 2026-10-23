@@ -132,6 +132,7 @@ Each decision has a **recommendation**, which the rest of the spec already assum
 | DEV-33 | Discover header shows today's XP as a ring (02 §2.5, 10 §10.3 `XpRing`) | A pill with "15/20 XP today" and a thin progress bar | A ring needs an SVG dependency (react-native-svg) that nothing else needs yet | Add `XpRing` with the design pass if the ring is still wanted |
 | DEV-34 | Terms of Use and Privacy Policy linked from Welcome and About (09 §9.7) | Welcome mentions them in text; About has no links yet | The documents don't exist yet (R-13, owner action) | Add the URLs once the documents are published |
 | DEV-35 | Onboarding is Interests then Daily goal, and ends on the first lesson's intro (FR-ONB-2, FR-ONB-4) | Onboarding is Subject (D-17) then Daily goal, and ends on the path, where a three-step first-run tour explains the roadmap, XP and recall. Interests stay editable in Settings › Learning. | The owner found the app's mechanics unclear; the tour and the lesson card on each node explain them where they appear | None |
+| DEV-36 | PostgreSQL 16 (06 §6.1) | The shared development database is a Neon project running PostgreSQL 18; tests still run on PostgreSQL 16. The API reads it from the gitignored `apps/api/.env`. | No Docker or local Postgres on the development machine; the embedded server lived in a temporary folder | Pin production to 16, or move tests to 18, before launch |
 
 ## 15.7 Change log for this spec
 
