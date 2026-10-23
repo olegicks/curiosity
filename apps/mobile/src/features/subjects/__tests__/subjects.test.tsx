@@ -41,7 +41,8 @@ test("lessons are filtered by subject and subjects get a stable look", () => {
   const all = [lesson("a", "math"), lesson("b", "psychology")];
   expect(lessonsOf(all, "math").map((l) => l.slug)).toEqual(["a"]);
   expect(lessonsOf(all, null)).toHaveLength(2);
-  expect(subjectLook("science", 7)).toEqual({ color: unitColor(1), icon: "flask" });
+  expect(subjectLook("science", 7)).toMatchObject({ color: unitColor(1), icon: "flask" });
+  expect(subjectLook("science", 7).decor).toHaveLength(4);
   expect(subjectLook("history", 5).icon).toBe("library");
 });
 

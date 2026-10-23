@@ -125,6 +125,9 @@ test("the path shows stats, a recall prompt and a lesson card for each node", as
   expect(screen.getByText(strings.path.reviewTitle)).toBeOnTheScreen();
   expect(screen.getByText(strings.path.continue.toUpperCase())).toBeOnTheScreen();
   expect(screen.getByText(strings.path.nextUp("Availability"))).toBeOnTheScreen();
+  expect(
+    screen.getByRole("button", { name: `Anchoring, learned, ${strings.lessons.mastery(3)}` }),
+  ).toBeOnTheScreen();
   expect(screen.getByLabelText(/^Unit 1: Judgment\. 1 of 2 lessons/)).toBeOnTheScreen();
 
   await fireEvent.press(

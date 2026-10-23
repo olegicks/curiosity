@@ -5,18 +5,25 @@ import { type UnitColor, unitColor } from "@/ui/tokens";
 
 export type Subject = SubjectsOut["items"][number];
 
-const LOOKS: Record<string, { color: number; icon: IconName }> = {
-  psychology: { color: 0, icon: "bulb" },
-  science: { color: 1, icon: "flask" },
-  math: { color: 2, icon: "dice" },
-  economics: { color: 3, icon: "trending-up" },
+const LOOKS: Record<string, { color: number; icon: IconName; decor: IconName[] }> = {
+  psychology: { color: 0, icon: "bulb", decor: ["sparkles", "heart", "chatbubbles", "eye"] },
+  science: { color: 1, icon: "flask", decor: ["planet", "leaf", "telescope", "magnet"] },
+  math: { color: 2, icon: "dice", decor: ["calculator", "shapes", "infinite", "pie-chart"] },
+  economics: {
+    color: 3,
+    icon: "trending-up",
+    decor: ["cash", "bar-chart", "storefront", "wallet"],
+  },
 };
 
-export function subjectLook(slug: string, index: number): { color: UnitColor; icon: IconName } {
+export type SubjectLook = { color: UnitColor; icon: IconName; decor: IconName[] };
+
+export function subjectLook(slug: string, index: number): SubjectLook {
   const look = LOOKS[slug];
   return {
     color: unitColor(look ? look.color : index),
     icon: look ? look.icon : "library",
+    decor: look ? look.decor : ["sparkles", "star", "book", "compass"],
   };
 }
 
