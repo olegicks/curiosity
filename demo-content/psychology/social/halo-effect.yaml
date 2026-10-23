@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760207
+slug: halo-effect
+version: 1
+status: published
+subject: psychology
+topic: social
+position: 4
+title: The halo effect
+description: Why one good trait makes us assume the rest are good too.
+learning_objective: Spot when one impression is colouring unrelated judgements, and judge traits separately.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-23
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [fundamental-attribution-error, confirmation-bias]
+sources:
+  - key: thorndike-1920
+  - key: nisbett-wilson-1977
+steps:
+  - type: hook
+    body: |
+      A speaker is attractive, confident and well dressed. Before they say anything
+      useful, you already think they're probably smart and honest. Why?
+  - type: explanation
+    title: The core idea
+    body: |
+      The **halo effect** is when one positive impression spreads to judgements
+      about unrelated qualities. A nice smile can make someone seem kinder,
+      smarter or more trustworthy. A bad first impression can do the reverse.
+  - type: question
+    question_key: check-spot
+  - type: example
+    kind: research
+    source_key: nisbett-wilson-1977
+    title: The warm and cold lecturer
+    body: |
+      Students watched the same lecturer act either warm or cold. When he was
+      warm, they rated his looks, accent and mannerisms as more appealing, and
+      didn't realise his warmth had changed those ratings.
+  - type: misconception
+    myth: I'd notice if one trait was biasing my judgement.
+    correction: |
+      In the lecturer study, students insisted the opposite: they thought their
+      dislike of his accent made them dislike him. The halo works quietly.
+  - type: question
+    question_key: check-fix
+  - type: summary
+    points:
+      - One strong impression can spill over into unrelated judgements.
+      - It works without us noticing.
+      - Judge important qualities one at a time, with separate evidence.
+questions:
+  - key: check-spot
+    role: lesson
+    type: single_choice
+    prompt: Which is an example of the halo effect?
+    options:
+      - key: a
+        text: Assuming a famous athlete gives good investment advice
+        correct: true
+        feedback: Skill in sport spills over into a judgement about money.
+      - key: b
+        text: Trusting a doctor about medicine
+        correct: false
+        feedback: That's their actual area of expertise.
+      - key: c
+        text: Guessing a price close to the first number you saw
+        correct: false
+        feedback: That's anchoring.
+    explanation: The halo spreads one impression to unrelated traits.
+  - key: check-fix
+    role: lesson
+    type: single_choice
+    prompt: You're interviewing a charming candidate. How do you avoid the halo effect?
+    options:
+      - key: a
+        text: Score each skill separately against set questions
+        correct: true
+        feedback: Structured scoring keeps one trait from colouring the rest.
+      - key: b
+        text: Go with your overall gut feeling
+        correct: false
+        feedback: The gut feeling is where the halo lives.
+      - key: c
+        text: Decide in the first minute
+        correct: false
+        feedback: First impressions are exactly what spreads.
+    explanation: Judge traits one by one.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: The halo effect is…
+    options:
+      - key: a
+        text: One good impression spreading to unrelated judgements
+        correct: true
+        feedback: Right.
+      - key: b
+        text: Blaming character instead of situation
+        correct: false
+        feedback: That's the fundamental attribution error.
+      - key: c
+        text: Helping less in a crowd
+        correct: false
+        feedback: That's the bystander effect.
+    explanation: A single trait casts a "halo" over the rest.
+  - key: recall-lecturer
+    role: recall
+    type: single_choice
+    prompt: In the lecturer study, what did students get wrong about their own judgements?
+    options:
+      - key: a
+        text: They didn't realise his warmth changed how they rated his looks and accent
+        correct: true
+        feedback: The halo worked without them noticing.
+      - key: b
+        text: They forgot what he said
+        correct: false
+        feedback: The study was about ratings, not memory.
+      - key: c
+        text: They rated two different lecturers
+        correct: false
+        feedback: It was the same man acting warm or cold.
+    explanation: We rarely see the halo in our own judgements.
+  - key: recall-reverse
+    role: recall
+    type: single_choice
+    prompt: A product has an ugly box, so you assume it works badly. This is…
+    options:
+      - key: a
+        text: A reverse halo, sometimes called the horn effect
+        correct: true
+        feedback: One bad impression spreads to unrelated qualities.
+      - key: b
+        text: The framing effect
+        correct: false
+        feedback: Framing is about how the same facts are worded.
+      - key: c
+        text: Good judgement
+        correct: false
+        feedback: The box doesn't tell you how well it works.
+    explanation: Halos can be negative too.
+  - key: recall-fix
+    role: recall
+    type: single_choice
+    prompt: What's the best defence against the halo effect?
+    options:
+      - key: a
+        text: Rate important qualities separately, each with its own evidence
+        correct: true
+        feedback: Separating judgements keeps one from colouring the rest.
+      - key: b
+        text: Trust first impressions
+        correct: false
+        feedback: First impressions are the source of the halo.
+      - key: c
+        text: Ask a friend who likes the person
+        correct: false
+        feedback: They may be under the same halo.
+    explanation: Break one big impression into separate judgements.

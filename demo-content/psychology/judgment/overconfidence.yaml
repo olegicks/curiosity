@@ -1,0 +1,156 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760204
+slug: overconfidence
+version: 1
+status: published
+subject: psychology
+topic: judgment
+position: 4
+title: Overconfidence
+description: Why most of us think we're better than average.
+learning_objective: Recognise overconfidence in yourself and others, and use outside numbers to check it.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-23
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [framing-effect, confirmation-bias]
+sources:
+  - key: svenson-1981
+  - key: moore-healy-2008
+steps:
+  - type: hook
+    body: |
+      Are you a better driver than the average person on the road? Most people
+      say yes. Can most people be above average?
+  - type: question
+    question_key: check-estimate
+  - type: explanation
+    title: The core idea
+    body: |
+      **Overconfidence** is believing we're more skilled, more right or more in
+      control than we really are. It shows up as rating ourselves above average,
+      and as being too sure of our guesses and plans.
+  - type: example
+    kind: research
+    source_key: svenson-1981
+    title: The driving survey
+    body: |
+      When students in the United States rated their own driving skill, about
+      93% placed themselves above the middle of the group. Only half can be.
+  - type: misconception
+    myth: Confident people are usually right.
+    correction: |
+      Feeling sure and being right are only loosely connected. Experts can be
+      badly overconfident outside their narrow area.
+  - type: question
+    question_key: check-plan
+  - type: summary
+    points:
+      - Most people rate themselves above average on many skills.
+      - Feeling certain is not the same as being right.
+      - Outside numbers, like how long similar projects took, keep us honest.
+questions:
+  - key: check-estimate
+    role: lesson
+    type: estimate
+    prompt: In one US survey, what share of drivers rated themselves above the middle of the group?
+    estimate:
+      min: 0
+      max: 100
+      step: 1
+      unit: "%"
+      answer: 93
+      tolerance: 8
+      anchor: 50
+    explanation: About 93% put themselves in the top half. If everyone were accurate, it would be about 50%.
+  - key: check-plan
+    role: lesson
+    type: single_choice
+    prompt: You think your project will take two weeks. What's the best check against overconfidence?
+    options:
+      - key: a
+        text: Look at how long similar projects actually took
+        correct: true
+        feedback: Outside numbers beat your inside feeling.
+      - key: b
+        text: Imagine everything going smoothly
+        correct: false
+        feedback: That's how overconfident plans are made.
+      - key: c
+        text: Add one day just in case
+        correct: false
+        feedback: A small buffer rarely fixes a big bias.
+    explanation: Base your estimate on real past cases.
+  - key: recall-average
+    role: recall
+    type: single_choice
+    prompt: If 90% of people say they're above-average drivers, what does that show?
+    options:
+      - key: a
+        text: Many people overrate their own skill
+        correct: true
+        feedback: Only about half can be above the middle.
+      - key: b
+        text: Most people really are great drivers
+        correct: false
+        feedback: The maths doesn't allow most to be above the middle.
+      - key: c
+        text: The survey was too small
+        correct: false
+        feedback: The pattern shows up again and again.
+    explanation: That's overconfidence about ourselves.
+  - key: recall-certainty
+    role: recall
+    type: single_choice
+    prompt: Which statement about confidence is accurate?
+    options:
+      - key: a
+        text: Feeling certain doesn't guarantee being right
+        correct: true
+        feedback: Certainty and accuracy often come apart.
+      - key: b
+        text: Experts are never overconfident
+        correct: false
+        feedback: Experts can be very overconfident outside their field.
+      - key: c
+        text: Confidence always means skill
+        correct: false
+        feedback: It often doesn't.
+    explanation: Check confidence against evidence.
+  - key: recall-planning
+    role: recall
+    type: single_choice
+    prompt: Why do projects so often run late?
+    options:
+      - key: a
+        text: We plan for the best case and ignore how long things usually take
+        correct: true
+        feedback: Overconfident plans skip the usual delays.
+      - key: b
+        text: People are lazy
+        correct: false
+        feedback: The bias affects hard-working people too.
+      - key: c
+        text: Deadlines are always unfair
+        correct: false
+        feedback: The problem is usually the estimate.
+    explanation: Use past projects as your guide.
+  - key: recall-fix
+    role: recall
+    type: single_choice
+    prompt: What helps most against overconfidence?
+    options:
+      - key: a
+        text: Comparing your guess with real outcomes from similar cases
+        correct: true
+        feedback: Outside data is the best reality check.
+      - key: b
+        text: Trusting your gut more
+        correct: false
+        feedback: The gut is where the overconfidence lives.
+      - key: c
+        text: Asking only people who agree with you
+        correct: false
+        feedback: That adds confirmation bias.
+    explanation: Let outside numbers correct your inside view.

@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760205
+slug: fundamental-attribution-error
+version: 1
+status: published
+subject: psychology
+topic: social
+position: 2
+title: The fundamental attribution error
+description: Why we blame people's character and forget their situation.
+learning_objective: Notice when you explain someone's behaviour by who they are, and consider the situation they were in.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-23
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [confirmation-bias, halo-effect]
+sources:
+  - key: jones-harris-1967
+  - key: ross-1977
+steps:
+  - type: hook
+    body: |
+      A driver cuts you off. Your first thought: what a selfish idiot. But
+      when you cut someone off, it's because you were late for something urgent.
+  - type: explanation
+    title: The core idea
+    body: |
+      The **fundamental attribution error** is the habit of explaining other
+      people's behaviour by their **character**, while underestimating their
+      **situation**. For our own behaviour, we see the situation clearly.
+  - type: question
+    question_key: check-spot
+  - type: example
+    kind: research
+    source_key: jones-harris-1967
+    title: The assigned essay
+    body: |
+      People read essays for or against a political leader. Even when told the
+      writer had been **assigned** their side, readers still believed the essay
+      showed the writer's true opinion.
+  - type: misconception
+    myth: Behaviour always reveals what someone is really like.
+    correction: |
+      The same person can act very differently in different situations. A rude
+      moment may say more about their day than about them.
+  - type: question
+    question_key: check-situation
+  - type: summary
+    points:
+      - We explain others by character and ourselves by circumstances.
+      - Situations shape behaviour more than we expect.
+      - Ask what situation might make a decent person act this way.
+questions:
+  - key: check-spot
+    role: lesson
+    type: single_choice
+    prompt: A waiter forgets your order. Which thought shows the fundamental attribution error?
+    options:
+      - key: a
+        text: He must be lazy and careless
+        correct: true
+        feedback: That blames character and ignores the busy restaurant.
+      - key: b
+        text: They seem understaffed tonight
+        correct: false
+        feedback: That considers the situation.
+      - key: c
+        text: Maybe the kitchen lost it
+        correct: false
+        feedback: That's a situational explanation too.
+    explanation: The error is jumping to character and skipping the situation.
+  - key: check-situation
+    role: lesson
+    type: single_choice
+    prompt: What's a good question to counter this error?
+    options:
+      - key: a
+        text: What could make a reasonable person act like this?
+        correct: true
+        feedback: It brings the situation back into view.
+      - key: b
+        text: What kind of person does this?
+        correct: false
+        feedback: That keeps the focus on character.
+      - key: c
+        text: Have they done this before to someone else?
+        correct: false
+        feedback: Hunting for more proof of character can feed the bias.
+    explanation: Look for the situation before judging the person.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: The fundamental attribution error is…
+    options:
+      - key: a
+        text: Overestimating character and underestimating situation in others' behaviour
+        correct: true
+        feedback: Right.
+      - key: b
+        text: Remembering only the evidence we like
+        correct: false
+        feedback: That's confirmation bias.
+      - key: c
+        text: Thinking one good trait means others are good too
+        correct: false
+        feedback: That's the halo effect.
+    explanation: Character gets too much credit or blame.
+  - key: recall-essay
+    role: recall
+    type: single_choice
+    prompt: In the essay study, what surprised researchers?
+    options:
+      - key: a
+        text: Readers judged writers by essays they were told had been assigned
+        correct: true
+        feedback: Even known situational pressure didn't stop the judgement.
+      - key: b
+        text: Readers refused to read the essays
+        correct: false
+        feedback: They read them and judged the writers anyway.
+      - key: c
+        text: Writers changed their own opinions
+        correct: false
+        feedback: The study was about the readers.
+    explanation: People underweight the situation even when told about it.
+  - key: recall-self
+    role: recall
+    type: single_choice
+    prompt: When you snap at a friend, you usually blame…
+    options:
+      - key: a
+        text: Your stressful day
+        correct: true
+        feedback: For ourselves, we easily see the situation.
+      - key: b
+        text: Your bad character
+        correct: false
+        feedback: We tend to judge others that way, not ourselves.
+      - key: c
+        text: Your friend's character
+        correct: false
+        feedback: That can happen, but the classic pattern is about how we explain ourselves.
+    explanation: We judge ourselves by circumstances and others by character.
+  - key: recall-driver
+    role: recall
+    type: single_choice
+    prompt: A driver speeds past you. Which explanation avoids the error?
+    options:
+      - key: a
+        text: They might be rushing to the hospital
+        correct: true
+        feedback: A situation that could explain it.
+      - key: b
+        text: They're a reckless person
+        correct: false
+        feedback: That jumps straight to character.
+      - key: c
+        text: People like that never change
+        correct: false
+        feedback: That's an even stronger character judgement.
+    explanation: Consider the situation first.

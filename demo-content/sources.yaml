@@ -73,3 +73,48 @@ sources:
     type: book
     citation: "Mankiw, N. G. (2021). Principles of economics (9th ed.). Cengage."
     peer_reviewed: false
+  - key: tversky-kahneman-1981
+    type: journal_article
+    citation: "Tversky, A., & Kahneman, D. (1981). The framing of decisions and the psychology of choice. Science, 211(4481), 453–458."
+    doi: "10.1126/science.7455683"
+    peer_reviewed: true
+  - key: svenson-1981
+    type: journal_article
+    citation: "Svenson, O. (1981). Are we all less risky and more skillful than our fellow drivers? Acta Psychologica, 47(2), 143–148."
+    doi: "10.1016/0001-6918(81)90005-6"
+    peer_reviewed: true
+  - key: moore-healy-2008
+    type: journal_article
+    citation: "Moore, D. A., & Healy, P. J. (2008). The trouble with overconfidence. Psychological Review, 115(2), 502–517."
+    doi: "10.1037/0033-295X.115.2.502"
+    peer_reviewed: true
+  - key: jones-harris-1967
+    type: journal_article
+    citation: "Jones, E. E., & Harris, V. A. (1967). The attribution of attitudes. Journal of Experimental Social Psychology, 3(1), 1–24."
+    doi: "10.1016/0022-1031(67)90034-0"
+    peer_reviewed: true
+  - key: ross-1977
+    type: journal_article
+    citation: "Ross, L. (1977). The intuitive psychologist and his shortcomings: Distortions in the attribution process. Advances in Experimental Social Psychology, 10, 173–220."
+    doi: "10.1016/S0065-2601(08)60357-3"
+    peer_reviewed: true
+  - key: darley-latane-1968
+    type: journal_article
+    citation: "Darley, J. M., & Latané, B. (1968). Bystander intervention in emergencies: Diffusion of responsibility. Journal of Personality and Social Psychology, 8(4), 377–383."
+    doi: "10.1037/h0025589"
+    peer_reviewed: true
+  - key: fischer-2011
+    type: journal_article
+    citation: "Fischer, P., Krueger, J. I., Greitemeyer, T., Vogrincic, C., Kastenmüller, A., Frey, D., Heene, M., Wicher, M., & Kainbacher, M. (2011). The bystander-effect: A meta-analytic review on bystander intervention in dangerous and non-dangerous emergencies. Psychological Bulletin, 137(4), 517–537."
+    doi: "10.1037/a0023304"
+    peer_reviewed: true
+  - key: nisbett-wilson-1977
+    type: journal_article
+    citation: "Nisbett, R. E., & Wilson, T. D. (1977). The halo effect: Evidence for unconscious alteration of judgments. Journal of Personality and Social Psychology, 35(4), 250–256."
+    doi: "10.1037/0022-3514.35.4.250"
+    peer_reviewed: true
+  - key: thorndike-1920
+    type: journal_article
+    citation: "Thorndike, E. L. (1920). A constant error in psychological ratings. Journal of Applied Psychology, 4(1), 25–29."
+    doi: "10.1037/h0071663"
+    peer_reviewed: true

@@ -1,0 +1,157 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760206
+slug: bystander-effect
+version: 1
+status: published
+subject: psychology
+topic: social
+position: 3
+title: The bystander effect
+description: Why help can be slower to come when more people are watching.
+learning_objective: Explain diffusion of responsibility and name one way to make sure help happens.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-23
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [fundamental-attribution-error, confirmation-bias]
+sources:
+  - key: darley-latane-1968
+  - key: fischer-2011
+steps:
+  - type: hook
+    body: |
+      Someone collapses on a busy street. Dozens of people walk past. Would you be
+      more likely to help if you were the only one there?
+  - type: explanation
+    title: The core idea
+    body: |
+      The **bystander effect** is the finding that people are often less likely
+      to help when others are present. Responsibility gets **spread out**: each
+      person assumes someone else will act, or reads others' calm as a sign
+      nothing is wrong.
+  - type: question
+    question_key: check-why
+  - type: example
+    kind: research
+    source_key: darley-latane-1968
+    title: The intercom emergency
+    body: |
+      Students talking over an intercom heard another participant appear to have
+      a seizure. Those who thought they were the only listener almost always went
+      for help. Those who thought four others were listening helped far less often.
+  - type: question
+    question_key: check-estimate
+  - type: misconception
+    myth: Crowds never help.
+    correction: |
+      A large review found the effect is weaker in clearly dangerous emergencies,
+      where people often do step in. It's strongest when a situation is ambiguous.
+  - type: summary
+    points:
+      - More bystanders can mean slower help, because responsibility spreads out.
+      - The effect is strongest when it's unclear whether help is needed.
+      - In an emergency, point at one person and give them a clear task.
+questions:
+  - key: check-why
+    role: lesson
+    type: single_choice
+    prompt: Why can more bystanders mean less help?
+    options:
+      - key: a
+        text: Each person assumes someone else will act
+        correct: true
+        feedback: That's diffusion of responsibility.
+      - key: b
+        text: People in cities don't care
+        correct: false
+        feedback: The effect appears in small groups too, and isn't about caring less.
+      - key: c
+        text: Crowds make it physically harder to help
+        correct: false
+        feedback: The intercom study had no physical crowd at all.
+    explanation: Responsibility feels smaller when it's shared.
+  - key: check-estimate
+    role: lesson
+    type: estimate
+    prompt: When students believed four others could also hear, what share helped before the seizure ended?
+    estimate:
+      min: 0
+      max: 100
+      step: 1
+      unit: "%"
+      answer: 31
+      tolerance: 10
+    explanation: Only about 31%, compared with about 85% of those who thought they were alone.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: The bystander effect describes…
+    options:
+      - key: a
+        text: People helping less when others are present
+        correct: true
+        feedback: Right.
+      - key: b
+        text: People helping more in crowds
+        correct: false
+        feedback: The classic finding goes the other way.
+      - key: c
+        text: Witnesses remembering events wrongly
+        correct: false
+        feedback: That's about memory, not helping.
+    explanation: Shared responsibility can slow help down.
+  - key: recall-fix
+    role: recall
+    type: single_choice
+    prompt: You need help in a crowd. What works best?
+    options:
+      - key: a
+        text: Point at one person and ask them directly
+        correct: true
+        feedback: A clear individual request removes the diffusion.
+      - key: b
+        text: Shout "Someone help!"
+        correct: false
+        feedback: Asking someone in general lets everyone assume it means another person.
+      - key: c
+        text: Wait for the crowd to notice
+        correct: false
+        feedback: Waiting gives everyone a reason to wait too.
+    explanation: Make responsibility personal.
+  - key: recall-danger
+    role: recall
+    type: single_choice
+    prompt: When is the bystander effect weakest?
+    options:
+      - key: a
+        text: In clearly dangerous emergencies
+        correct: true
+        feedback: Obvious danger makes people more likely to act.
+      - key: b
+        text: When the situation is unclear
+        correct: false
+        feedback: That's when it's strongest.
+      - key: c
+        text: When many people are watching
+        correct: false
+        feedback: More watchers usually strengthens it.
+    explanation: Clarity cuts through diffusion.
+  - key: recall-calm
+    role: recall
+    type: single_choice
+    prompt: Everyone around you looks calm during a strange event. Why might nobody act?
+    options:
+      - key: a
+        text: Each person reads the others' calm as a sign nothing is wrong
+        correct: true
+        feedback: Everyone looks to everyone else for cues.
+      - key: b
+        text: Everyone has checked and it's fine
+        correct: false
+        feedback: Often nobody has checked.
+      - key: c
+        text: Calm people are always right
+        correct: false
+        feedback: They may be just as unsure as you.
+    explanation: Shared uncertainty keeps people still.

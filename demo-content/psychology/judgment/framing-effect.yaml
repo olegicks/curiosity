@@ -1,0 +1,162 @@
+# DEMO ONLY: local device testing. Not editorially reviewed.
+id: 01a150f6-72b3-77a0-9158-002bee760203
+slug: framing-effect
+version: 1
+status: published
+subject: psychology
+topic: judgment
+position: 3
+title: The framing effect
+description: Why the same facts feel different depending on how they're worded.
+learning_objective: Recognise when wording, not substance, is changing a choice, and reframe it to check.
+estimated_minutes: 5
+evidence_status: established
+last_reviewed_on: 2026-10-23
+reviewers: [Demo author, Demo reviewer]
+prerequisites: []
+related: [anchoring, sunk-cost]
+sources:
+  - key: tversky-kahneman-1981
+  - key: tversky-kahneman-1974
+steps:
+  - type: hook
+    body: |
+      A surgery has a 90% survival rate. Another has a 10% death rate. Which one
+      would you choose?
+  - type: explanation
+    title: The core idea
+    body: |
+      The **framing effect** is when the same information leads to different
+      choices depending on how it's presented. "90% survive" and "10% die" say the
+      same thing, but gains feel safe and losses feel scary.
+  - type: question
+    question_key: check-same
+  - type: example
+    kind: research
+    source_key: tversky-kahneman-1981
+    title: Saving lives or losing them
+    body: |
+      People chose between two plans to fight a disease expected to kill 600.
+      When options were described as lives **saved**, most picked the sure thing.
+      When the same options were described as lives **lost**, most picked the gamble.
+  - type: misconception
+    myth: Only careless people are swayed by wording.
+    correction: |
+      Framing affects doctors, judges and experts too. The fix isn't more
+      intelligence; it's restating the choice the other way round.
+  - type: question
+    question_key: check-reframe
+  - type: summary
+    points:
+      - The same facts can feel different when framed as gains or losses.
+      - Gain frames push us toward safe choices, loss frames toward gambles.
+      - Restate the choice the other way round before deciding.
+questions:
+  - key: check-same
+    role: lesson
+    type: single_choice
+    prompt: Which two descriptions give exactly the same information?
+    options:
+      - key: a
+        text: 80% lean beef and 20% fat beef
+        correct: true
+        feedback: Same meat, different emphasis.
+      - key: b
+        text: 80% lean beef and 10% fat beef
+        correct: false
+        feedback: Those numbers describe different meat.
+      - key: c
+        text: 80% lean beef and 80% fat beef
+        correct: false
+        feedback: Those can't describe the same meat.
+    explanation: Framing changes the emphasis, not the facts.
+  - key: check-reframe
+    role: lesson
+    type: single_choice
+    prompt: A store says "Save 25% today!" What's the best way to check the deal?
+    options:
+      - key: a
+        text: Ask what the final price is and whether you'd pay it anyway
+        correct: true
+        feedback: Looking past the frame to the actual number helps.
+      - key: b
+        text: Buy quickly before the discount ends
+        correct: false
+        feedback: Urgency is part of the frame.
+      - key: c
+        text: Compare it only with the crossed-out price
+        correct: false
+        feedback: That keeps you inside the store's frame.
+    explanation: Restate the offer in plain terms before deciding.
+  - key: recall-surgery
+    role: recall
+    type: single_choice
+    prompt: Why does "90% survive" sound better than "10% die"?
+    options:
+      - key: a
+        text: Gains feel safe and losses feel threatening
+        correct: true
+        feedback: Same facts, different emotional pull.
+      - key: b
+        text: The numbers are different
+        correct: false
+        feedback: They describe exactly the same outcome.
+      - key: c
+        text: Survival rates are always more accurate
+        correct: false
+        feedback: Both statements are equally accurate.
+    explanation: Framing works on feelings, not facts.
+  - key: recall-disease
+    role: recall
+    type: single_choice
+    prompt: In the disease study, people framed in terms of lives lost tended to…
+    options:
+      - key: a
+        text: Choose the risky gamble
+        correct: true
+        feedback: Losses push people toward risk.
+      - key: b
+        text: Choose the sure option
+        correct: false
+        feedback: That happened in the lives-saved frame.
+      - key: c
+        text: Refuse to choose
+        correct: false
+        feedback: Most people made a choice.
+    explanation: Loss frames make gambles look more attractive.
+  - key: recall-define
+    role: recall
+    type: single_choice
+    prompt: The framing effect is…
+    options:
+      - key: a
+        text: Choices changing with how the same facts are worded
+        correct: true
+        feedback: Right.
+      - key: b
+        text: Remembering facts you agree with
+        correct: false
+        feedback: That's confirmation bias.
+      - key: c
+        text: Relying on the first number you hear
+        correct: false
+        feedback: That's anchoring.
+    explanation: Same information, different presentation.
+  - key: recall-fix
+    role: recall
+    type: single_choice
+    prompt: What's a simple habit that weakens framing?
+    options:
+      - key: a
+        text: Restating the option in the opposite frame
+        correct: true
+        feedback: If "90% survive" also reads fine as "10% die", you're seeing past it.
+      - key: b
+        text: Deciding faster
+        correct: false
+        feedback: Speed makes framing stronger.
+      - key: c
+        text: Trusting the first description
+        correct: false
+        feedback: The first description is the frame.
+    explanation: Flip the frame and see if your choice changes.
