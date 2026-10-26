@@ -8,10 +8,8 @@ services:
     region: frankfurt
     dockerfilePath: ./apps/api/Dockerfile
     dockerContext: .
-    # The free plan has no pre-deploy step, so migrations run before the server starts.
-    dockerCommand: >-
-      sh -c "alembic upgrade head &&
-      uvicorn --factory app.main:create_app --host 0.0.0.0 --port $PORT --proxy-headers --workers 1"
+    # The free plan has no pre-deploy step, so the script migrates before serving.
+    dockerCommand: sh docker/start.sh
     healthCheckPath: /health
     autoDeploy: true
     envVars:
